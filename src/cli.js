@@ -6,6 +6,7 @@ const initCommand = require('./commands/init');
 const checkCommand = require('./commands/check');
 const statusCommand = require('./commands/status');
 const updateCommand = require('./commands/update');
+const resetCommand = require('./commands/reset');
 
 const program = new Command();
 
@@ -34,6 +35,11 @@ program
   .command('update')
   .description('Refresh slash commands to the latest version')
   .action(updateCommand);
+
+program
+  .command('reset')
+  .description('Remove all artifacts and start over')
+  .action(resetCommand);
 
 program.parse(process.argv);
 
