@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const initCommand = require('./commands/init');
 const checkCommand = require('./commands/check');
 const statusCommand = require('./commands/status');
+const updateCommand = require('./commands/update');
 
 const program = new Command();
 
@@ -28,6 +29,11 @@ program
   .command('status')
   .description('Show which artifacts exist and what steps remain')
   .action(statusCommand);
+
+program
+  .command('update')
+  .description('Refresh slash commands to the latest version')
+  .action(updateCommand);
 
 program.parse(process.argv);
 
