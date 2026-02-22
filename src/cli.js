@@ -12,7 +12,7 @@ const program = new Command();
 program
   .name('productkit')
   .description(chalk.cyan.bold('Product thinking toolkit for Claude Code'))
-  .version('1.3.0');
+  .version('1.4.0');
 
 program
   .command('init [projectName]')
