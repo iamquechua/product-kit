@@ -68,3 +68,50 @@ describe('init command', () => {
     });
   });
 });
+
+describe('init --existing', () => {
+  const EXISTING_DIR = path.join(__dirname, '..', 'test-existing-output');
+
+  before(() => {
+    fs.removeSync(EXISTING_DIR);
+    fs.ensureDirSync(EXISTING_DIR);
+  });
+
+  after(() => {
+    fs.removeSync(EXISTING_DIR);
+  });
+
+  it('scaffolds into the current directory', () => {
+    execSync(`node ${CLI} init --existing`, {
+      cwd: EXISTING_DIR,
+      stdio: 'ignore',
+    });
+
+    assert.ok(fs.existsSync(path.join(EXISTING_DIR, '.productkit', 'config.json')));
+    assert.ok(fs.existsSync(path.join(EXISTING_DIR, '.claude', 'commands', 'productkit.users.md')));
+    assert.ok(fs.existsSync(path.join(EXISTING_DIR, 'CLAUDE.md')));
+  });
+
+  it('preserves existing README.md', () => {
+    fs.removeSync(EXISTING_DIR);
+    fs.ensureDirSync(EXISTING_DIR);
+    fs.writeFileSync(path.join(EXISTING_DIR, 'README.md'), '# My Existing Project\n');
+
+    execSync(`node ${CLI} init --existing`, {
+      cwd: EXISTING_DIR,
+      stdio: 'ignore',
+    });
+
+    const readme = fs.readFileSync(path.join(EXISTING_DIR, 'README.md'), 'utf-8');
+    assert.ok(readme.includes('My Existing Project'));
+  });
+
+  it('refuses if already a productkit project', () => {
+    assert.throws(() => {
+      execSync(`node ${CLI} init --existing`, {
+        cwd: EXISTING_DIR,
+        stdio: 'pipe',
+      });
+    });
+  });
+});
