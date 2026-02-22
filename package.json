@@ -1,0 +1,30 @@
+{
+  "name": "productkit",
+  "version": "1.0.0",
+  "description": "Slash-command-driven product thinking toolkit for Claude Code",
+  "main": "src/cli.js",
+  "bin": {
+    "productkit": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "files": [
+    "src/",
+    "templates/",
+    "README.md"
+  ],
+  "keywords": [
+    "product-management",
+    "claude-code",
+    "slash-commands",
+    "product-thinking"
+  ],
+  "author": "Douno",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0"
+  }
+}
