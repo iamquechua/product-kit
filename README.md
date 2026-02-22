@@ -17,7 +17,7 @@ claude --version
 
 ## Setup
 
-### From npm (once published)
+### From npm
 
 ```bash
 npm install -g productkit
@@ -26,7 +26,7 @@ npm install -g productkit
 ### From source
 
 ```bash
-git clone https://github.com/douno/product-kit.git
+git clone https://github.com/iamquechua/product-kit.git
 cd product-kit
 npm install
 npm link   # makes `productkit` available globally
@@ -59,10 +59,13 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | 2 | `/productkit.users` | Define target user personas through dialogue | `users.md` |
 | 3 | `/productkit.problem` | Frame the problem statement grounded in user research | `problem.md` |
 | 4 | `/productkit.assumptions` | Extract and prioritize hidden assumptions | `assumptions.md` |
-| 5 | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
-| 6 | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
+| 5 | `/productkit.solution` | Brainstorm and evaluate solution ideas | `solution.md` |
+| 6 | `/productkit.prioritize` | Score and rank features for v1 | `priorities.md` |
+| 7 | `/productkit.spec` | Generate a complete product spec | `spec.md` |
+| — | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
+| — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
 
-Commands build on each other — `/productkit.problem` reads your `users.md` to ground the problem in real user needs. `/productkit.assumptions` reads both `users.md` and `problem.md` to find hidden assumptions. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
+Commands build on each other — `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 
 ### 4. Review your artifacts
 
@@ -74,6 +77,9 @@ my-project/
 ├── users.md               # User personas
 ├── problem.md             # Problem statement
 ├── assumptions.md         # Prioritized assumptions
+├── solution.md            # Chosen solution
+├── priorities.md          # Ranked feature list
+├── spec.md                # Complete product spec
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md
@@ -81,7 +87,7 @@ my-project/
 └── .gitignore
 ```
 
-These markdown files are your product foundation — share them with your team, commit them to git, or use them as input for solution design.
+These markdown files are your product foundation — share them with your team, commit them to git, or hand `spec.md` to engineering.
 
 ## CLI Commands
 
