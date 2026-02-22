@@ -96,6 +96,7 @@ These markdown files are your product foundation — share them with your team, 
 | `productkit init <name>` | Scaffold a new project |
 | `productkit init --existing` | Add Product Kit to the current directory |
 | `productkit status` | Show progress — which artifacts exist and what's next |
+| `productkit update` | Refresh slash commands to the latest version |
 | `productkit check` | Verify Claude Code is installed |
 
 ## How It Works
