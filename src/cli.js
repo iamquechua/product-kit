@@ -14,8 +14,9 @@ program
   .version('1.2.0');
 
 program
-  .command('init <projectName>')
+  .command('init [projectName]')
   .description('Initialize a new product research project')
+  .option('--existing', 'Add Product Kit to the current directory')
   .action(initCommand);
 
 program
