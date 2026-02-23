@@ -4,13 +4,14 @@ Structured product thinking for Claude Cowork. No command line required.
 
 ## Install
 
-In Claude Cowork or Claude Code, run:
+### Claude Cowork (GUI)
 
-```
-/plugin install https://github.com/iamquechua/product-kit --path plugin
-```
+1. Download the `plugin/` folder from [this repo](https://github.com/iamquechua/product-kit/tree/main/plugin)
+2. Zip the folder
+3. In Cowork, go to **Plugins → + → Upload plugin**
+4. Select the zip file
 
-Or load locally for testing:
+### Claude Code (CLI)
 
 ```bash
 claude --plugin-dir ./plugin

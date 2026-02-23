@@ -73,3 +73,9 @@ Priority Score = (Impact x Confidence) / Effort
 - [Decision 1 and rationale]
 - [Decision 2 and rationale]
 ```
+
+## Next Step
+
+After writing the priorities, tell the user:
+
+> Your features are prioritized. The next step is to generate the full product spec — run `/product-kit:spec`.

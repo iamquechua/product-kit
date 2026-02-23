@@ -44,3 +44,9 @@ Write the final constitution to `constitution.md` in the project root with this 
 ## Decision Framework
 When [X] conflicts with [Y], we choose [X] because [reason].
 ```
+
+## Next Step
+
+After writing the constitution, tell the user:
+
+> Your product constitution is ready. The next step is to define your target users — run `/product-kit:users`.

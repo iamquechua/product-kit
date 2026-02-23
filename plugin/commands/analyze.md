@@ -70,3 +70,7 @@ Present the analysis directly in the conversation. Use this structure:
 ### Verdict
 [Ready to move to solution design / Needs more work on X]
 ```
+
+## Next Step
+
+After presenting the analysis, recommend the next action based on the findings. If artifacts are missing, tell the user which command to run. If there are contradictions, suggest `/product-kit:clarify`. If everything looks solid, suggest moving to the next command in the workflow.

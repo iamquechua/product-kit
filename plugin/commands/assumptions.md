@@ -65,3 +65,9 @@ Write to `assumptions.md` in the project root:
 2. [Second priority]
 3. [Third priority]
 ```
+
+## Next Step
+
+After writing the assumptions, tell the user:
+
+> Your assumptions are mapped. The next step is to brainstorm solutions — run `/product-kit:solution`.

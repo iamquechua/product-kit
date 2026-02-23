@@ -51,3 +51,9 @@ Write the final personas to `users.md` in the project root with this format:
 ## Key Insight
 [The most important thing learned about these users]
 ```
+
+## Next Step
+
+After writing the personas, tell the user:
+
+> Your user personas are ready. The next step is to frame the problem statement — run `/product-kit:problem`.
