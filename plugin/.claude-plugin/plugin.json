@@ -1,0 +1,11 @@
+{
+  "name": "product-kit",
+  "description": "Structured product thinking toolkit — guided workflows for user research, problem framing, solution design, and spec writing",
+  "version": "1.7.0",
+  "author": {
+    "name": "Douno"
+  },
+  "homepage": "https://github.com/iamquechua/product-kit",
+  "repository": "https://github.com/iamquechua/product-kit",
+  "license": "MIT"
+}

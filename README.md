@@ -102,6 +102,16 @@ These markdown files are your product foundation — share them with your team, 
 | `productkit completion` | Output shell completion script (bash/zsh) |
 | `productkit check` | Verify Claude Code is installed |
 
+## Cowork Plugin (No CLI Required)
+
+If you prefer Claude Cowork over the command line, Product Kit is also available as a Cowork plugin. Same guided workflows, no terminal needed.
+
+```
+/plugin install https://github.com/iamquechua/product-kit --path plugin
+```
+
+Once installed, type `/product-kit:users`, `/product-kit:problem`, etc. in Cowork's chat. See [plugin/README.md](plugin/README.md) for details.
+
 ## How It Works
 
 Product Kit is a thin scaffolding tool. The real work happens in slash commands — markdown prompt files that live in `.claude/commands/`. When you type `/productkit.users` in Claude Code, it reads the prompt file and starts a guided conversation.
