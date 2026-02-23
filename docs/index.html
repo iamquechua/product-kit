@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Kit — Validate Before You Build</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --bg-surface: #161822;
+      --bg-card: #1c1f2e;
+      --bg-code: #12141d;
+      --border: #2a2d3e;
+      --text: #e2e4ed;
+      --text-muted: #8b8fa3;
+      --accent: #7c6aef;
+      --accent-light: #9d8ff2;
+      --accent-glow: rgba(124, 106, 239, 0.15);
+      --green: #34d399;
+      --amber: #fbbf24;
+      --red: #f87171;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 17, 23, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+    /* Sections */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text); }
+    p { margin-bottom: 1rem; color: var(--text-muted); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 8rem 1.5rem 6rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--accent-light); }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { box-shadow: 0 4px 20px var(--accent-glow); }
+    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+
+    /* Problem section */
+    .callout {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .callout-big {
+      font-size: 1.5rem;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    /* Workflow diagram */
+    .workflow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      margin: 2.5rem 0;
+    }
+    .workflow-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .workflow-step .num {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      font-size: 0.7rem;
+      margin-right: 0.4rem;
+    }
+    .workflow-arrow { color: var(--text-muted); font-size: 1.2rem; }
+
+    /* Setup tabs */
+    .setup-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .setup-tab {
+      padding: 0.75rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .setup-tab.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+    .setup-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 2rem;
+    }
+    .setup-panel.active { display: block; }
+
+    /* Code blocks */
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85em;
+      background: var(--bg-code);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    pre code { background: none; padding: 0; font-size: 0.9rem; color: var(--text); }
+
+    /* Step cards */
+    .step-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .step-card .step-num {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
+    .step-card h3 { display: inline; vertical-align: middle; font-size: 1.35rem; }
+    .step-card .tagline {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .step-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .step-meta-block h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .step-meta-block ul { list-style: none; }
+    .step-meta-block li {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 0.15rem 0;
+    }
+    .step-meta-block li::before {
+      content: '  ';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
+
+    /* Utility cards */
+    .utility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .utility-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+
+    /* Tree */
+    .tree {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin: 1.5rem 0;
+    }
+    .tree .folder { color: var(--accent-light); }
+    .tree .file { color: var(--text); }
+    .tree .muted { color: var(--text-muted); }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 6rem 1.5rem;
+    }
+    .cta h2 { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .cta p { font-size: 1.1rem; margin-bottom: 2rem; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent-light); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section { padding: 3.5rem 1rem; }
+      .hero { padding: 5rem 1rem 4rem; }
+      .step-meta { grid-template-columns: 1fr; }
+      .utility-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg); flex-direction: column; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Product Kit</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+    <div class="nav-links">
+      <a href="#problem">Why</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#setup">Setup</a>
+      <a href="#steps">Steps</a>
+      <a href="#utilities">Utilities</a>
+      <a href="#get-started">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="container">
+    <h1>Validate ideas<br><span>before you build them.</span></h1>
+    <p>Product Kit is a free, open-source toolkit that brings structured product thinking to Claude. 9 guided conversations. 7 artifacts. 1 spec.</p>
+    <div class="hero-buttons">
+      <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">View on GitHub</a>
+      <a href="#setup" class="btn btn-secondary">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- The Problem -->
+<section id="problem">
+  <div class="container">
+    <h2>Building is easy. Building the right thing is hard.</h2>
+    <p>Claude Code. Codex. Cursor. Windsurf. You can go from idea to working app in hours. But easier to build doesn't mean smarter to build.</p>
+    <p>Most people skip straight to code. No user research. No problem validation. No spec. The result?</p>
+    <div class="callout">
+      <p class="callout-big">Polished solutions for problems that don't exist.</p>
+    </div>
+    <p>Before you ask <strong>"Can we build it?"</strong> — ask <strong>"Should we build it?"</strong></p>
+    <p>What if the same AI tool you use to build could first help you validate the idea?</p>
+  </div>
+</section>
+
+<!-- Workflow Overview -->
+<section id="workflow" style="background: var(--bg-surface);">
+  <div class="container">
+    <h2>How It Works</h2>
+    <p>Product Kit guides you through 7 steps. Each step reads the previous one. Nothing gets skipped.</p>
+
+    <div class="workflow">
+      <div class="workflow-step"><span class="num">1</span>Constitution</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">2</span>Users</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">3</span>Problem</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">4</span>Assumptions</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">5</span>Solution</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">6</span>Prioritize</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">7</span>Spec</div>
+    </div>
+
+    <p style="text-align:center; color: var(--text-muted); margin-top: 1rem;">Plus two utility commands — <strong>Clarify</strong> and <strong>Analyze</strong> — that you can run anytime.</p>
+  </div>
+</section>
+
+<!-- Setup -->
+<section id="setup">
+  <div class="container">
+    <h2>Setup</h2>
+    <p>Product Kit works two ways. Pick the one that fits your style.</p>
+
+    <div class="setup-tabs">
+      <button class="setup-tab active" onclick="switchTab('cowork')">Cowork Plugin</button>
+      <button class="setup-tab" onclick="switchTab('cli')">CLI (Claude Code)</button>
+    </div>
+
+    <div class="setup-panel active" id="panel-cowork">
+      <h3>No terminal required</h3>
+      <p>Use Product Kit directly in Claude with the Cowork plugin.</p>
+      <ol style="color: var(--text); padding-left: 1.25rem; margin: 1rem 0;">
+        <li style="margin-bottom: 0.5rem;">Download the plugin zip from <a href="https://github.com/iamquechua/product-kit/releases" style="color: var(--accent-light);">GitHub Releases</a></li>
+        <li style="margin-bottom: 0.5rem;">In Claude, go to <strong>Plugins &rarr; + &rarr; Upload plugin</strong></li>
+        <li style="margin-bottom: 0.5rem;">Select the zip file</li>
+        <li style="margin-bottom: 0.5rem;">Done &mdash; type <code>/product-kit:users</code> to start</li>
+      </ol>
+    </div>
+
+    <div class="setup-panel" id="panel-cli">
+      <h3>For terminal users</h3>
+      <p>Requires <a href="https://nodejs.org" style="color: var(--accent-light);">Node.js 18+</a> and <a href="https://claude.com/claude-code" style="color: var(--accent-light);">Claude Code</a>.</p>
+      <pre><code>npm install -g productkit
+productkit init my-project
+cd my-project
+claude</code></pre>
+      <p style="margin-top: 1rem;">Then run the slash commands in order: <code>/productkit.constitution</code>, <code>/productkit.users</code>, etc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Step-by-step -->
+<section id="steps" style="background: var(--bg-surface);">
+  <div class="container">
+    <h2>The 7 Steps</h2>
+    <p>Each step is a guided conversation. Claude asks the questions, pushes back on vague answers, and writes a markdown artifact when done.</p>
+
+    <!-- Step 1 -->
+    <div class="step-card">
+      <span class="step-num">1</span>
+      <h3>Constitution</h3>
+      <span class="tagline">"Make the hard tradeoffs before you write a line of code."</span>
+      <pre><code>/productkit.constitution</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude asks you</h4>
+          <ul>
+            <li>What does your product stand for?</li>
+            <li>What will you never do?</li>
+            <li>What principles guide decisions?</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>constitution.md</code></h4>
+          <ul>
+            <li>Vision</li>
+            <li>Core Principles</li>
+            <li>Non-Negotiables</li>
+            <li>Decision Framework</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <span class="step-num">2</span>
+      <h3>Users</h3>
+      <span class="tagline">"Everyone" is not a user.</span>
+      <pre><code>/productkit.users</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude asks you</h4>
+          <ul>
+            <li>Who specifically has this problem?</li>
+            <li>What's their day-to-day like?</li>
+            <li>How do they solve it today?</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>users.md</code></h4>
+          <ul>
+            <li>Primary persona (specific, detailed)</li>
+            <li>Secondary persona</li>
+            <li>Key insight</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <span class="step-num">3</span>
+      <h3>Problem</h3>
+      <span class="tagline">"We need an app" &rarr; "What problem does that app solve?"</span>
+      <pre><code>/productkit.problem</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude asks you</h4>
+          <ul>
+            <li>What specific pain are users feeling?</li>
+            <li>How often does it happen?</li>
+            <li>What's the root cause?</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>problem.md</code></h4>
+          <ul>
+            <li>Problem statement grounded in evidence</li>
+            <li>Impact (frequency + severity)</li>
+            <li>Root cause</li>
+            <li>Scope (in + out)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+      <span class="step-num">4</span>
+      <h3>Assumptions</h3>
+      <span class="tagline">What are you betting on without knowing it?</span>
+      <pre><code>/productkit.assumptions</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude does</h4>
+          <ul>
+            <li>Reads your artifacts so far</li>
+            <li>Surfaces hidden risks</li>
+            <li>Identifies what you're taking for granted</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>assumptions.md</code></h4>
+          <ul>
+            <li>Critical assumptions (low confidence, high impact)</li>
+            <li>Validation plan for top risks</li>
+            <li>Recommended next steps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step-card">
+      <span class="step-num">5</span>
+      <h3>Solution</h3>
+      <span class="tagline">NOW you can brainstorm what to build.</span>
+      <pre><code>/productkit.solution</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude asks you</h4>
+          <ul>
+            <li>What approaches have you considered?</li>
+            <li>How does each trace to a user need?</li>
+            <li>What are the tradeoffs?</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>solution.md</code></h4>
+          <ul>
+            <li>Options considered (with pros/cons)</li>
+            <li>Recommended solution for v1</li>
+            <li>What's deferred to v2+</li>
+            <li>Key risks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step-card">
+      <span class="step-num">6</span>
+      <h3>Prioritize</h3>
+      <span class="tagline">"What's the smallest thing you can ship that solves the core problem?"</span>
+      <pre><code>/productkit.prioritize</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude does</h4>
+          <ul>
+            <li>Scores features: Impact x Confidence / Effort</li>
+            <li>Draws the v1 line</li>
+            <li>Justifies every cut</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>priorities.md</code></h4>
+          <ul>
+            <li>Ranked feature table with scores</li>
+            <li>Must-haves vs nice-to-haves</li>
+            <li>What's deferred and why</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 7 -->
+    <div class="step-card">
+      <span class="step-num">7</span>
+      <h3>Spec</h3>
+      <span class="tagline">Everything synthesized. Every claim traced. Ready to build.</span>
+      <pre><code>/productkit.spec</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude does</h4>
+          <ul>
+            <li>Reads all 6 previous artifacts</li>
+            <li>Synthesizes into one document</li>
+            <li>Links every claim to its source</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>spec.md</code></h4>
+          <ul>
+            <li>Overview, principles, users, problem</li>
+            <li>Solution with acceptance criteria</li>
+            <li>Risks, open questions, success metrics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Utilities -->
+<section id="utilities">
+  <div class="container">
+    <h2>Utility Commands</h2>
+    <p>Run these at any stage to check your work.</p>
+
+    <div class="utility-grid">
+      <div class="utility-card">
+        <h3>Clarify</h3>
+        <pre><code>/productkit.clarify</code></pre>
+        <p>Find contradictions across your artifacts. Run this anytime something feels off. Claude reads everything you've written and flags inconsistencies.</p>
+      </div>
+      <div class="utility-card">
+        <h3>Analyze</h3>
+        <pre><code>/productkit.analyze</code></pre>
+        <p>Get a score out of 10. Strengths. Gaps. Contradictions. Verdict: <em>"Ready to build, or needs more work?"</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What You End Up With -->
+<section style="background: var(--bg-surface);">
+  <div class="container">
+    <h2>What You End Up With</h2>
+    <p>After running all 7 steps, your project root contains:</p>
+
+    <div class="tree">
+      <span class="folder">my-project/</span><br>
+      <span class="muted">├──</span> <span class="file">constitution.md</span> <span class="muted">&nbsp;&nbsp;# Product principles</span><br>
+      <span class="muted">├──</span> <span class="file">users.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# User personas</span><br>
+      <span class="muted">├──</span> <span class="file">problem.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Problem statement</span><br>
+      <span class="muted">├──</span> <span class="file">assumptions.md</span> <span class="muted">&nbsp;&nbsp;# Prioritized assumptions</span><br>
+      <span class="muted">├──</span> <span class="file">solution.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Chosen solution</span><br>
+      <span class="muted">├──</span> <span class="file">priorities.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;# Ranked feature list</span><br>
+      <span class="muted">└──</span> <span class="file">spec.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Complete product spec</span>
+    </div>
+
+    <p>7 artifacts. 1 validated product idea. Hand <code>spec.md</code> to Claude Code and build the right thing.</p>
+  </div>
+</section>
+
+<!-- Get Started -->
+<section class="cta" id="get-started">
+  <div class="container">
+    <h2>Ready to validate your idea?</h2>
+    <p>Free. Open source. MIT license.</p>
+    <div class="hero-buttons">
+      <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">GitHub Repository</a>
+      <a href="https://github.com/iamquechua/product-kit/releases" class="btn btn-secondary">Download Plugin</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Product Kit &mdash; built by <a href="https://github.com/iamquechua">iamquechua</a> &middot; <a href="https://github.com/iamquechua/product-kit">GitHub</a> &middot; MIT License</p>
+</footer>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.setup-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.setup-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+}
+</script>
+
+</body>
+</html>
