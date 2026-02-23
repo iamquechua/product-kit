@@ -59,3 +59,9 @@ Write the problem statement to `problem.md` in the project root:
 - **In scope:** [What we're solving]
 - **Out of scope:** [What we're explicitly NOT solving]
 ```
+
+## Next Step
+
+After writing the problem statement, tell the user:
+
+> Your problem statement is ready. The next step is to surface your assumptions — run `/product-kit:assumptions`.

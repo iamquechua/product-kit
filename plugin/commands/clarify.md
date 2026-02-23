@@ -36,3 +36,7 @@ Work with whatever exists — this command can run at any stage.
 ## Output
 
 This command updates existing artifacts rather than creating a new file. After resolving issues, update the relevant files (`users.md`, `problem.md`, etc.) with the agreed-upon changes.
+
+## Next Step
+
+After resolving issues, tell the user which command to run next based on their progress. If all core artifacts exist, suggest `/product-kit:analyze` for a completeness check. If they're mid-workflow, suggest the next command in sequence.

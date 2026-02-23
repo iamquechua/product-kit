@@ -82,3 +82,9 @@ Write to `solution.md` in the project root:
 - [Risk 1 and how to mitigate]
 - [Risk 2 and how to mitigate]
 ```
+
+## Next Step
+
+After writing the solution, tell the user:
+
+> Your solution is defined. The next step is to prioritize features — run `/product-kit:prioritize`.

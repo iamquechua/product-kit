@@ -89,3 +89,9 @@ Write to `spec.md` in the project root:
 ## Success Metrics
 - [How we'll know if this is working]
 ```
+
+## Next Step
+
+After writing the spec, tell the user:
+
+> Your product spec is complete! You can now run `/product-kit:analyze` to check for consistency, or `/product-kit:clarify` to resolve any ambiguities. Your `spec.md` is ready to share with design and engineering.
