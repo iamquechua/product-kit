@@ -40,6 +40,7 @@ program
 program
   .command('reset')
   .description('Remove all artifacts and start over')
+  .option('--force', 'Skip confirmation prompt')
   .action(resetCommand);
 
 program

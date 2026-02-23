@@ -25,7 +25,7 @@ describe('reset command', () => {
     fs.writeFileSync(path.join(TEST_PROJECT, 'users.md'), '# Users\n');
     fs.writeFileSync(path.join(TEST_PROJECT, 'problem.md'), '# Problem\n');
 
-    const output = execSync(`node ${CLI} reset`, {
+    const output = execSync(`node ${CLI} reset --force`, {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
@@ -36,7 +36,7 @@ describe('reset command', () => {
   });
 
   it('reports nothing to reset when no artifacts exist', () => {
-    const output = execSync(`node ${CLI} reset`, {
+    const output = execSync(`node ${CLI} reset --force`, {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
@@ -50,7 +50,7 @@ describe('reset command', () => {
 
   it('fails outside a productkit project', () => {
     assert.throws(() => {
-      execSync(`node ${CLI} reset`, {
+      execSync(`node ${CLI} reset --force`, {
         cwd: '/tmp',
         stdio: 'pipe',
       });
