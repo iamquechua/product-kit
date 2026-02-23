@@ -8,6 +8,7 @@ const statusCommand = require('./commands/status');
 const updateCommand = require('./commands/update');
 const resetCommand = require('./commands/reset');
 const listCommand = require('./commands/list');
+const completionCommand = require('./commands/completion');
 
 const program = new Command();
 
@@ -47,6 +48,12 @@ program
   .command('list')
   .description('Show available slash commands with descriptions')
   .action(listCommand);
+
+program
+  .command('completion')
+  .description('Output shell completion script')
+  .option('--shell <shell>', 'Shell type (bash or zsh)')
+  .action(completionCommand);
 
 program.parse(process.argv);
 
