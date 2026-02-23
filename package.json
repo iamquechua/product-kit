@@ -20,6 +20,14 @@
     "slash-commands",
     "product-thinking"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamquechua/product-kit.git"
+  },
+  "homepage": "https://github.com/iamquechua/product-kit#readme",
+  "bugs": {
+    "url": "https://github.com/iamquechua/product-kit/issues"
+  },
   "author": "Douno",
   "license": "MIT",
   "dependencies": {
