@@ -4,6 +4,8 @@ Slash-command-driven product thinking toolkit for [Claude Code](https://claude.c
 
 Product Kit gives PMs a structured workflow for validating product ideas — user personas, problem statements, assumptions mapping — all through guided AI conversations.
 
+**[Read the full guide →](https://iamquechua.github.io/product-kit/)**
+
 ## Prerequisites
 
 - **Node.js** 18 or later
