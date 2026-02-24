@@ -9,6 +9,7 @@ const updateCommand = require('./commands/update');
 const resetCommand = require('./commands/reset');
 const listCommand = require('./commands/list');
 const completionCommand = require('./commands/completion');
+const exportCommand = require('./commands/export');
 
 const program = new Command();
 
@@ -54,6 +55,12 @@ program
   .description('Output shell completion script')
   .option('--shell <shell>', 'Shell type (bash or zsh)')
   .action(completionCommand);
+
+program
+  .command('export')
+  .description('Export all artifacts as a single combined markdown file')
+  .option('--output <file>', 'Output filename', 'export.md')
+  .action(exportCommand);
 
 program.parse(process.argv);
 
