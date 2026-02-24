@@ -12,9 +12,12 @@ src/
 ├── commands/
 │   ├── init.js         # Scaffolds new projects (copies templates/)
 │   ├── check.js        # Verifies Claude Code is installed
-│   └── status.js       # Shows artifact progress
+│   ├── status.js       # Shows artifact progress
+│   ├── export.js       # Exports artifacts as combined markdown
+│   ├── diff.js         # Shows artifact changes since last commit
+│   └── doctor.js       # Checks project health
 └── utils/
-    └── fileUtils.js    # Project detection helpers
+    └── fileUtils.js    # Project detection + artifact dir helpers
 
 templates/              # Copied into user projects on `init`
 ├── commands/           # Slash command prompts (.md files)
@@ -29,7 +32,7 @@ examples/               # Example projects
 ## Key Concepts
 
 - **Slash commands** live in `templates/commands/`. Each is a markdown file with a `description` front-matter field and a structured prompt.
-- **Artifacts** are the markdown files slash commands produce (`users.md`, `problem.md`, etc.). They're written to the user's project root.
+- **Artifacts** are the markdown files slash commands produce (`users.md`, `problem.md`, etc.). They're written to the user's project root by default, or to a custom directory if `artifact_dir` is set in `.productkit/config.json`.
 - **Workflow ordering** is enforced by each command reading previous artifacts. If a dependency is missing, the command tells the user which command to run first.
 - The `init` command copies everything from `templates/` into the target project. It does NOT generate content — it just copies files.
 

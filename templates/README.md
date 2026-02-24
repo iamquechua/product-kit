@@ -23,6 +23,8 @@ Then use the slash commands to build your product foundation:
 
 ## Artifacts
 
+Artifacts are written to the project root by default. If `artifact_dir` is set in `.productkit/config.json`, they are written there instead.
+
 | File | Description |
 |------|-------------|
 | `constitution.md` | Product principles and values |
