@@ -9,6 +9,7 @@ const updateCommand = require('./commands/update');
 const resetCommand = require('./commands/reset');
 const listCommand = require('./commands/list');
 const completionCommand = require('./commands/completion');
+const diffCommand = require('./commands/diff');
 
 const program = new Command();
 
@@ -54,6 +55,12 @@ program
   .description('Output shell completion script')
   .option('--shell <shell>', 'Shell type (bash or zsh)')
   .action(completionCommand);
+
+program
+  .command('diff')
+  .description('Show what changed since last commit across artifacts')
+  .option('--staged', 'Show staged changes instead of unstaged')
+  .action(diffCommand);
 
 program.parse(process.argv);
 
