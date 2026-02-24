@@ -12,6 +12,7 @@ const ARTIFACT_FILES = [
   'solution.md',
   'priorities.md',
   'spec.md',
+  'stories.md',
 ];
 
 async function diff(options) {

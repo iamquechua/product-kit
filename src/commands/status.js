@@ -11,6 +11,7 @@ const ARTIFACTS = [
   { file: 'solution.md', command: '/productkit.solution', label: 'Solution' },
   { file: 'priorities.md', command: '/productkit.prioritize', label: 'Priorities' },
   { file: 'spec.md', command: '/productkit.spec', label: 'Spec' },
+  { file: 'stories.md', command: '/productkit.stories', label: 'Stories' },
 ];
 
 async function status() {

@@ -11,6 +11,7 @@ const ARTIFACTS = [
   { file: 'solution.md', label: 'Solution' },
   { file: 'priorities.md', label: 'Priorities' },
   { file: 'spec.md', label: 'Spec' },
+  { file: 'stories.md', label: 'Stories' },
 ];
 
 async function exportCommand(options) {

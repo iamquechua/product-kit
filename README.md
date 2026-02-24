@@ -77,6 +77,7 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | 5 | `/productkit.solution` | Brainstorm and evaluate solution ideas | `solution.md` |
 | 6 | `/productkit.prioritize` | Score and rank features for v1 | `priorities.md` |
 | 7 | `/productkit.spec` | Generate a complete product spec | `spec.md` |
+| 8 | `/productkit.stories` | Break spec into user stories with acceptance criteria | `stories.md` |
 | — | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
 | — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
 | — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
@@ -96,6 +97,7 @@ my-project/
 ├── solution.md            # Chosen solution
 ├── priorities.md          # Ranked feature list
 ├── spec.md                # Complete product spec
+├── stories.md             # User stories
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md

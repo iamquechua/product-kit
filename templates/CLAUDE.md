@@ -13,9 +13,10 @@ Use these commands in order to build your product foundation:
 5. `/productkit.solution` — Brainstorm and evaluate solutions
 6. `/productkit.prioritize` — Score and rank features
 7. `/productkit.spec` — Generate a product spec
-8. `/productkit.clarify` — Resolve ambiguities across artifacts
-9. `/productkit.analyze` — Run a completeness/consistency check
-10. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
+8. `/productkit.stories` — Break spec into user stories with acceptance criteria
+9. `/productkit.clarify` — Resolve ambiguities across artifacts
+10. `/productkit.analyze` — Run a completeness/consistency check
+11. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
 
 ## Artifacts
 
@@ -27,6 +28,7 @@ Product artifacts are written as markdown files. Check `.productkit/config.json`
 - `solution.md` — Chosen solution with alternatives considered
 - `priorities.md` — Scored and ranked feature list
 - `spec.md` — Complete product spec ready for engineering
+- `stories.md` — User stories with acceptance criteria
 
 ## Workflow
 

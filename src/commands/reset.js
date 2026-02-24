@@ -12,6 +12,7 @@ const ARTIFACTS = [
   'solution.md',
   'priorities.md',
   'spec.md',
+  'stories.md',
 ];
 
 function confirm(question) {
