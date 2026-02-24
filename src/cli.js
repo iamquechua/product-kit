@@ -10,6 +10,8 @@ const resetCommand = require('./commands/reset');
 const listCommand = require('./commands/list');
 const completionCommand = require('./commands/completion');
 const exportCommand = require('./commands/export');
+const diffCommand = require('./commands/diff');
+const doctorCommand = require('./commands/doctor');
 
 const program = new Command();
 
@@ -62,6 +64,17 @@ program
   .description('Export all artifacts as a single combined markdown file')
   .option('--output <file>', 'Output filename', 'export.md')
   .action(exportCommand);
+
+program
+  .command('diff')
+  .description('Show what changed since last commit across artifacts')
+  .option('--staged', 'Show staged changes instead of unstaged')
+  .action(diffCommand);
+
+program
+  .command('doctor')
+  .description('Check project health (missing files, outdated commands, etc.)')
+  .action(doctorCommand);
 
 program.parse(process.argv);
 
