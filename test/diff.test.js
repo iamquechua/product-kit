@@ -14,7 +14,11 @@ describe('diff command', () => {
       cwd: path.join(__dirname, '..'),
       stdio: 'ignore',
     });
-    // Create an artifact and commit it
+    // Init git repo with dummy user for CI, create an artifact and commit it
+    execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', {
+      cwd: PROJECT_DIR,
+      stdio: 'ignore',
+    });
     fs.writeFileSync(path.join(PROJECT_DIR, 'users.md'), '# Users\n\nOriginal.\n');
     execSync('git add -A && git commit -m "initial"', {
       cwd: PROJECT_DIR,
