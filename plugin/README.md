@@ -37,4 +37,4 @@ Start with `/product-kit:constitution` or `/product-kit:users`, then work throug
 
 ## Learn More
 
-See the [main README](../README.md) for full documentation.
+See the [main README](../README.md) for full documentation or the [online guide](https://iamquechua.github.io/product-kit/) for a step-by-step walkthrough.
