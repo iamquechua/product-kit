@@ -34,7 +34,9 @@ If `users.md` does not exist, tell the user to run `/productkit.users` first.
 
 ## Output
 
-Write the problem statement to `problem.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write the problem statement to `problem.md`:
 
 ```markdown
 # Problem Statement

@@ -41,6 +41,7 @@ describe('init command', () => {
       'productkit.spec.md',
       'productkit.clarify.md',
       'productkit.analyze.md',
+      'productkit.bootstrap.md',
     ];
     for (const cmd of commands) {
       assert.ok(
@@ -113,5 +114,102 @@ describe('init --existing', () => {
         stdio: 'pipe',
       });
     });
+  });
+});
+
+describe('init --minimal', () => {
+  const MINIMAL_DIR = path.join(__dirname, '..', 'test-minimal-output');
+
+  before(() => {
+    fs.removeSync(MINIMAL_DIR);
+  });
+
+  after(() => {
+    fs.removeSync(MINIMAL_DIR);
+  });
+
+  it('excludes constitution and sets minimal config', () => {
+    execSync(`node ${CLI} init test-minimal-output --minimal`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+
+    // Constitution should NOT exist
+    assert.ok(
+      !fs.existsSync(path.join(MINIMAL_DIR, '.claude', 'commands', 'productkit.constitution.md')),
+      'constitution command should not exist in minimal mode'
+    );
+
+    // Other commands should exist
+    const expectedCommands = [
+      'productkit.users.md',
+      'productkit.problem.md',
+      'productkit.assumptions.md',
+      'productkit.solution.md',
+      'productkit.prioritize.md',
+      'productkit.spec.md',
+      'productkit.clarify.md',
+      'productkit.analyze.md',
+    ];
+    for (const cmd of expectedCommands) {
+      assert.ok(
+        fs.existsSync(path.join(MINIMAL_DIR, '.claude', 'commands', cmd)),
+        `Missing command: ${cmd}`
+      );
+    }
+
+    // Config should have minimal: true
+    const config = fs.readJsonSync(path.join(MINIMAL_DIR, '.productkit', 'config.json'));
+    assert.strictEqual(config.minimal, true);
+  });
+});
+
+describe('init --artifact-dir', () => {
+  const ARTDIR_PROJECT = path.join(__dirname, '..', 'test-artdir-output');
+
+  before(() => {
+    fs.removeSync(ARTDIR_PROJECT);
+  });
+
+  after(() => {
+    fs.removeSync(ARTDIR_PROJECT);
+  });
+
+  it('creates artifact directory and stores config', () => {
+    execSync(`node ${CLI} init test-artdir-output --artifact-dir docs/product`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+
+    // Config should have artifact_dir
+    const config = fs.readJsonSync(path.join(ARTDIR_PROJECT, '.productkit', 'config.json'));
+    assert.strictEqual(config.artifact_dir, 'docs/product');
+
+    // Artifact directory should exist
+    assert.ok(fs.existsSync(path.join(ARTDIR_PROJECT, 'docs', 'product')));
+  });
+
+  it('CLI commands use artifact_dir for artifact lookup', () => {
+    // Write an artifact in the artifact dir
+    fs.writeFileSync(
+      path.join(ARTDIR_PROJECT, 'docs', 'product', 'users.md'),
+      '# Users\n\nTest users.\n'
+    );
+
+    // Status should detect it
+    const statusOutput = execSync(`node ${CLI} status`, {
+      cwd: ARTDIR_PROJECT,
+      encoding: 'utf-8',
+    });
+    assert.ok(statusOutput.includes('done'));
+    assert.ok(statusOutput.includes('Users'));
+
+    // Export should include it
+    execSync(`node ${CLI} export`, {
+      cwd: ARTDIR_PROJECT,
+      stdio: 'ignore',
+    });
+    const exportContent = fs.readFileSync(path.join(ARTDIR_PROJECT, 'export.md'), 'utf-8');
+    assert.ok(exportContent.includes('Test users'));
   });
 });

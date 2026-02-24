@@ -33,7 +33,9 @@ Read `constitution.md` if it exists — use the product vision to inform user di
 
 ## Output
 
-Write the final personas to `users.md` in the project root with this format:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write the final personas to `users.md` with this format:
 
 ```markdown
 # Target Users

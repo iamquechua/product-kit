@@ -349,7 +349,7 @@
 <section class="hero" id="top">
   <div class="container">
     <h1>Validate ideas<br><span>before you build them.</span></h1>
-    <p>Product Kit is a free, open-source toolkit that brings structured product thinking to Claude. 9 guided conversations. 7 artifacts. 1 spec.</p>
+    <p>Product Kit is a free, open-source toolkit that brings structured product thinking to Claude. 10 guided conversations. 7 artifacts. 1 spec.</p>
     <div class="hero-buttons">
       <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">View on GitHub</a>
       <a href="#setup" class="btn btn-secondary">Get Started</a>
@@ -393,7 +393,7 @@
       <div class="workflow-step"><span class="num">7</span>Spec</div>
     </div>
 
-    <p style="text-align:center; color: var(--text-muted); margin-top: 1rem;">Plus two utility commands — <strong>Clarify</strong> and <strong>Analyze</strong> — that you can run anytime.</p>
+    <p style="text-align:center; color: var(--text-muted); margin-top: 1rem;">Plus three utility commands — <strong>Clarify</strong>, <strong>Analyze</strong>, and <strong>Bootstrap</strong> — that you can run anytime.</p>
   </div>
 </section>
 
@@ -412,7 +412,7 @@
       <h3>No terminal required</h3>
       <p>Use Product Kit directly in Claude with the Cowork plugin.</p>
       <ol style="color: var(--text); padding-left: 1.25rem; margin: 1rem 0;">
-        <li style="margin-bottom: 0.5rem;">Download <code>product-kit-plugin.zip</code> from <a href="https://github.com/iamquechua/product-kit/releases" style="color: var(--accent-light);">GitHub Releases</a></li>
+        <li style="margin-bottom: 0.5rem;">Download <a href="https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip" style="color: var(--accent-light);"><code>product-kit-plugin.zip</code></a></li>
         <li style="margin-bottom: 0.5rem;">In Claude, go to <strong>Plugins &rarr; + &rarr; Upload plugin</strong></li>
         <li style="margin-bottom: 0.5rem;">Select the zip file</li>
         <li style="margin-bottom: 0.5rem;">Done &mdash; type <code>/product-kit:users</code> to start</li>
@@ -427,6 +427,8 @@ productkit init my-project
 cd my-project
 claude</code></pre>
       <p style="margin-top: 1rem;">Then run the slash commands in order: <code>/productkit.constitution</code>, <code>/productkit.users</code>, etc.</p>
+      <p style="margin-top: 1rem; font-size: 0.9rem;"><strong>Options:</strong> Use <code>--existing</code> to add to a current project, <code>--minimal</code> to skip constitution, or <code>--artifact-dir docs/product</code> to store artifacts in a custom directory.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>CLI tools:</strong> <code>productkit status</code>, <code>productkit export</code>, <code>productkit diff</code>, <code>productkit doctor</code> &mdash; manage and inspect your artifacts from the terminal.</p>
     </div>
   </div>
 </section>
@@ -641,6 +643,11 @@ claude</code></pre>
         <pre><code>/productkit.analyze</code></pre>
         <p>Get a score out of 10. Strengths. Gaps. Contradictions. Verdict: <em>"Ready to build, or needs more work?"</em></p>
       </div>
+      <div class="utility-card">
+        <h3>Bootstrap</h3>
+        <pre><code>/productkit.bootstrap</code></pre>
+        <p>Already have a codebase? Bootstrap scans your project and auto-drafts all missing artifacts in one session. Great for existing projects.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -649,7 +656,7 @@ claude</code></pre>
 <section style="background: var(--bg-surface);">
   <div class="container">
     <h2>What You End Up With</h2>
-    <p>After running all 7 steps, your project root contains:</p>
+    <p>After running all 7 steps, your project contains:</p>
 
     <div class="tree">
       <span class="folder">my-project/</span><br>
@@ -662,6 +669,8 @@ claude</code></pre>
       <span class="muted">└──</span> <span class="file">spec.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Complete product spec</span>
     </div>
 
+    <p style="font-size: 0.9rem; color: var(--text-muted);">Use <code>--artifact-dir</code> during init to store artifacts in a subdirectory (e.g. <code>docs/product/</code>) instead of the project root.</p>
+
     <p>7 artifacts. 1 validated product idea. Hand <code>spec.md</code> to Claude Code and build the right thing.</p>
   </div>
 </section>
@@ -673,7 +682,7 @@ claude</code></pre>
     <p>Free. Open source. MIT license.</p>
     <div class="hero-buttons">
       <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">GitHub Repository</a>
-      <a href="https://github.com/iamquechua/product-kit/releases" class="btn btn-secondary">Download Plugin</a>
+      <a href="https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip" class="btn btn-secondary">Download Plugin</a>
     </div>
   </div>
 </section>

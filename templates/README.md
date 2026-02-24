@@ -19,8 +19,11 @@ Then use the slash commands to build your product foundation:
 7. `/productkit.spec` — Generate a product spec
 8. `/productkit.clarify` — Resolve ambiguities
 9. `/productkit.analyze` — Check consistency and completeness
+10. `/productkit.bootstrap` — Auto-draft all artifacts from existing codebase
 
 ## Artifacts
+
+Artifacts are written to the project root by default. If `artifact_dir` is set in `.productkit/config.json`, they are written there instead.
 
 | File | Description |
 |------|-------------|

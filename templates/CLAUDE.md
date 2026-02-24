@@ -15,10 +15,11 @@ Use these commands in order to build your product foundation:
 7. `/productkit.spec` — Generate a product spec
 8. `/productkit.clarify` — Resolve ambiguities across artifacts
 9. `/productkit.analyze` — Run a completeness/consistency check
+10. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
 
 ## Artifacts
 
-Product artifacts are written to the project root as markdown files:
+Product artifacts are written as markdown files. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead of the project root. Default artifact locations:
 - `constitution.md` — Product principles and values
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
@@ -30,3 +31,5 @@ Product artifacts are written to the project root as markdown files:
 ## Workflow
 
 Start with `/productkit.constitution` or `/productkit.users`, then work through the commands in order. Each command reads previous artifacts to maintain consistency.
+
+For existing projects, use `/productkit.bootstrap` to auto-draft all artifacts from your codebase in one session.

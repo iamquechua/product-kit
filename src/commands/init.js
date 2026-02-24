@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 
-function scaffold(projectRoot, projectName) {
+function scaffold(projectRoot, projectName, minimal, artifactDir) {
   const templatesDir = path.join(__dirname, '..', '..', 'templates');
 
   // Create directories
@@ -10,15 +10,24 @@ function scaffold(projectRoot, projectName) {
   fs.ensureDirSync(path.join(projectRoot, '.claude', 'commands'));
 
   // Write config
-  fs.writeJsonSync(path.join(projectRoot, '.productkit', 'config.json'), {
+  const config = {
     version: '1.0.0',
     created: new Date().toISOString(),
-  }, { spaces: 2 });
+  };
+  if (minimal) {
+    config.minimal = true;
+  }
+  if (artifactDir) {
+    config.artifact_dir = artifactDir;
+    fs.ensureDirSync(path.join(projectRoot, artifactDir));
+  }
+  fs.writeJsonSync(path.join(projectRoot, '.productkit', 'config.json'), config, { spaces: 2 });
 
   // Copy slash command templates
   const commandsDir = path.join(templatesDir, 'commands');
   const commandFiles = fs.readdirSync(commandsDir);
   for (const file of commandFiles) {
+    if (minimal && file === 'productkit.constitution.md') continue;
     fs.copyFileSync(
       path.join(commandsDir, file),
       path.join(projectRoot, '.claude', 'commands', file)
@@ -61,13 +70,13 @@ async function init(projectName, options) {
     }
 
     try {
-      scaffold(projectRoot, path.basename(projectRoot));
+      scaffold(projectRoot, path.basename(projectRoot), options.minimal, options.artifactDir);
 
       console.log(chalk.green.bold('Product Kit added to existing project!'));
       console.log();
       console.log(chalk.cyan('Next steps:'));
       console.log('  1. claude');
-      console.log('  2. /productkit.constitution');
+      console.log(`  2. /productkit.${options.minimal ? 'users' : 'constitution'}`);
       console.log();
     } catch (error) {
       console.error(chalk.red('Error initializing:'), error.message);
@@ -89,7 +98,7 @@ async function init(projectName, options) {
   }
 
   try {
-    scaffold(projectRoot, projectName);
+    scaffold(projectRoot, projectName, options.minimal, options.artifactDir);
 
     // Init git repo
     const { execSync } = require('child_process');
@@ -104,7 +113,7 @@ async function init(projectName, options) {
     console.log(chalk.cyan('Next steps:'));
     console.log(`  1. cd ${projectName}`);
     console.log('  2. claude');
-    console.log('  3. /productkit.constitution');
+    console.log(`  3. /productkit.${options.minimal ? 'users' : 'constitution'}`);
     console.log();
   } catch (error) {
     console.error(chalk.red('Error initializing project:'), error.message);

@@ -41,7 +41,9 @@ Also read if they exist:
 
 ## Output
 
-Write to `assumptions.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write to `assumptions.md`:
 
 ```markdown
 # Assumptions

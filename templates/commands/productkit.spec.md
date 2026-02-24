@@ -10,7 +10,9 @@ Pull together everything the user has built — constitution, users, problem, as
 
 ## Before You Start
 
-Read all existing artifacts in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
+Read all existing artifacts:
 - `constitution.md` — product principles
 - `users.md` — target users (required)
 - `problem.md` — problem statement (required)
@@ -37,7 +39,7 @@ At minimum, `users.md`, `problem.md`, and `solution.md` must exist. If any are m
 
 ## Output
 
-Write to `spec.md` in the project root:
+Write to `spec.md`:
 
 ```markdown
 # Product Spec: [Product Name]

@@ -45,6 +45,19 @@ cd my-project
 
 This scaffolds a project with slash commands, a `CLAUDE.md` context file, and a `.productkit/` config directory.
 
+For existing projects:
+
+```bash
+cd my-existing-project
+productkit init --existing
+```
+
+To keep artifacts out of the project root (recommended for busy codebases):
+
+```bash
+productkit init --existing --artifact-dir docs/product
+```
+
 ### 2. Open Claude Code
 
 ```bash
@@ -66,12 +79,13 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | 7 | `/productkit.spec` | Generate a complete product spec | `spec.md` |
 | — | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
 | — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
+| — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
 
 Commands build on each other — `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 
 ### 4. Review your artifacts
 
-After running the commands, your project root contains:
+After running the commands, your project contains:
 
 ```
 my-project/
@@ -89,6 +103,8 @@ my-project/
 └── .gitignore
 ```
 
+If you used `--artifact-dir docs/product`, artifacts live in `docs/product/` instead of the project root.
+
 These markdown files are your product foundation — share them with your team, commit them to git, or hand `spec.md` to engineering.
 
 ## CLI Commands
@@ -97,7 +113,14 @@ These markdown files are your product foundation — share them with your team, 
 |---------|-------------|
 | `productkit init <name>` | Scaffold a new project |
 | `productkit init --existing` | Add Product Kit to the current directory |
+| `productkit init --minimal` | Skip constitution, start with users/problem |
+| `productkit init --artifact-dir <dir>` | Store artifacts in a custom directory |
 | `productkit status` | Show progress — which artifacts exist and what's next |
+| `productkit export` | Export all artifacts as a single combined markdown file |
+| `productkit export --output <file>` | Export to a custom filename |
+| `productkit diff` | Show what changed in artifacts since last commit |
+| `productkit diff --staged` | Show staged artifact changes |
+| `productkit doctor` | Check project health (missing files, outdated commands) |
 | `productkit update` | Refresh slash commands to the latest version |
 | `productkit reset` | Remove all artifacts and start over |
 | `productkit list` | Show available slash commands with descriptions |
@@ -108,7 +131,7 @@ These markdown files are your product foundation — share them with your team, 
 
 If you prefer Claude Cowork over the command line, Product Kit is also available as a Cowork plugin. Same guided workflows, no terminal needed.
 
-1. Download `product-kit-plugin.zip` from [GitHub Releases](https://github.com/iamquechua/product-kit/releases)
+1. Download [`product-kit-plugin.zip`](https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip) from [GitHub Releases](https://github.com/iamquechua/product-kit/releases/tag/latest-plugin)
 2. In Cowork, go to **Plugins → + → Upload plugin**
 3. Select the zip file
 
