@@ -115,3 +115,50 @@ describe('init --existing', () => {
     });
   });
 });
+
+describe('init --minimal', () => {
+  const MINIMAL_DIR = path.join(__dirname, '..', 'test-minimal-output');
+
+  before(() => {
+    fs.removeSync(MINIMAL_DIR);
+  });
+
+  after(() => {
+    fs.removeSync(MINIMAL_DIR);
+  });
+
+  it('excludes constitution and sets minimal config', () => {
+    execSync(`node ${CLI} init test-minimal-output --minimal`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+
+    // Constitution should NOT exist
+    assert.ok(
+      !fs.existsSync(path.join(MINIMAL_DIR, '.claude', 'commands', 'productkit.constitution.md')),
+      'constitution command should not exist in minimal mode'
+    );
+
+    // Other commands should exist
+    const expectedCommands = [
+      'productkit.users.md',
+      'productkit.problem.md',
+      'productkit.assumptions.md',
+      'productkit.solution.md',
+      'productkit.prioritize.md',
+      'productkit.spec.md',
+      'productkit.clarify.md',
+      'productkit.analyze.md',
+    ];
+    for (const cmd of expectedCommands) {
+      assert.ok(
+        fs.existsSync(path.join(MINIMAL_DIR, '.claude', 'commands', cmd)),
+        `Missing command: ${cmd}`
+      );
+    }
+
+    // Config should have minimal: true
+    const config = fs.readJsonSync(path.join(MINIMAL_DIR, '.productkit', 'config.json'));
+    assert.strictEqual(config.minimal, true);
+  });
+});

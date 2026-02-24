@@ -21,6 +21,7 @@ program
   .command('init [projectName]')
   .description('Initialize a new product research project')
   .option('--existing', 'Add Product Kit to the current directory')
+  .option('--minimal', 'Skip constitution, start with users/problem')
   .action(initCommand);
 
 program
