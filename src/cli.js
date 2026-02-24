@@ -9,6 +9,7 @@ const updateCommand = require('./commands/update');
 const resetCommand = require('./commands/reset');
 const listCommand = require('./commands/list');
 const completionCommand = require('./commands/completion');
+const doctorCommand = require('./commands/doctor');
 
 const program = new Command();
 
@@ -54,6 +55,11 @@ program
   .description('Output shell completion script')
   .option('--shell <shell>', 'Shell type (bash or zsh)')
   .action(completionCommand);
+
+program
+  .command('doctor')
+  .description('Check project health (missing files, outdated commands, etc.)')
+  .action(doctorCommand);
 
 program.parse(process.argv);
 
