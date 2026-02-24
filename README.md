@@ -108,10 +108,9 @@ These markdown files are your product foundation — share them with your team, 
 
 If you prefer Claude Cowork over the command line, Product Kit is also available as a Cowork plugin. Same guided workflows, no terminal needed.
 
-1. Download the [`plugin/`](plugin/) folder from this repo
-2. Zip the folder
-3. In Cowork, go to **Plugins → + → Upload plugin**
-4. Select the zip file
+1. Download `product-kit-plugin.zip` from [GitHub Releases](https://github.com/iamquechua/product-kit/releases)
+2. In Cowork, go to **Plugins → + → Upload plugin**
+3. Select the zip file
 
 Once installed, type `/product-kit:users`, `/product-kit:problem`, etc. in Cowork's chat. See [plugin/README.md](plugin/README.md) for details.
 

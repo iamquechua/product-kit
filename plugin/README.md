@@ -6,10 +6,9 @@ Structured product thinking for Claude Cowork. No command line required.
 
 ### Claude Cowork (GUI)
 
-1. Download the `plugin/` folder from [this repo](https://github.com/iamquechua/product-kit/tree/main/plugin)
-2. Zip the folder
-3. In Cowork, go to **Plugins → + → Upload plugin**
-4. Select the zip file
+1. Download `product-kit-plugin.zip` from [GitHub Releases](https://github.com/iamquechua/product-kit/releases)
+2. In Cowork, go to **Plugins → + → Upload plugin**
+3. Select the zip file
 
 ### Claude Code (CLI)
 
