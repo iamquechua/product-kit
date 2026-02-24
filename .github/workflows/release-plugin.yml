@@ -1,0 +1,31 @@
+name: Release Cowork Plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugin/**'
+
+jobs:
+  release-plugin:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip plugin folder
+        run: zip -r product-kit-plugin.zip plugin/
+
+      - name: Upload to latest-plugin release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-plugin
+          name: Cowork Plugin (latest)
+          body: |
+            Latest version of the Product Kit Cowork plugin.
+
+            **Install:** Download `product-kit-plugin.zip`, then in Claude go to Plugins → + → Upload plugin.
+          files: product-kit-plugin.zip
+          make_latest: false
