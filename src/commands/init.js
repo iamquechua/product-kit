@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 
-function scaffold(projectRoot, projectName, minimal) {
+function scaffold(projectRoot, projectName, minimal, artifactDir) {
   const templatesDir = path.join(__dirname, '..', '..', 'templates');
 
   // Create directories
@@ -16,6 +16,10 @@ function scaffold(projectRoot, projectName, minimal) {
   };
   if (minimal) {
     config.minimal = true;
+  }
+  if (artifactDir) {
+    config.artifact_dir = artifactDir;
+    fs.ensureDirSync(path.join(projectRoot, artifactDir));
   }
   fs.writeJsonSync(path.join(projectRoot, '.productkit', 'config.json'), config, { spaces: 2 });
 
@@ -66,7 +70,7 @@ async function init(projectName, options) {
     }
 
     try {
-      scaffold(projectRoot, path.basename(projectRoot), options.minimal);
+      scaffold(projectRoot, path.basename(projectRoot), options.minimal, options.artifactDir);
 
       console.log(chalk.green.bold('Product Kit added to existing project!'));
       console.log();
@@ -94,7 +98,7 @@ async function init(projectName, options) {
   }
 
   try {
-    scaffold(projectRoot, projectName, options.minimal);
+    scaffold(projectRoot, projectName, options.minimal, options.artifactDir);
 
     // Init git repo
     const { execSync } = require('child_process');

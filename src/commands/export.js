@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const { getArtifactDir } = require('../utils/fileUtils');
 
 const ARTIFACTS = [
   { file: 'constitution.md', label: 'Constitution' },
@@ -22,7 +23,8 @@ async function exportCommand(options) {
     process.exit(1);
   }
 
-  const existing = ARTIFACTS.filter(a => fs.existsSync(path.join(root, a.file)));
+  const artifactDir = getArtifactDir(root);
+  const existing = ARTIFACTS.filter(a => fs.existsSync(path.join(artifactDir, a.file)));
 
   if (existing.length === 0) {
     console.error(chalk.red('No artifacts found. Run some slash commands first.'));
@@ -31,7 +33,7 @@ async function exportCommand(options) {
 
   const sections = [];
   for (const artifact of existing) {
-    const content = fs.readFileSync(path.join(root, artifact.file), 'utf-8');
+    const content = fs.readFileSync(path.join(artifactDir, artifact.file), 'utf-8');
     sections.push(content);
   }
 

@@ -25,6 +25,7 @@ program
   .description('Initialize a new product research project')
   .option('--existing', 'Add Product Kit to the current directory')
   .option('--minimal', 'Skip constitution, start with users/problem')
+  .option('--artifact-dir <dir>', 'Directory for artifacts (default: project root)')
   .action(initCommand);
 
 program

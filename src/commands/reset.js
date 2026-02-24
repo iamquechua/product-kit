@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const readline = require('readline');
+const { getArtifactDir } = require('../utils/fileUtils');
 
 const ARTIFACTS = [
   'constitution.md',
@@ -36,9 +37,11 @@ async function reset(options) {
     process.exit(1);
   }
 
+  const artifactDir = getArtifactDir(root);
+
   // Find existing artifacts
   const existing = ARTIFACTS.filter(file =>
-    fs.existsSync(path.join(root, file))
+    fs.existsSync(path.join(artifactDir, file))
   );
 
   if (existing.length === 0) {
@@ -67,7 +70,7 @@ async function reset(options) {
   }
 
   for (const file of existing) {
-    fs.removeSync(path.join(root, file));
+    fs.removeSync(path.join(artifactDir, file));
     console.log(chalk.yellow(`  removed ${file}`));
   }
 

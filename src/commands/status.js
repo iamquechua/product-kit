@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const { getArtifactDir } = require('../utils/fileUtils');
 
 const ARTIFACTS = [
   { file: 'constitution.md', command: '/productkit.constitution', label: 'Constitution' },
@@ -22,11 +23,12 @@ async function status() {
     process.exit(1);
   }
 
+  const artifactDir = getArtifactDir(root);
   const done = [];
   const remaining = [];
 
   for (const artifact of ARTIFACTS) {
-    const exists = fs.existsSync(path.join(root, artifact.file));
+    const exists = fs.existsSync(path.join(artifactDir, artifact.file));
     if (exists) {
       done.push(artifact);
     } else {

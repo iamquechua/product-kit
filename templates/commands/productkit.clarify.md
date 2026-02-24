@@ -10,7 +10,9 @@ Cross-reference all existing artifacts, find inconsistencies, and guide the user
 
 ## Before You Start
 
-Read all existing artifacts in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
+Read all existing artifacts:
 - `constitution.md`
 - `users.md`
 - `problem.md`

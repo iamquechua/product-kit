@@ -11,8 +11,9 @@ Analyze the existing project — code, docs, README, config files, comments — 
 ## Before You Start
 
 1. Read the project's README, CLAUDE.md, package.json (or equivalent), and scan the directory structure to understand what this project does.
-2. Check which artifacts already exist (constitution.md, users.md, problem.md, assumptions.md, solution.md, priorities.md, spec.md). **Skip any that already exist** — tell the user you're skipping them.
-3. Check `.productkit/config.json` — if `minimal: true`, skip `constitution.md`.
+2. Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+3. Check which artifacts already exist (constitution.md, users.md, problem.md, assumptions.md, solution.md, priorities.md, spec.md) in the artifact directory. **Skip any that already exist** — tell the user you're skipping them.
+4. Check `.productkit/config.json` — if `minimal: true`, skip `constitution.md`.
 
 ## Process
 
@@ -58,7 +59,7 @@ Draft based on: all previous artifacts plus technical implementation details.
 1. **Show your draft** — present the full markdown content
 2. **Explain your reasoning** — briefly note what codebase signals you used
 3. **Ask for approval** — "Should I write this to `[filename]`? Or would you like to adjust anything?"
-4. **On approval** — write the file to the project root
+4. **On approval** — write the file to the artifact directory
 5. **On feedback** — revise and re-present
 
 ## Conversation Style

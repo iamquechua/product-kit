@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const { execSync } = require('child_process');
+const { getArtifactDir } = require('../utils/fileUtils');
 
 const ARTIFACT_FILES = [
   'constitution.md',
@@ -31,7 +32,11 @@ async function diff(options) {
     process.exit(1);
   }
 
-  const existing = ARTIFACT_FILES.filter(f => fs.existsSync(path.join(root, f)));
+  const artifactDir = getArtifactDir(root);
+  const relDir = path.relative(root, artifactDir);
+  const existing = ARTIFACT_FILES
+    .map(f => relDir && relDir !== '.' ? path.join(relDir, f) : f)
+    .filter(f => fs.existsSync(path.join(root, f)));
 
   if (existing.length === 0) {
     console.error(chalk.red('No artifacts found. Run some slash commands first.'));

@@ -44,7 +44,9 @@ If `users.md` or `problem.md` do not exist, tell the user to run `/productkit.us
 
 ## Output
 
-Write to `solution.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write to `solution.md`:
 
 ```markdown
 # Solution

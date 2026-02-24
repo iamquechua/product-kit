@@ -19,7 +19,7 @@ Use these commands in order to build your product foundation:
 
 ## Artifacts
 
-Product artifacts are written to the project root as markdown files:
+Product artifacts are written as markdown files. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead of the project root. Default artifact locations:
 - `constitution.md` — Product principles and values
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
