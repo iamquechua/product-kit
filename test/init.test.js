@@ -41,6 +41,7 @@ describe('init command', () => {
       'productkit.spec.md',
       'productkit.clarify.md',
       'productkit.analyze.md',
+      'productkit.bootstrap.md',
     ];
     for (const cmd of commands) {
       assert.ok(
