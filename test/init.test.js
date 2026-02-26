@@ -39,6 +39,7 @@ describe('init command', () => {
       'productkit.solution.md',
       'productkit.prioritize.md',
       'productkit.spec.md',
+      'productkit.validate.md',
       'productkit.clarify.md',
       'productkit.analyze.md',
       'productkit.bootstrap.md',

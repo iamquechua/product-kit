@@ -8,6 +8,7 @@ const ARTIFACTS = [
   { file: 'users.md', label: 'Users' },
   { file: 'problem.md', label: 'Problem' },
   { file: 'assumptions.md', label: 'Assumptions' },
+  { file: 'validation.md', label: 'Validation' },
   { file: 'solution.md', label: 'Solution' },
   { file: 'priorities.md', label: 'Priorities' },
   { file: 'spec.md', label: 'Spec' },
