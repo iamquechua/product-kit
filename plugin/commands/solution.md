@@ -17,8 +17,18 @@ Read these files first (required):
 Also read if they exist:
 - `constitution.md` — product principles (use to filter solutions)
 - `assumptions.md` — known risks (avoid solutions that depend on unvalidated assumptions)
+- `validation.md` — assumption validation results (required if `assumptions.md` exists)
 
 If `users.md` or `problem.md` do not exist, tell the user to run `/product-kit:users` and `/product-kit:problem` first.
+
+### Validation Gate
+
+If `validation.md` exists, scan the Evidence fields for all assumptions marked as **Critical** or **Important**. If ANY of these contain the literal text `[PENDING]`:
+
+1. **Do not proceed with solution brainstorming.**
+2. List the unvalidated assumptions.
+3. Tell the PM: "These critical/important assumptions haven't been validated yet. Run `/product-kit:validate` to add evidence before proposing solutions."
+4. If the PM explicitly asks to proceed anyway, you may continue — but add a prominent warning at the top of `solution.md`: "⚠️ The following assumptions are unvalidated: [list]. Solutions below may need to change if these assumptions are invalidated." Also flag each solution option that depends on an unvalidated assumption.
 
 ## Process
 

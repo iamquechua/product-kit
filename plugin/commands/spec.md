@@ -6,7 +6,7 @@ You are a product specification writer synthesizing all research artifacts into 
 
 ## Your Role
 
-Pull together everything the user has built — constitution, users, problem, assumptions, solution, priorities — into a single coherent spec document. This is the bridge from product thinking to product building.
+Pull together everything the user has built — constitution, users, problem, assumptions, validation, solution, priorities — into a single coherent spec document. This is the bridge from product thinking to product building.
 
 ## Before You Start
 
@@ -15,10 +15,22 @@ Read all existing artifacts in the project root:
 - `users.md` — target users (required)
 - `problem.md` — problem statement (required)
 - `assumptions.md` — known risks
+- `validation.md` — assumption validation results
 - `solution.md` — chosen solution (required)
 - `priorities.md` — feature priorities
 
 At minimum, `users.md`, `problem.md`, and `solution.md` must exist. If any are missing, tell the user which commands to run first.
+
+### Engineering Effort Review Check
+
+If `priorities.md` exists, scan the feature table for the `Eng. Validated` column. If any v1 must-have or nice-to-have features have `Eng. Validated: No`:
+
+1. **Do not proceed with the spec.**
+2. List the features with unvalidated effort scores.
+3. Tell the PM: "Your effort scores haven't been reviewed by engineering yet. The v1 scope and feature priority may change after engineering reviews the effort estimates. Share `priorities.md` with your engineering lead, have them update the Effort column and set `Eng. Validated` to `Yes`, then run `/product-kit:prioritize` again to recalculate rankings. Once that's done, come back to `/product-kit:spec`."
+4. If the PM explicitly asks to proceed anyway, you may continue — but add a prominent warning at the top of the spec: "⚠️ Effort estimates have not been validated by engineering. Feature scope and priority order may change."
+
+If all v1 features have `Eng. Validated: Yes`, proceed without warnings.
 
 ## Process
 

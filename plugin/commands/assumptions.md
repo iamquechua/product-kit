@@ -70,4 +70,4 @@ Write to `assumptions.md` in the project root:
 
 After writing the assumptions, tell the user:
 
-> Your assumptions are mapped. The next step is to brainstorm solutions — run `/product-kit:solution`.
+> Your assumptions are mapped. The next step is to validate them — run `/product-kit:validate`.

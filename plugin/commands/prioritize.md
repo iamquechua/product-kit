@@ -27,11 +27,12 @@ If `solution.md` does not exist, tell the user to run `/product-kit:solution` fi
 2. **Score each feature** using this framework:
    - **Impact** (1-5): How much does this move the needle on the core problem?
    - **Confidence** (1-5): How sure are we that users need this? (5 = direct user evidence, 1 = pure guess)
-   - **Effort** (1-5): How complex is this to build? (1 = trivial, 5 = massive)
+   - **Effort** (1-5): How complex is this to build? (1 = trivial, 5 = massive). **This is a PM estimate — mark as `Eng. Validated: No`.**
    - **Priority Score** = (Impact x Confidence) / Effort
 3. **Discuss the ranking** — Present the scored list. Ask the user if the ranking feels right. Adjust if needed.
 4. **Draw the v1 line** — Which features make the cut for the first release? Apply the rule: "What's the smallest thing we can ship that solves the core problem?"
 5. **Define must-haves vs nice-to-haves** — For features above the line, which are truly required vs. which could be cut if time runs short?
+6. **Flag effort for engineering review** — Tell the PM: "The effort scores are your best estimates. Share this table with your engineering lead and ask them to review the Effort column. When they've provided their input, update the Effort scores and set `Eng. Validated` to `Yes`, then run `/product-kit:prioritize` again to recalculate rankings."
 
 ## Conversation Style
 
@@ -52,12 +53,15 @@ Priority Score = (Impact x Confidence) / Effort
 
 ## Feature Rankings
 
-| Rank | Feature | Impact | Confidence | Effort | Score | Status |
-|------|---------|--------|------------|--------|-------|--------|
-| 1 | [Feature] | 5 | 4 | 2 | 10.0 | v1 must-have |
-| 2 | [Feature] | 4 | 4 | 2 | 8.0 | v1 must-have |
-| 3 | [Feature] | 4 | 3 | 3 | 4.0 | v1 nice-to-have |
-| 4 | [Feature] | 3 | 2 | 4 | 1.5 | v2 |
+| Rank | Feature | Impact | Confidence | Effort | Eng. Validated | Score | Status |
+|------|---------|--------|------------|--------|----------------|-------|--------|
+| 1 | [Feature] | 5 | 4 | 2 | No | 10.0 | v1 must-have |
+| 2 | [Feature] | 4 | 4 | 2 | No | 8.0 | v1 must-have |
+| 3 | [Feature] | 4 | 3 | 3 | No | 4.0 | v1 nice-to-have |
+| 4 | [Feature] | 3 | 2 | 4 | No | 1.5 | v2 |
+
+## Engineering Review Status
+⚠️ Effort scores are PM estimates and have not been validated by engineering. Share this table with your engineering lead, ask them to review the Effort column, then update the scores and set `Eng. Validated` to `Yes`. Run `/product-kit:prioritize` again to recalculate rankings.
 
 ## v1 Scope
 ### Must-Haves
@@ -79,3 +83,16 @@ Priority Score = (Impact x Confidence) / Effort
 After writing the priorities, tell the user:
 
 > Your features are prioritized. The next step is to generate the full product spec — run `/product-kit:spec`.
+
+### When the PM returns with engineering-validated effort scores
+
+When the user runs `/product-kit:prioritize` again after updating effort scores:
+
+1. Read the existing `priorities.md`
+2. Check the `Eng. Validated` column. For rows marked `Yes`:
+   - Recalculate the Priority Score using the updated Effort value
+   - Re-rank features by new scores
+   - Present the updated ranking and highlight what changed
+3. For rows still marked `No`, keep the PM estimate but flag them
+4. Redraw the v1 line if the ranking changed significantly — ask the PM if the v1 scope still makes sense
+5. Update the Engineering Review Status section. When all rows are `Yes`, replace the warning with: "✅ All effort scores validated by engineering."
