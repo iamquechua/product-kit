@@ -8,6 +8,7 @@ const ARTIFACTS = [
   { file: 'users.md', command: '/productkit.users', label: 'Users' },
   { file: 'problem.md', command: '/productkit.problem', label: 'Problem' },
   { file: 'assumptions.md', command: '/productkit.assumptions', label: 'Assumptions' },
+  { file: 'validation.md', command: '/productkit.validate', label: 'Validation' },
   { file: 'solution.md', command: '/productkit.solution', label: 'Solution' },
   { file: 'priorities.md', command: '/productkit.prioritize', label: 'Priorities' },
   { file: 'spec.md', command: '/productkit.spec', label: 'Spec' },

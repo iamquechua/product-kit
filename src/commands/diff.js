@@ -9,6 +9,7 @@ const ARTIFACT_FILES = [
   'users.md',
   'problem.md',
   'assumptions.md',
+  'validation.md',
   'solution.md',
   'priorities.md',
   'spec.md',

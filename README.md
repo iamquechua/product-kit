@@ -74,12 +74,14 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | 2 | `/productkit.users` | Define target user personas through dialogue | `users.md` |
 | 3 | `/productkit.problem` | Frame the problem statement grounded in user research | `problem.md` |
 | 4 | `/productkit.assumptions` | Extract and prioritize hidden assumptions | `assumptions.md` |
-| 5 | `/productkit.solution` | Brainstorm and evaluate solution ideas | `solution.md` |
-| 6 | `/productkit.prioritize` | Score and rank features for v1 | `priorities.md` |
-| 7 | `/productkit.spec` | Generate a complete product spec | `spec.md` |
+| 5 | `/productkit.validate` | Validate assumptions with interviews and surveys | `validation.md` |
+| 6 | `/productkit.solution` | Brainstorm and evaluate solution ideas | `solution.md` |
+| 7 | `/productkit.prioritize` | Score and rank features for v1 | `priorities.md` |
+| 8 | `/productkit.spec` | Generate a complete product spec | `spec.md` |
 | — | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
 | — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
 | — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
+| — | `/productkit.audit` | Compare spec against codebase, surface gaps | `audit.md` |
 
 Commands build on each other — `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 
@@ -93,9 +95,11 @@ my-project/
 ├── users.md               # User personas
 ├── problem.md             # Problem statement
 ├── assumptions.md         # Prioritized assumptions
+├── validation.md          # Validation results & scripts
 ├── solution.md            # Chosen solution
 ├── priorities.md          # Ranked feature list
 ├── spec.md                # Complete product spec
+├── audit.md               # Spec vs codebase audit (on demand)
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md

@@ -10,15 +10,33 @@ Guide the user from problem understanding to concrete solution ideas. Ensure eve
 
 ## Before You Start
 
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
 Read these files first (required):
 - `users.md` — who has this problem
 - `problem.md` — what problem we're solving
+- `validation.md` — assumption validation results (required)
 
 Also read if they exist:
 - `constitution.md` — product principles (use to filter solutions)
-- `assumptions.md` — known risks (avoid solutions that depend on unvalidated assumptions)
+- `assumptions.md` — known risks
 
 If `users.md` or `problem.md` do not exist, tell the user to run `/productkit.users` and `/productkit.problem` first.
+
+If `validation.md` does not exist, tell the user to run `/productkit.validate` first.
+
+### Validation Gate
+
+After reading `validation.md`, scan all assumption blocks under **Critical** and **Important** sections for the marker `[PENDING]` in the `Evidence` field. This is a mechanical check — look for the literal text `[PENDING]`.
+
+**If any Critical or Important assumption has `Evidence: [PENDING]`:**
+
+1. **Do not proceed with solution brainstorming.**
+2. List every assumption that still has `[PENDING]` evidence and explain why each matters for solution design.
+3. Tell the user: "These assumptions have no evidence yet. Run `/productkit.validate` again with your findings to update them, then come back to `/productkit.solution`."
+4. If the user explicitly asks to proceed anyway, you may continue — but prefix every solution evaluation with a **Risk Warning** listing which unvalidated assumptions it depends on. Make it clear the output is a hypothesis, not a validated plan.
+
+**Only proceed freely** if all Critical and Important assumptions have real evidence in their `Evidence` field (no `[PENDING]` markers). Low Risk assumptions with `[PENDING]` are acceptable and should not block.
 
 ## Process
 

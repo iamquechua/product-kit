@@ -25,7 +25,7 @@ describe('status command', () => {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
-    assert.ok(output.includes('0/7'));
+    assert.ok(output.includes('0/8'));
     assert.ok(output.includes('todo'));
     assert.ok(output.includes('/productkit.constitution'));
   });
@@ -36,7 +36,7 @@ describe('status command', () => {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
-    assert.ok(output.includes('1/7'));
+    assert.ok(output.includes('1/8'));
     assert.ok(output.includes('Users'));
   });
 

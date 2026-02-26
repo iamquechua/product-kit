@@ -10,12 +10,14 @@ Use these commands in order to build your product foundation:
 2. `/productkit.users` — Define target user personas
 3. `/productkit.problem` — Frame the problem statement
 4. `/productkit.assumptions` — Extract and prioritize assumptions
-5. `/productkit.solution` — Brainstorm and evaluate solutions
-6. `/productkit.prioritize` — Score and rank features
-7. `/productkit.spec` — Generate a product spec
-8. `/productkit.clarify` — Resolve ambiguities across artifacts
-9. `/productkit.analyze` — Run a completeness/consistency check
-10. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
+5. `/productkit.validate` — Validate assumptions with interview scripts and surveys
+6. `/productkit.solution` — Brainstorm and evaluate solutions
+7. `/productkit.prioritize` — Score and rank features
+8. `/productkit.spec` — Generate a product spec
+9. `/productkit.clarify` — Resolve ambiguities across artifacts
+10. `/productkit.analyze` — Run a completeness/consistency check
+11. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
+12. `/productkit.audit` — Compare spec against codebase and surface gaps
 
 ## Artifacts
 
@@ -24,6 +26,7 @@ Product artifacts are written as markdown files. Check `.productkit/config.json`
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
 - `assumptions.md` — Prioritized assumptions
+- `validation.md` — Assumption validation results, interview scripts, and survey questions
 - `solution.md` — Chosen solution with alternatives considered
 - `priorities.md` — Scored and ranked feature list
 - `spec.md` — Complete product spec ready for engineering
