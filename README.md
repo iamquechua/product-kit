@@ -81,6 +81,7 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | — | `/productkit.clarify` | Resolve ambiguities and contradictions across artifacts | Updates existing files |
 | — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
 | — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
+| — | `/productkit.audit` | Compare spec against codebase, surface gaps | `audit.md` |
 
 Commands build on each other — `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 

@@ -17,6 +17,7 @@ Use these commands in order to build your product foundation:
 9. `/productkit.clarify` — Resolve ambiguities across artifacts
 10. `/productkit.analyze` — Run a completeness/consistency check
 11. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
+12. `/productkit.audit` — Compare spec against codebase and surface gaps
 
 ## Artifacts
 

@@ -21,6 +21,7 @@ Then use the slash commands to build your product foundation:
 9. `/productkit.clarify` — Resolve ambiguities
 10. `/productkit.analyze` — Check consistency and completeness
 11. `/productkit.bootstrap` — Auto-draft all artifacts from existing codebase
+12. `/productkit.audit` — Compare spec against actual implementation
 
 ## Artifacts
 
