@@ -99,6 +99,7 @@ my-project/
 ├── solution.md            # Chosen solution
 ├── priorities.md          # Ranked feature list
 ├── spec.md                # Complete product spec
+├── audit.md               # Spec vs codebase audit (on demand)
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md
