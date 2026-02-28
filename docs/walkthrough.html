@@ -442,6 +442,10 @@
         <strong>Follow the order.</strong> Each step reads the artifacts from previous steps. Skipping ahead means Claude won't have the context it needs to ask the right questions.
       </div>
 
+      <div class="wt-note">
+        <strong>Building solo?</strong> This walkthrough uses team mode examples (user stories, engineering handoffs). In solo mode, Product Kit adapts &mdash; you get direct task lists instead of &ldquo;As a user...&rdquo; stories, personal build plans instead of sprint estimates, and techreview resolves questions conversationally instead of deferring to engineers. Set your mode during <code>productkit init</code> with <code>--mode solo</code>.
+      </div>
+
       <div class="wt-tip">
         <strong>Already have a product?</strong> This walkthrough follows a new product from scratch, but Product Kit works for existing products too. Run <code>/product-kit:bootstrap</code> to generate artifacts from your codebase, then re-run individual steps (like Problem, Assumptions, and Validate) scoped to your next feature. You don't need to redo Landscape or Constitution every time.
       </div>
@@ -783,6 +787,10 @@
         <strong>The "current solutions" section is gold.</strong> It tells you what to beat and reveals unmet needs.
       </div>
 
+      <div class="wt-note">
+        <strong>B2B / Enterprise adaptation:</strong> In B2B, your "user" is often multiple people &mdash; the buyer, the admin, and the end user have different goals. Create separate personas for each role. The buyer cares about ROI and compliance; the end user cares about daily workflow. Don't collapse them into one persona.
+      </div>
+
       <h4>When to re-run</h4>
       <ul>
         <li>After validation interviews reveal a different primary user</li>
@@ -892,6 +900,10 @@
       </div>
       <div class="wt-tip">
         <strong>A good problem statement doesn't mention your product.</strong> If you can't describe the problem without describing the solution, you haven't found the real problem yet.
+      </div>
+
+      <div class="wt-note">
+        <strong>B2B / Enterprise adaptation:</strong> Enterprise problems often have organizational friction layered on top. "The tool is slow" might really be "the procurement process took 6 months, so by the time we got it, our needs changed." Dig into process and organizational pain, not just product pain.
       </div>
 
       <h4>When to re-run</h4>
@@ -1041,6 +1053,19 @@
         <li>A willingness to hear that you're wrong</li>
       </ul>
 
+      <h4>Finding your first 5 interviewees</h4>
+      <p>The hardest part of validation isn't the interview &mdash; it's finding people to talk to. Here's where to start:</p>
+      <ul>
+        <li><strong>Reddit &amp; online communities:</strong> Post in subreddits related to your problem space. For Streak, r/getdisciplined, r/habits, and r/productivity are goldmines. Write a short post: "I'm researching why people quit habit apps. If you've downloaded and abandoned one, I'd love a 15-minute chat. DM me."</li>
+        <li><strong>Twitter/X:</strong> Search for people complaining about the problem. "quit habit app" or "broken streak" surface real frustrations in real time.</li>
+        <li><strong>Your extended network:</strong> Post on LinkedIn or ask friends to introduce you. "Know anyone who's tried and quit a habit tracker?" One warm intro often leads to 2-3 more.</li>
+        <li><strong>In-person:</strong> Coffee shops, co-working spaces, meetups. "Quick question &mdash; have you ever used a habit tracking app?" works surprisingly well.</li>
+        <li><strong>Respondent services:</strong> If you have budget, tools like <a href="https://respondent.io" style="color: var(--accent-light);">Respondent.io</a> or <a href="https://userinterviews.com" style="color: var(--accent-light);">User Interviews</a> can find screened participants in 24-48 hours.</li>
+      </ul>
+      <div class="wt-tip">
+        <strong>Outreach template:</strong> "Hi! I'm building a [category] app and trying to understand why people [problem]. Would you be open to a 15-minute call? No sales pitch &mdash; just questions. Happy to send a $10 coffee gift card as thanks."
+      </div>
+
       <h4>The conversation (Phase 1: Generate instruments)</h4>
       <div class="wt-dialogue">
         <p class="wt-speaker claude">Claude</p>
@@ -1090,6 +1115,22 @@
         All critical assumptions validated. Cleared to proceed to Solution.
       </div>
 
+      <h4>What if an assumption fails?</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>I interviewed 6 people and... they actually said the streak reset wasn't a big deal. Most of them quit because they simply forgot about the app after a few days. Notifications didn't help either.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>That's a significant finding. Your critical assumption #1 is <strong>invalidated</strong> &mdash; the root cause isn't the streak model, it's forgetting. This changes everything downstream. Here's what I recommend:</p>
+        <p>1. <strong>Update problem.md:</strong> The root cause shifts from "streak punishment" to "habit apps fail to stay top-of-mind." That's a different problem with different solutions.<br>
+        2. <strong>Re-run /product-kit:solution:</strong> Weekly rhythms may still help, but the core solution should focus on re-engagement, not forgiveness.<br>
+        3. <strong>Don't panic:</strong> This is exactly why you validate. You just saved months of building the wrong thing.</p>
+      </div>
+      <div class="wt-note">
+        <strong>Invalidation is a success, not a failure.</strong> You spent a few hours discovering that your original direction was wrong. Without validation, you'd have built an entire app around streak forgiveness &mdash; and still had the same abandonment problem.
+      </div>
+
       <div class="wt-note">
         <strong>Gate:</strong> If critical assumptions still have <code>[PENDING]</code> evidence, <code>/product-kit:solution</code> will refuse to proceed. This prevents building on guesses.
       </div>
@@ -1111,6 +1152,10 @@
       </div>
       <div class="wt-tip">
         <strong>If an assumption is invalidated, that's a SUCCESS.</strong> You just avoided building the wrong thing. Pivot the assumption, not the whole product.
+      </div>
+
+      <div class="wt-note">
+        <strong>B2B / Enterprise adaptation:</strong> Enterprise validation looks different. You may not have access to 45 survey respondents &mdash; 3-5 conversations with decision-makers at target companies can be enough. Focus on procurement blockers, integration requirements, and compliance needs. A single enterprise sales call often reveals more than dozens of consumer surveys.
       </div>
 
       <h4>When to re-run</h4>
@@ -1494,6 +1539,34 @@
         <div class="wt-dialogue">
           <p class="wt-speaker claude">Claude</p>
           <p>Indexed 3 files into knowledge-index.md. Key findings: "implementation intentions" increase habit adherence by 2-3x (source: habit-research.pdf). I'll reference this in future artifact drafts when relevant.</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Tech Review</h3>
+        <div class="wt-command">/product-kit:techreview</div>
+        <p>Before writing stories, run Tech Review so engineering concerns are surfaced early.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p><strong>Feature-by-feature feasibility:</strong><br>
+          &bull; Weekly rhythm tracker &mdash; Straightforward, ~2 days. Uses standard date math.<br>
+          &bull; Recovery nudge &mdash; <span style="color: var(--amber);">[Needs engineering input]</span> Push notification timing depends on OS-level scheduling constraints. Consider local notifications vs server-triggered.<br>
+          &bull; Social accountability &mdash; High effort (~2 weeks). Requires real-time sync, friend graph, privacy controls. Recommend deferring to v2.</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Stories</h3>
+        <div class="wt-command">/product-kit:stories</div>
+        <p>After Tech Review, break the spec into implementable stories.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p><strong>Epic 1: Core Tracking</strong><br>
+          &bull; E1-S1: Weekly rhythm setup &mdash; Must-have, 3 pts<br>
+          &bull; E1-S2: Daily check-in &mdash; Must-have, 2 pts, depends on E1-S1<br>
+          <strong>Epic 2: Engagement</strong><br>
+          &bull; E2-S1: Recovery nudge &mdash; Nice-to-have, 5 pts<br>
+          Each story has acceptance criteria and definition of done. Export with <code>productkit export --stories-csv</code> for Jira/Linear import.</p>
         </div>
       </div>
     </section>

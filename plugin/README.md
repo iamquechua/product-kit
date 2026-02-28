@@ -34,6 +34,8 @@ claude --plugin-dir ./plugin
 | `/product-kit:bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
 | `/product-kit:audit` | Compare spec against codebase, surface gaps | `audit.md` |
 | `/product-kit:learn` | Index knowledge directory into a compact summary | `knowledge-index.md` |
+| `/product-kit:techreview` | Review spec against codebase, flag engineering questions | `techreview.md` |
+| `/product-kit:stories` | Break spec into user stories with acceptance criteria | `stories.md` |
 
 ## Knowledge Directory
 
@@ -49,7 +51,11 @@ All commands automatically detect workspace membership and read both project-lev
 
 ## Workflow
 
-Start with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution` or `/product-kit:users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, or `/product-kit:audit` at any stage.
+Start with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution` or `/product-kit:users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, `/product-kit:audit`, `/product-kit:learn`, `/product-kit:techreview`, or `/product-kit:stories` at any stage.
+
+## Version Sync
+
+The plugin version in `.claude-plugin/plugin.json` must stay in sync with the CLI version in `package.json`. When bumping versions, update both files.
 
 ## Learn More
 

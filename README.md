@@ -95,6 +95,8 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
 | — | `/productkit.audit` | Compare spec against codebase, surface gaps | `audit.md` |
 | — | `/productkit.learn` | Index knowledge directory into a compact summary | `knowledge-index.md` |
+| — | `/productkit.techreview` | Review spec against codebase, flag engineering questions | `techreview.md` |
+| — | `/productkit.stories` | Break spec into user stories with acceptance criteria | `stories.md` |
 
 Commands build on each other — every command reads `landscape.md` and `knowledge-index.md` for evidence, `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 
@@ -116,6 +118,8 @@ my-project/
 ├── audit.md               # Spec vs codebase audit (on demand)
 ├── knowledge-index.md     # Summary index of knowledge/ files
 ├── knowledge/             # Raw research files (interviews, surveys, etc.)
+├── techreview.md          # Technical feasibility review (on demand)
+├── stories.md             # User stories by epic (on demand)
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md
@@ -134,11 +138,13 @@ These markdown files are your product foundation — share them with your team, 
 | `productkit init <name>` | Scaffold a new project |
 | `productkit init --existing` | Add Product Kit to the current directory |
 | `productkit init --minimal` | Skip constitution, start with users/problem |
+| `productkit init --mode <solo\|team>` | Set building mode (solo builder vs team with engineers) |
 | `productkit init --artifact-dir <dir>` | Store artifacts in a custom directory |
 | `productkit workspace <name>` | Create a shared workspace for multi-project orgs |
 | `productkit status` | Show progress — which artifacts exist and what's next |
 | `productkit export` | Export all artifacts as a single combined markdown file |
 | `productkit export --output <file>` | Export to a custom filename |
+| `productkit export --stories-csv` | Export stories as CSV for Jira/Linear/Shortcut import |
 | `productkit diff` | Show what changed in artifacts since last commit |
 | `productkit diff --staged` | Show staged artifact changes |
 | `productkit doctor` | Check project health (missing files, outdated commands) |

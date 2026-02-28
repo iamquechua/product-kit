@@ -23,6 +23,7 @@ function promptMode() {
 
 function scaffold(projectRoot, projectName, minimal, artifactDir, mode) {
   const templatesDir = path.join(__dirname, '..', '..', 'templates');
+  const pkgVersion = require('../../package.json').version;
 
   // Create directories
   fs.ensureDirSync(path.join(projectRoot, '.productkit'));
@@ -30,7 +31,7 @@ function scaffold(projectRoot, projectName, minimal, artifactDir, mode) {
 
   // Write config
   const config = {
-    version: '1.0.0',
+    version: pkgVersion,
     created: new Date().toISOString(),
   };
 
@@ -160,9 +161,9 @@ async function init(projectName, options) {
     scaffold(projectRoot, projectName, options.minimal, options.artifactDir, mode);
 
     // Init git repo
-    const { execSync } = require('child_process');
+    const { execFileSync } = require('child_process');
     try {
-      execSync('git init', { cwd: projectRoot, stdio: 'ignore' });
+      execFileSync('git', ['init'], { cwd: projectRoot, stdio: 'ignore' });
     } catch {
       // Git not available, skip
     }

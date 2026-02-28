@@ -3,9 +3,10 @@ const assert = require('node:assert');
 const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
+const os = require('os');
 
 const CLI = path.join(__dirname, '..', 'src', 'cli.js');
-const TEST_PROJECT = path.join(__dirname, '..', 'test-output');
+const TEST_PROJECT = path.join(os.tmpdir(), 'test-output');
 
 describe('init command', () => {
   before(() => {
@@ -18,7 +19,7 @@ describe('init command', () => {
 
   it('scaffolds all expected files and directories', () => {
     execSync(`node ${CLI} init test-output`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 
@@ -28,7 +29,8 @@ describe('init command', () => {
 
     // Config
     const config = fs.readJsonSync(path.join(TEST_PROJECT, '.productkit', 'config.json'));
-    assert.strictEqual(config.version, '1.0.0');
+    const pkg = require('../package.json');
+    assert.strictEqual(config.version, pkg.version);
 
     // Slash commands
     const commands = [
@@ -45,6 +47,8 @@ describe('init command', () => {
       'productkit.bootstrap.md',
       'productkit.audit.md',
       'productkit.learn.md',
+      'productkit.techreview.md',
+      'productkit.stories.md',
     ];
     for (const cmd of commands) {
       assert.ok(
@@ -79,7 +83,7 @@ describe('init command', () => {
   it('refuses to overwrite existing directory', () => {
     assert.throws(() => {
       execSync(`node ${CLI} init test-output`, {
-        cwd: path.join(__dirname, '..'),
+        cwd: os.tmpdir(),
         stdio: 'pipe',
       });
     });
@@ -87,7 +91,7 @@ describe('init command', () => {
 });
 
 describe('init --existing', () => {
-  const EXISTING_DIR = path.join(__dirname, '..', 'test-existing-output');
+  const EXISTING_DIR = path.join(os.tmpdir(), 'test-existing-output');
 
   before(() => {
     fs.removeSync(EXISTING_DIR);
@@ -134,7 +138,7 @@ describe('init --existing', () => {
 });
 
 describe('init --minimal', () => {
-  const MINIMAL_DIR = path.join(__dirname, '..', 'test-minimal-output');
+  const MINIMAL_DIR = path.join(os.tmpdir(), 'test-minimal-output');
 
   before(() => {
     fs.removeSync(MINIMAL_DIR);
@@ -146,7 +150,7 @@ describe('init --minimal', () => {
 
   it('excludes constitution and sets minimal config', () => {
     execSync(`node ${CLI} init test-minimal-output --minimal`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 
@@ -181,13 +185,13 @@ describe('init --minimal', () => {
 });
 
 describe('init inside workspace (auto-detection)', () => {
-  const WORKSPACE_DIR = path.join(__dirname, '..', 'test-workspace-output');
+  const WORKSPACE_DIR = path.join(os.tmpdir(), 'test-workspace-output');
 
   before(() => {
     fs.removeSync(WORKSPACE_DIR);
     // Create workspace first using the workspace command
     execSync(`node ${CLI} workspace test-workspace-output`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
   });
@@ -231,8 +235,8 @@ describe('init inside workspace (auto-detection)', () => {
 });
 
 describe('init --mode', () => {
-  const MODE_SOLO_DIR = path.join(__dirname, '..', 'test-mode-solo-output');
-  const MODE_TEAM_DIR = path.join(__dirname, '..', 'test-mode-team-output');
+  const MODE_SOLO_DIR = path.join(os.tmpdir(), 'test-mode-solo-output');
+  const MODE_TEAM_DIR = path.join(os.tmpdir(), 'test-mode-team-output');
 
   before(() => {
     fs.removeSync(MODE_SOLO_DIR);
@@ -246,7 +250,7 @@ describe('init --mode', () => {
 
   it('init --mode solo sets mode in config', () => {
     execSync(`node ${CLI} init test-mode-solo-output --mode solo`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 
@@ -256,7 +260,7 @@ describe('init --mode', () => {
 
   it('init --mode team sets mode in config', () => {
     execSync(`node ${CLI} init test-mode-team-output --mode team`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 
@@ -266,7 +270,7 @@ describe('init --mode', () => {
 });
 
 describe('init --artifact-dir', () => {
-  const ARTDIR_PROJECT = path.join(__dirname, '..', 'test-artdir-output');
+  const ARTDIR_PROJECT = path.join(os.tmpdir(), 'test-artdir-output');
 
   before(() => {
     fs.removeSync(ARTDIR_PROJECT);
@@ -278,7 +282,7 @@ describe('init --artifact-dir', () => {
 
   it('creates artifact directory and stores config', () => {
     execSync(`node ${CLI} init test-artdir-output --artifact-dir docs/product`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 

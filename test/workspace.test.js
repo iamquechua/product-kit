@@ -3,9 +3,10 @@ const assert = require('node:assert');
 const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
+const os = require('os');
 
 const CLI = path.join(__dirname, '..', 'src', 'cli.js');
-const WORKSPACE_DIR = path.join(__dirname, '..', 'test-workspace-cmd-output');
+const WORKSPACE_DIR = path.join(os.tmpdir(), 'test-workspace-cmd-output');
 
 describe('workspace command', () => {
   before(() => {
@@ -18,14 +19,15 @@ describe('workspace command', () => {
 
   it('creates a workspace directory with config and knowledge', () => {
     execSync(`node ${CLI} workspace test-workspace-cmd-output`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
 
     // Workspace config
     const config = fs.readJsonSync(path.join(WORKSPACE_DIR, '.productkit', 'config.json'));
     assert.strictEqual(config.type, 'workspace');
-    assert.strictEqual(config.version, '1.0.0');
+    const pkg = require('../package.json');
+    assert.strictEqual(config.version, pkg.version);
     assert.strictEqual(config.knowledge_dir, 'knowledge');
     assert.ok(config.created);
 
@@ -39,7 +41,7 @@ describe('workspace command', () => {
   it('refuses to overwrite existing workspace', () => {
     assert.throws(() => {
       execSync(`node ${CLI} workspace test-workspace-cmd-output`, {
-        cwd: path.join(__dirname, '..'),
+        cwd: os.tmpdir(),
         stdio: 'pipe',
       });
     });

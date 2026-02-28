@@ -14,12 +14,13 @@ const diffCommand = require('./commands/diff');
 const doctorCommand = require('./commands/doctor');
 const workspaceCommand = require('./commands/workspace');
 
+const { version } = require('../package.json');
 const program = new Command();
 
 program
   .name('productkit')
   .description(chalk.cyan.bold('Product thinking toolkit for Claude Code'))
-  .version('1.9.0');
+  .version(version);
 
 program
   .command('init [projectName]')
@@ -66,6 +67,7 @@ program
   .command('export')
   .description('Export all artifacts as a single combined markdown file')
   .option('--output <file>', 'Output filename', 'export.md')
+  .option('--stories-csv', 'Export stories as CSV for Jira/Linear import')
   .action(exportCommand);
 
 program

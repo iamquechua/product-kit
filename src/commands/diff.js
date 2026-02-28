@@ -1,19 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { execSync } = require('child_process');
-const { getArtifactDir } = require('../utils/fileUtils');
-
-const ARTIFACT_FILES = [
-  'constitution.md',
-  'users.md',
-  'problem.md',
-  'assumptions.md',
-  'validation.md',
-  'solution.md',
-  'priorities.md',
-  'spec.md',
-];
+const { execFileSync } = require('child_process');
+const { getArtifactDir, ARTIFACT_FILES } = require('../utils/fileUtils');
 
 async function diff(options) {
   const root = process.cwd();
@@ -27,7 +16,7 @@ async function diff(options) {
 
   // Check if git is available
   try {
-    execSync('git rev-parse --git-dir', { cwd: root, stdio: 'ignore' });
+    execFileSync('git', ['rev-parse', '--git-dir'], { cwd: root, stdio: 'ignore' });
   } catch {
     console.error(chalk.red('Not a git repository. The diff command requires git.'));
     process.exit(1);
@@ -45,11 +34,10 @@ async function diff(options) {
   }
 
   const gitArgs = options.staged ? ['diff', '--cached'] : ['diff'];
-  const cmd = ['git', ...gitArgs, '--', ...existing].join(' ');
 
   let output;
   try {
-    output = execSync(cmd, { cwd: root, encoding: 'utf-8' });
+    output = execFileSync('git', [...gitArgs, '--', ...existing], { cwd: root, encoding: 'utf-8' });
   } catch (err) {
     // git diff returns exit code 1 when there are differences in some configs
     output = err.stdout || '';

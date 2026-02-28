@@ -21,9 +21,10 @@ async function workspace(workspaceName) {
 
     // Create workspace directory and config
     fs.ensureDirSync(path.join(workspaceRoot, '.productkit'));
+    const pkgVersion = require('../../package.json').version;
     fs.writeJsonSync(path.join(workspaceRoot, '.productkit', 'config.json'), {
       type: 'workspace',
-      version: '1.0.0',
+      version: pkgVersion,
       created: new Date().toISOString(),
       knowledge_dir: 'knowledge',
     }, { spaces: 2 });

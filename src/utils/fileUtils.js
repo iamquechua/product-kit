@@ -1,15 +1,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-function isProductKitProject() {
-  return fs.existsSync(path.join(process.cwd(), '.productkit'));
-}
-
-function getProjectRoot() {
-  if (isProductKitProject()) {
-    return process.cwd();
+function resolveContainedPath(root, relativePath, fallback) {
+  const resolved = path.resolve(root, relativePath);
+  if (!resolved.startsWith(root + path.sep) && resolved !== root) {
+    return fallback;
   }
-  return null;
+  return resolved;
 }
 
 function getArtifactDir(root) {
@@ -17,21 +14,10 @@ function getArtifactDir(root) {
   try {
     const config = fs.readJsonSync(configPath);
     if (config.artifact_dir) {
-      return path.join(root, config.artifact_dir);
+      return resolveContainedPath(root, config.artifact_dir, root);
     }
   } catch {}
   return root;
-}
-
-function getKnowledgeDir(root) {
-  const configPath = path.join(root, '.productkit', 'config.json');
-  try {
-    const config = fs.readJsonSync(configPath);
-    if (config.knowledge_dir) {
-      return path.join(root, config.knowledge_dir);
-    }
-  } catch {}
-  return path.join(root, 'knowledge');
 }
 
 function getWorkspaceRoot(projectRoot) {
@@ -46,34 +32,45 @@ function getWorkspaceRoot(projectRoot) {
   return null;
 }
 
-function getWorkspaceKnowledgeDir(workspaceRoot) {
-  const configPath = path.join(workspaceRoot, '.productkit', 'config.json');
-  try {
-    const config = fs.readJsonSync(configPath);
-    if (config.knowledge_dir) {
-      return path.join(workspaceRoot, config.knowledge_dir);
-    }
-  } catch {}
-  return path.join(workspaceRoot, 'knowledge');
-}
+const ARTIFACT_FILES = [
+  'landscape.md',
+  'constitution.md',
+  'users.md',
+  'problem.md',
+  'assumptions.md',
+  'validation.md',
+  'solution.md',
+  'priorities.md',
+  'spec.md',
+  'audit.md',
+  'knowledge-index.md',
+  'techreview.md',
+  'stories.md',
+];
 
-function getMode(root) {
-  const configPath = path.join(root, '.productkit', 'config.json');
-  try {
-    const config = fs.readJsonSync(configPath);
-    if (config.mode) {
-      return config.mode;
-    }
-  } catch {}
-  return 'solo';
-}
+const ARTIFACTS_WITH_COMMANDS = [
+  { file: 'landscape.md', command: '/productkit.landscape', label: 'Landscape' },
+  { file: 'constitution.md', command: '/productkit.constitution', label: 'Constitution' },
+  { file: 'users.md', command: '/productkit.users', label: 'Users' },
+  { file: 'problem.md', command: '/productkit.problem', label: 'Problem' },
+  { file: 'assumptions.md', command: '/productkit.assumptions', label: 'Assumptions' },
+  { file: 'validation.md', command: '/productkit.validate', label: 'Validation' },
+  { file: 'solution.md', command: '/productkit.solution', label: 'Solution' },
+  { file: 'priorities.md', command: '/productkit.prioritize', label: 'Priorities' },
+  { file: 'spec.md', command: '/productkit.spec', label: 'Spec' },
+  { file: 'audit.md', command: '/productkit.audit', label: 'Audit' },
+  { file: 'knowledge-index.md', command: '/productkit.learn', label: 'Knowledge Index' },
+  { file: 'techreview.md', command: '/productkit.techreview', label: 'Tech Review' },
+  { file: 'stories.md', command: '/productkit.stories', label: 'Stories' },
+];
+
+// Lighter version without command info (for export/diff)
+const ARTIFACTS = ARTIFACTS_WITH_COMMANDS.map(({ file, label }) => ({ file, label }));
 
 module.exports = {
-  isProductKitProject,
-  getProjectRoot,
   getArtifactDir,
-  getKnowledgeDir,
   getWorkspaceRoot,
-  getWorkspaceKnowledgeDir,
-  getMode,
+  ARTIFACT_FILES,
+  ARTIFACTS,
+  ARTIFACTS_WITH_COMMANDS,
 };

@@ -44,16 +44,19 @@ If `validation-data/` contains filled-in files, these are the **primary source o
 
 ## Process
 
+If this is your first time doing validation, start simple: pick the single riskiest assumption and validate just that one. You don't need to test everything at once. A 15-minute conversation with one real user teaches more than hours of desk research.
+
 1. **Review assumptions** — Read `assumptions.md` and list the Critical and Important assumptions. Present them to the user.
-2. **Triage each assumption** — For each high-risk assumption, ask: "Do you already have evidence for or against this?" If yes, capture it and assess whether it validates, partially validates, or invalidates the assumption. If no, flag it for validation.
-3. **Generate interview script** — For assumptions that need qualitative validation, write an interview script targeting the relevant user persona from `users.md`. Group questions by assumption. Include warm-up and closing sections.
-4. **Generate survey questions** — For assumptions that can be tested quantitatively, write survey questions in formats ready for Typeform/Google Forms (Likert scale, multiple choice, open text). Tag each question with the assumption it tests.
-5. **Generate data collection templates** — Create the `validation-data/` directory and write CSV templates:
+2. **Check for existing data** — Before generating new validation instruments, ask: "Do you already have data that could serve as evidence? Analytics dashboards, support ticket themes, NPS scores, user feedback logs, app store reviews?" If the team already has relevant data, capture it as evidence immediately rather than creating new instruments for something already answered.
+3. **Triage each assumption** — For each high-risk assumption, ask: "Do you already have evidence for or against this?" If yes, capture it and assess whether it validates, partially validates, or invalidates the assumption. If no, flag it for validation.
+4. **Generate interview script** — For assumptions that need qualitative validation, write an interview script targeting the relevant user persona from `users.md`. Group questions by assumption. Include warm-up and closing sections.
+5. **Generate survey questions** — For assumptions that can be tested quantitatively, write survey questions in formats ready for Typeform/Google Forms (Likert scale, multiple choice, open text). Tag each question with the assumption it tests.
+6. **Generate data collection templates** — Create the `validation-data/` directory and write CSV templates:
    - **`validation-data/interviews.csv`** — Pre-filled with the interview questions from the script. Columns: `Participant`, `Question`, `Response`, `Notes`. Each row has a question pre-populated; the PM fills in responses for each participant.
    - **`validation-data/survey-responses.csv`** — Columns are the survey questions generated in step 4. Each row will be one respondent's answers. First row is headers only — the PM pastes in exported survey data or fills in manually.
    - **`validation-data/desk-research.csv`** — Pre-filled with one row per assumption that needs desk research. Columns: `Assumption`, `Source`, `Finding`, `URL`, `Date`. The PM fills in what they find.
-6. **Summarize status** — Present a clear picture: what's validated, what's invalidated, what still needs fieldwork.
-7. **Finalize** — Write the validation artifact and data collection templates after user approval. Tell the PM: "Fill in the CSV files in `validation-data/` as you collect data, then run `/product-kit:validate` again for me to analyze your findings."
+7. **Summarize status** — Present a clear picture: what's validated, what's invalidated, what still needs fieldwork.
+8. **Finalize** — Write the validation artifact and data collection templates after user approval. Tell the PM: "Fill in the CSV files in `validation-data/` as you collect data, then run `/product-kit:validate` again for me to analyze your findings."
 
 ## Conversation Style
 

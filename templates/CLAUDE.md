@@ -18,10 +18,10 @@ Use these commands in order to build your product foundation:
 9. `/productkit.clarify` — Resolve ambiguities across artifacts
 10. `/productkit.analyze` — Run a completeness/consistency check
 11. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
-12. `/productkit.audit` — Compare spec against codebase and surface gaps
+12. `/productkit.audit` — Compare spec against codebase and surface gaps (post-build — what was actually implemented vs spec)
 13. `/productkit.learn` — Index knowledge directory into a summary for faster commands
-
-## Artifacts
+14. `/productkit.techreview` — Review spec against codebase and flag what needs engineering input (pre-build — feasibility before implementation)
+15. `/productkit.stories` — Break spec into user stories with acceptance criteria
 
 ## Mode
 
@@ -39,7 +39,10 @@ Product artifacts are written as markdown files. Check `.productkit/config.json`
 - `solution.md` — Chosen solution with alternatives considered
 - `priorities.md` — Scored and ranked feature list
 - `spec.md` — Complete product spec ready for engineering
+- `audit.md` — Spec vs codebase audit with gap analysis
 - `knowledge-index.md` — Summary index of research files in `knowledge/`
+- `techreview.md` — Technical feasibility review with effort estimates
+- `stories.md` — User stories grouped by epic with acceptance criteria
 
 ## Workflow
 

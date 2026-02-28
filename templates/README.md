@@ -24,6 +24,8 @@ Then use the slash commands to build your product foundation:
 11. `/productkit.bootstrap` — Auto-draft all artifacts from existing codebase
 12. `/productkit.audit` — Compare spec against actual implementation
 13. `/productkit.learn` — Index knowledge directory for faster commands
+14. `/productkit.techreview` — Review spec against codebase, flag engineering questions
+15. `/productkit.stories` — Break spec into user stories with acceptance criteria
 
 ## Artifacts
 
@@ -40,7 +42,10 @@ Artifacts are written to the project root by default. If `artifact_dir` is set i
 | `solution.md` | Chosen solution with alternatives considered |
 | `priorities.md` | Scored and ranked feature list |
 | `spec.md` | Complete product spec ready for engineering |
+| `audit.md` | Spec vs codebase audit with gap analysis |
 | `knowledge-index.md` | Summary index of research files in `knowledge/` |
+| `techreview.md` | Technical feasibility review with effort estimates |
+| `stories.md` | User stories grouped by epic with acceptance criteria |
 
 ## Workspaces
 
