@@ -17,11 +17,11 @@ Check `.productkit/config.json` for:
 Read these artifacts (required):
 - `spec.md` — the product spec
 - `solution.md` — chosen solution approach
-- `priorities.md` — feature priorities and v1 scope
 
-All three must exist. If any are missing, tell the user which commands to run first (`/productkit.solution`, `/productkit.prioritize`, `/productkit.spec`).
+Both must exist. If either is missing, tell the user which commands to run first (`/productkit.solution`, `/productkit.spec`).
 
 Also read if they exist:
+- `priorities.md` — feature priorities and v1 scope (if missing, use the priority information in `spec.md` — the spec typically contains prioritized features already)
 - `landscape.md` — company and domain landscape (use for team/constraint-aware feasibility assessment)
 - `users.md` — user personas (use to assess whether architecture serves the right use cases)
 - `constitution.md` — product principles (flag when a technical shortcut would violate a principle)

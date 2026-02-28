@@ -26,6 +26,18 @@ At minimum, `spec.md` must exist. If it's missing, tell the user to run `/produc
 
 If `techreview.md` is missing, suggest running `/product-kit:techreview` first for better effort estimates and dependency awareness — but don't block on it.
 
+If `techreview.md` exists and contains `[Needs engineering input]` flags on effort estimates, warn the user before proceeding:
+
+> **⚠️ Unvalidated effort estimates detected**
+> The following features have effort estimates that haven't been reviewed by engineering:
+> [List the flagged features]
+>
+> Stories written with unvalidated estimates may need re-scoping after engineering review. Options:
+> 1. **Proceed anyway** — write stories with current estimates, flag them in notes
+> 2. **Pause** — get engineering input on flagged items first, then return to stories
+
+Wait for the user's choice before continuing. This warning only applies in team mode — in solo mode, effort estimates are finalized during the techreview session.
+
 Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when writing story notes. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
 
 Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
