@@ -17,7 +17,16 @@ Read these files first (required):
 If either file is missing, tell the user which commands to run first.
 
 Also read if they exist:
+- `landscape.md` — company and domain landscape
 - `constitution.md` — product principles
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when identifying assumptions that need validation. If the file doesn't exist but `knowledge/` has files, suggest running `/productkit.learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 ## Process
 

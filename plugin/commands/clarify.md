@@ -10,11 +10,22 @@ Cross-reference all existing artifacts, find inconsistencies, and guide the user
 
 ## Before You Start
 
-Read all existing artifacts in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
+Read all existing artifacts:
+- `landscape.md`
 - `constitution.md`
 - `users.md`
 - `problem.md`
 - `assumptions.md`
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when checking for contradictions between research evidence and artifact claims. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 Work with whatever exists — this command can run at any stage.
 
@@ -36,7 +47,3 @@ Work with whatever exists — this command can run at any stage.
 ## Output
 
 This command updates existing artifacts rather than creating a new file. After resolving issues, update the relevant files (`users.md`, `problem.md`, etc.) with the agreed-upon changes.
-
-## Next Step
-
-After resolving issues, tell the user which command to run next based on their progress. If all core artifacts exist, suggest `/product-kit:analyze` for a completeness check. If they're mid-workflow, suggest the next command in sequence.

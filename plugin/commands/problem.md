@@ -14,6 +14,16 @@ Read these files first (required):
 - `users.md` — understand who has this problem
 - `constitution.md` — if it exists, align with product principles
 
+Read `landscape.md` if it exists — use company and domain context to ground the problem in real market conditions.
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when framing the problem. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
+
 If `users.md` does not exist, tell the user to run `/product-kit:users` first.
 
 ## Process
@@ -34,7 +44,9 @@ If `users.md` does not exist, tell the user to run `/product-kit:users` first.
 
 ## Output
 
-Write the problem statement to `problem.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write the problem statement to `problem.md`:
 
 ```markdown
 # Problem Statement
@@ -59,9 +71,3 @@ Write the problem statement to `problem.md` in the project root:
 - **In scope:** [What we're solving]
 - **Out of scope:** [What we're explicitly NOT solving]
 ```
-
-## Next Step
-
-After writing the problem statement, tell the user:
-
-> Your problem statement is ready. The next step is to surface your assumptions — run `/product-kit:assumptions`.

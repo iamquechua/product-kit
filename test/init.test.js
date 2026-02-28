@@ -44,6 +44,7 @@ describe('init command', () => {
       'productkit.analyze.md',
       'productkit.bootstrap.md',
       'productkit.audit.md',
+      'productkit.learn.md',
     ];
     for (const cmd of commands) {
       assert.ok(
@@ -51,6 +52,19 @@ describe('init command', () => {
         `Missing command: ${cmd}`
       );
     }
+
+    // Landscape should NOT exist in standalone projects
+    assert.ok(
+      !fs.existsSync(path.join(TEST_PROJECT, '.claude', 'commands', 'productkit.landscape.md')),
+      'landscape command should not exist in standalone projects'
+    );
+
+    // Knowledge directory
+    assert.ok(fs.existsSync(path.join(TEST_PROJECT, 'knowledge')));
+    assert.ok(fs.existsSync(path.join(TEST_PROJECT, 'knowledge', 'README.md')));
+
+    // Config should have knowledge_dir
+    assert.strictEqual(config.knowledge_dir, 'knowledge');
 
     // Root files
     assert.ok(fs.existsSync(path.join(TEST_PROJECT, 'CLAUDE.md')));
@@ -163,6 +177,91 @@ describe('init --minimal', () => {
     // Config should have minimal: true
     const config = fs.readJsonSync(path.join(MINIMAL_DIR, '.productkit', 'config.json'));
     assert.strictEqual(config.minimal, true);
+  });
+});
+
+describe('init inside workspace (auto-detection)', () => {
+  const WORKSPACE_DIR = path.join(__dirname, '..', 'test-workspace-output');
+
+  before(() => {
+    fs.removeSync(WORKSPACE_DIR);
+    // Create workspace first using the workspace command
+    execSync(`node ${CLI} workspace test-workspace-output`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+  });
+
+  after(() => {
+    fs.removeSync(WORKSPACE_DIR);
+  });
+
+  it('auto-detects workspace and sets type: project', () => {
+    execSync(`node ${CLI} init my-app`, {
+      cwd: WORKSPACE_DIR,
+      stdio: 'ignore',
+    });
+
+    const projectRoot = path.join(WORKSPACE_DIR, 'my-app');
+    const projConfig = fs.readJsonSync(path.join(projectRoot, '.productkit', 'config.json'));
+    assert.strictEqual(projConfig.type, 'project');
+    assert.strictEqual(projConfig.workspace, '..');
+    assert.ok(fs.existsSync(path.join(projectRoot, '.claude', 'commands', 'productkit.users.md')));
+  });
+
+  it('creates second project in same workspace', () => {
+    execSync(`node ${CLI} init second-app`, {
+      cwd: WORKSPACE_DIR,
+      stdio: 'ignore',
+    });
+
+    const projConfig = fs.readJsonSync(path.join(WORKSPACE_DIR, 'second-app', '.productkit', 'config.json'));
+    assert.strictEqual(projConfig.type, 'project');
+    assert.strictEqual(projConfig.workspace, '..');
+  });
+
+  it('refuses to overwrite existing project in workspace', () => {
+    assert.throws(() => {
+      execSync(`node ${CLI} init my-app`, {
+        cwd: WORKSPACE_DIR,
+        stdio: 'pipe',
+      });
+    });
+  });
+});
+
+describe('init --mode', () => {
+  const MODE_SOLO_DIR = path.join(__dirname, '..', 'test-mode-solo-output');
+  const MODE_TEAM_DIR = path.join(__dirname, '..', 'test-mode-team-output');
+
+  before(() => {
+    fs.removeSync(MODE_SOLO_DIR);
+    fs.removeSync(MODE_TEAM_DIR);
+  });
+
+  after(() => {
+    fs.removeSync(MODE_SOLO_DIR);
+    fs.removeSync(MODE_TEAM_DIR);
+  });
+
+  it('init --mode solo sets mode in config', () => {
+    execSync(`node ${CLI} init test-mode-solo-output --mode solo`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+
+    const config = fs.readJsonSync(path.join(MODE_SOLO_DIR, '.productkit', 'config.json'));
+    assert.strictEqual(config.mode, 'solo');
+  });
+
+  it('init --mode team sets mode in config', () => {
+    execSync(`node ${CLI} init test-mode-team-output --mode team`, {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+    });
+
+    const config = fs.readJsonSync(path.join(MODE_TEAM_DIR, '.productkit', 'config.json'));
+    assert.strictEqual(config.mode, 'team');
   });
 });
 

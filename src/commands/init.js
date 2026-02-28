@@ -1,8 +1,27 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const readline = require('readline');
 
-function scaffold(projectRoot, projectName, minimal, artifactDir) {
+function promptMode() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return new Promise((resolve) => {
+    console.log();
+    console.log(chalk.cyan('How are you building this product?'));
+    console.log('  1. Solo — I\'m building it myself');
+    console.log('  2. Team — I\'m working with engineers/designers');
+    console.log();
+    rl.question('Choose (1 or 2): ', (answer) => {
+      rl.close();
+      resolve(answer.trim() === '2' ? 'team' : 'solo');
+    });
+  });
+}
+
+function scaffold(projectRoot, projectName, minimal, artifactDir, mode) {
   const templatesDir = path.join(__dirname, '..', '..', 'templates');
 
   // Create directories
@@ -14,6 +33,18 @@ function scaffold(projectRoot, projectName, minimal, artifactDir) {
     version: '1.0.0',
     created: new Date().toISOString(),
   };
+
+  // Detect workspace: check if parent has workspace config
+  const parentDir = path.dirname(projectRoot);
+  const parentConfigPath = path.join(parentDir, '.productkit', 'config.json');
+  try {
+    const parentConfig = fs.readJsonSync(parentConfigPath);
+    if (parentConfig.type === 'workspace') {
+      config.type = 'project';
+      config.workspace = '..';
+    }
+  } catch {}
+
   if (minimal) {
     config.minimal = true;
   }
@@ -21,6 +52,10 @@ function scaffold(projectRoot, projectName, minimal, artifactDir) {
     config.artifact_dir = artifactDir;
     fs.ensureDirSync(path.join(projectRoot, artifactDir));
   }
+  if (mode) {
+    config.mode = mode;
+  }
+  config.knowledge_dir = 'knowledge';
   fs.writeJsonSync(path.join(projectRoot, '.productkit', 'config.json'), config, { spaces: 2 });
 
   // Copy slash command templates
@@ -28,6 +63,8 @@ function scaffold(projectRoot, projectName, minimal, artifactDir) {
   const commandFiles = fs.readdirSync(commandsDir);
   for (const file of commandFiles) {
     if (minimal && file === 'productkit.constitution.md') continue;
+    // Landscape lives at workspace level, not project level
+    if (file === 'productkit.landscape.md') continue;
     fs.copyFileSync(
       path.join(commandsDir, file),
       path.join(projectRoot, '.claude', 'commands', file)
@@ -51,6 +88,14 @@ function scaffold(projectRoot, projectName, minimal, artifactDir) {
     fs.writeFileSync(path.join(projectRoot, 'README.md'), readme);
   }
 
+  // Create knowledge directory with README
+  const knowledgeDir = path.join(projectRoot, 'knowledge');
+  fs.ensureDirSync(knowledgeDir);
+  fs.copyFileSync(
+    path.join(templatesDir, 'knowledge-README.md'),
+    path.join(knowledgeDir, 'README.md')
+  );
+
   // Copy .gitignore (only for new projects)
   if (!fs.existsSync(path.join(projectRoot, '.gitignore'))) {
     fs.copyFileSync(
@@ -61,6 +106,20 @@ function scaffold(projectRoot, projectName, minimal, artifactDir) {
 }
 
 async function init(projectName, options) {
+  // Validate and resolve mode
+  let mode = options.mode;
+  if (mode && mode !== 'solo' && mode !== 'team') {
+    console.error(chalk.red('Error: --mode must be "solo" or "team"'));
+    process.exit(1);
+  }
+  if (!mode) {
+    if (process.stdin.isTTY) {
+      mode = await promptMode();
+    } else {
+      mode = 'solo';
+    }
+  }
+
   if (options.existing) {
     const projectRoot = process.cwd();
 
@@ -70,7 +129,7 @@ async function init(projectName, options) {
     }
 
     try {
-      scaffold(projectRoot, path.basename(projectRoot), options.minimal, options.artifactDir);
+      scaffold(projectRoot, path.basename(projectRoot), options.minimal, options.artifactDir, mode);
 
       console.log(chalk.green.bold('Product Kit added to existing project!'));
       console.log();
@@ -98,7 +157,7 @@ async function init(projectName, options) {
   }
 
   try {
-    scaffold(projectRoot, projectName, options.minimal, options.artifactDir);
+    scaffold(projectRoot, projectName, options.minimal, options.artifactDir, mode);
 
     // Init git repo
     const { execSync } = require('child_process');

@@ -50,7 +50,9 @@ async function doctor() {
   // Account for minimal mode
   let config = {};
   try { config = fs.readJsonSync(configPath); } catch {}
-  const skippable = config.minimal ? ['productkit.constitution.md'] : [];
+  // Landscape is workspace-only; constitution is skipped in minimal mode
+  const skippable = ['productkit.landscape.md'];
+  if (config.minimal) skippable.push('productkit.constitution.md');
 
   const missing = [];
   for (const cmd of expectedCommands) {

@@ -10,7 +10,17 @@ Guide the user through identifying and deeply understanding their target users. 
 
 ## Before You Start
 
+Read `landscape.md` if it exists — use company, market, and domain context to ask more targeted questions about users.
+
 Read `constitution.md` if it exists — use the product vision to inform user discovery.
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when building personas. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 ## Process
 
@@ -33,7 +43,9 @@ Read `constitution.md` if it exists — use the product vision to inform user di
 
 ## Output
 
-Write the final personas to `users.md` in the project root with this format:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write the final personas to `users.md` with this format:
 
 ```markdown
 # Target Users
@@ -51,9 +63,3 @@ Write the final personas to `users.md` in the project root with this format:
 ## Key Insight
 [The most important thing learned about these users]
 ```
-
-## Next Step
-
-After writing the personas, tell the user:
-
-> Your user personas are ready. The next step is to frame the problem statement — run `/product-kit:problem`.

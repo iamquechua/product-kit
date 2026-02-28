@@ -1,6 +1,8 @@
 node_modules/
+.claude/
 .DS_Store
 .env
 my-first-project/
 test-output/
 TODO.md
+REVIEW.md

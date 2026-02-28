@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Kit — Walkthrough: Building Streak</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --bg-surface: #161822;
+      --bg-card: #1c1f2e;
+      --bg-code: #12141d;
+      --border: #2a2d3e;
+      --text: #e2e4ed;
+      --text-muted: #8b8fa3;
+      --accent: #7c6aef;
+      --accent-light: #9d8ff2;
+      --accent-glow: rgba(124, 106, 239, 0.15);
+      --green: #34d399;
+      --amber: #fbbf24;
+      --red: #f87171;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 17, 23, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Layout */
+    .walkthrough-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 2rem;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 72px;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+      padding-right: 1rem;
+    }
+    .sidebar h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      padding-left: 1rem;
+    }
+    .sidebar ul { list-style: none; }
+    .sidebar li { margin-bottom: 0.25rem; }
+    .sidebar a {
+      display: block;
+      padding: 0.4rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-left: 2px solid transparent;
+      border-radius: 0 4px 4px 0;
+      transition: all 0.2s;
+    }
+    .sidebar a:hover { color: var(--text); background: var(--bg-card); }
+    .sidebar a.active {
+      color: var(--accent-light);
+      border-left-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* Main content */
+    .wt-main { max-width: 800px; }
+    .wt-main h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .wt-main h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text); }
+    .wt-main h4 {
+      font-size: 1rem;
+      margin: 1.5rem 0 0.75rem;
+      color: var(--text);
+    }
+    .wt-main p { margin-bottom: 1rem; color: var(--text-muted); }
+    .wt-main ul, .wt-main ol { color: var(--text-muted); padding-left: 1.25rem; margin-bottom: 1rem; }
+    .wt-main li { margin-bottom: 0.35rem; }
+
+    /* Code */
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85em;
+      background: var(--bg-code);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    pre code { background: none; padding: 0; font-size: 0.9rem; color: var(--text); }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { box-shadow: 0 4px 20px var(--accent-glow); }
+    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+
+    /* Format switcher */
+    .format-switcher {
+      display: inline-flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+    .format-btn {
+      padding: 0.5rem 1.25rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .format-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Step sections */
+    .wt-section {
+      padding-bottom: 3rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .wt-section:last-child { border-bottom: none; }
+
+    /* Walkthrough components */
+    .wt-step-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .wt-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .wt-command {
+      display: inline-block;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-light);
+      margin-bottom: 1rem;
+    }
+    .wt-dialogue {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 0.75rem 0;
+    }
+    .wt-dialogue p { margin-bottom: 0.5rem; }
+    .wt-dialogue p:last-child { margin-bottom: 0; }
+    .wt-speaker {
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .wt-speaker.claude { color: var(--accent-light); }
+    .wt-speaker.you { color: var(--green); }
+    .wt-artifact {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+    .wt-artifact .artifact-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    .wt-note {
+      background: rgba(124, 106, 239, 0.08);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    .wt-note strong { color: var(--accent-light); }
+    .wt-mistake {
+      background: rgba(248, 113, 113, 0.08);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+    .wt-mistake strong { color: var(--red); }
+    .wt-tip {
+      background: rgba(52, 211, 153, 0.08);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+    .wt-tip strong { color: var(--green); }
+    .wt-section-nav {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+    .wt-section-nav .nav-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .wt-section-nav .nav-items { color: var(--text); }
+
+    /* Utility cards */
+    .utility-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent-light); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .walkthrough-layout { grid-template-columns: 1fr; }
+      .sidebar {
+        display: none;
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: auto;
+        background: var(--bg);
+        z-index: 150;
+        padding: 1.5rem;
+        border-right: none;
+      }
+      .sidebar.open { display: block; }
+      .sidebar-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Product Kit</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#intro">Intro</a>
+      <a href="#step-0">Steps</a>
+      <a href="#utilities">Utilities</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar toggle (mobile) -->
+<button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+
+<div class="walkthrough-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h4>Walkthrough</h4>
+    <ul>
+      <li><a href="#intro" class="active">Introduction</a></li>
+      <li><a href="#knowledge">Knowledge &amp; Learn</a></li>
+      <li><a href="#step-0">0. Landscape</a></li>
+      <li><a href="#step-1">1. Constitution</a></li>
+      <li><a href="#step-2">2. Users</a></li>
+      <li><a href="#step-3">3. Problem</a></li>
+      <li><a href="#step-4">4. Assumptions</a></li>
+      <li><a href="#step-5">5. Validate</a></li>
+      <li><a href="#step-6">6. Solution</a></li>
+      <li><a href="#step-7">7. Prioritize</a></li>
+      <li><a href="#step-8">8. Spec</a></li>
+      <li><a href="#utilities">Utilities</a></li>
+      <li><a href="#conclusion">Next Steps</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <main class="wt-main">
+
+    <!-- Introduction -->
+    <section class="wt-section" id="intro" data-step="intro">
+      <h2>Walkthrough: Building "Streak" from Scratch</h2>
+      <p style="color: var(--text);">Product Kit is a free, open-source toolkit that brings structured product thinking to Claude. It guides you through 9 steps &mdash; from understanding your market to writing a validated product spec &mdash; using guided conversations that produce markdown artifacts.</p>
+      <p style="color: var(--text);">In this walkthrough, we'll build <strong>Streak</strong> &mdash; a habit tracker for people who keep starting habits and quitting. You'll see every conversation, every artifact, and every decision along the way.</p>
+
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Claude with the <a href="https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip" style="color: var(--accent-light);">Cowork plugin</a>, or <a href="https://claude.com/claude-code" style="color: var(--accent-light);">Claude Code</a> with the CLI</li>
+        <li>Product Kit set up (plugin uploaded, or <code>productkit init</code> in the CLI)</li>
+        <li>A product idea you want to validate (or follow along with Streak)</li>
+      </ul>
+
+      <h4>Command format</h4>
+      <p>Slash commands look slightly different depending on how you use Product Kit. Pick your setup and all commands in this walkthrough will update automatically.</p>
+      <div class="format-switcher">
+        <button class="format-btn active" onclick="setFormat('plugin')">Cowork Plugin</button>
+        <button class="format-btn" onclick="setFormat('cli')">CLI (Claude Code)</button>
+      </div>
+
+      <h4>Estimated time</h4>
+      <ul>
+        <li><strong>Steps 0&ndash;4</strong> (Landscape through Assumptions): ~2 hours</li>
+        <li><strong>Step 5</strong> (Validate): 1&ndash;2 weeks of fieldwork (interviews, surveys, data collection)</li>
+        <li><strong>Steps 6&ndash;8</strong> (Solution through Spec): ~1 hour</li>
+      </ul>
+
+      <div class="wt-note">
+        <strong>Follow the order.</strong> Each step reads the artifacts from previous steps. Skipping ahead means Claude won't have the context it needs to ask the right questions.
+      </div>
+
+      <div class="wt-tip">
+        <strong>Already have a product?</strong> This walkthrough follows a new product from scratch, but Product Kit works for existing products too. Run <code>/product-kit:bootstrap</code> to generate artifacts from your codebase, then re-run individual steps (like Problem, Assumptions, and Validate) scoped to your next feature. You don't need to redo Landscape or Constitution every time.
+      </div>
+    </section>
+
+    <!-- Knowledge & Learn -->
+    <section class="wt-section" id="knowledge" data-step="knowledge">
+      <h2>Set Up Your Knowledge Base</h2>
+      <div class="wt-command">/product-kit:learn</div>
+      <p>Before you begin the 9-step workflow, set up your <code>knowledge/</code> directory. This is where you store research files &mdash; competitor analyses, user interview transcripts, market reports, articles, anything that informs your product thinking.</p>
+
+      <h4>How it works</h4>
+      <ul>
+        <li>Drop any research files into <code>knowledge/</code> (PDFs, markdown, text files)</li>
+        <li>Run <code>/product-kit:learn</code> to index them into <code>knowledge-index.md</code></li>
+        <li>All other commands automatically read this index and reference your evidence</li>
+      </ul>
+
+      <p>For Streak, you might add articles about habit formation psychology, competitor app reviews, or behavioral science research. When you later run <code>/product-kit:problem</code>, Claude will reference this research when framing the problem.</p>
+
+      <div class="wt-tip">
+        <strong>Tip:</strong> You can add files and re-run <code>/product-kit:learn</code> at any point in the workflow. The index updates automatically.
+      </div>
+    </section>
+
+    <!-- Step 0: Landscape -->
+    <section class="wt-section" id="step-0" data-step="step-0">
+      <div class="wt-step-header">
+        <span class="wt-step-num">0</span>
+        <h2>Landscape</h2>
+      </div>
+      <div class="wt-command">/product-kit:landscape</div>
+      <p style="font-style: italic; color: var(--text);">"Front-load the context so every future step is smarter."</p>
+
+      <h4>Why this step matters</h4>
+      <p>Before you can build something useful, Claude needs to understand your world. Without landscape context, later commands will suggest features that don't fit your team size, market position, or tech stack.</p>
+      <p>This step isn't about your product idea yet &mdash; it's about the environment your product will live in. A 2-person bootstrapped startup and a 50-person funded company will get very different suggestions in every subsequent step.</p>
+      <p>Think of it as giving Claude the same context a new hire would need on their first day. Who are we? What do we do? Who else is doing it?</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Your company basics (stage, size, funding)</li>
+        <li>Team composition and skills</li>
+        <li>Tech stack and platform priorities</li>
+        <li>3-5 competitors you've researched</li>
+        <li>Market gaps you've noticed</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Let's start with the basics. What does your company do, and what stage are you at?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>We're a two-person startup building personal productivity tools. Pre-revenue, bootstrapped.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Got it. Two people &mdash; what does each person do? And what's your tech stack?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>I'm the PM and my co-founder writes code. We're targeting mobile-first, building in React Native with Expo.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Who are your competitors in the habit tracking space? I need specifics &mdash; not just "there are some apps," but which ones and what they get right or wrong.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Habitica (gamified, complex &mdash; lots of features but overwhelming), Streaks (Apple-only, simple but limited), and Notion templates (flexible but zero guidance). The gap we see is between "too simple" and "too complex."</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">landscape.md</span>
+        <strong># Landscape</strong><br><br>
+        <strong>## Company</strong><br>
+        - <strong>Name:</strong> (unnamed startup)<br>
+        - <strong>Stage:</strong> Pre-revenue / Bootstrapped<br>
+        - <strong>Team Size:</strong> 2 (PM + Engineer)<br>
+        - <strong>Tech Stack:</strong> React Native, Expo<br>
+        - <strong>Revenue:</strong> None (pre-launch)<br><br>
+        <strong>## Domain</strong><br>
+        - <strong>Market:</strong> Personal productivity &mdash; habit tracking<br>
+        - <strong>Competitors:</strong><br>
+        &nbsp;&nbsp;- <strong>Habitica:</strong> Gamified habit tracker. Rich feature set but steep learning curve. Appeals to RPG fans.<br>
+        &nbsp;&nbsp;- <strong>Streaks:</strong> Apple-only, minimal UI. Simple but limited &mdash; no flexibility in streak definitions.<br>
+        &nbsp;&nbsp;- <strong>Notion templates:</strong> Infinitely flexible but no built-in guidance or motivation mechanics.<br>
+        - <strong>Competitive Gap:</strong> No product occupies the middle ground between oversimplified trackers and complex gamified systems.<br><br>
+        <strong>## Constraints</strong><br>
+        - <strong>Budget:</strong> Zero (bootstrapped)<br>
+        - <strong>Timeline:</strong> Aiming for MVP in 8-12 weeks<br>
+        - <strong>Platform:</strong> Mobile-first (iOS + Android via React Native)
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Being too vague about competitors.</strong> "There are some habit apps out there" gives Claude nothing to work with. Name them, describe what they do well and poorly.
+      </div>
+      <div class="wt-mistake">
+        <strong>Forgetting to mention constraints.</strong> Budget, team size, and technical limitations shape everything downstream. If you don't mention them now, Claude will suggest ideas you can't execute.
+      </div>
+      <div class="wt-mistake">
+        <strong>Describing what you want to build instead of the market you're entering.</strong> This step is about context, not solutions. Save your product ideas for later.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Research 3-5 competitors before running this.</strong> Spend 30 minutes trying competing products. First-hand experience makes your answers much richer.
+      </div>
+      <div class="wt-tip">
+        <strong>Be honest about constraints.</strong> Claude calibrates all future suggestions to what you tell it here. Understating your constraints leads to over-scoped recommendations.
+      </div>
+      <div class="wt-tip">
+        <strong>Include non-obvious competitors.</strong> Notion templates, spreadsheets, pen-and-paper &mdash; anything your users currently do instead of using a purpose-built tool.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>Team size changes (hiring, co-founder leaves)</li>
+        <li>A major new competitor enters the market</li>
+        <li>You pivot to a different market or platform</li>
+      </ul>
+      <div class="wt-tip">
+        <strong>Commit before re-running.</strong> This applies to every step: commit your current artifacts to git before re-running any command. Re-running overwrites the artifact, and git history lets you see how your thinking evolved.
+      </div>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Nothing (first step)</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Constitution, Users, and all downstream steps</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 1: Constitution -->
+    <section class="wt-section" id="step-1" data-step="step-1">
+      <div class="wt-step-header">
+        <span class="wt-step-num">1</span>
+        <h2>Constitution</h2>
+      </div>
+      <div class="wt-command">/product-kit:constitution</div>
+      <p style="font-style: italic; color: var(--text);">"Make the hard tradeoffs before you write a line of code."</p>
+
+      <h4>Why this step matters</h4>
+      <p>Principles prevent scope creep. When your engineer asks "should we add social features?" the constitution gives you the answer without a debate.</p>
+      <p>Good principles are opinionated. "We value quality" isn't a principle &mdash; everyone values quality. "Simplicity over power" is a principle because it tells you what to sacrifice.</p>
+      <p>Without explicit principles, every feature request becomes a subjective argument. With them, you have a decision filter that works even when you're not in the room.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>What your product stands for</li>
+        <li>What you will <em>never</em> do</li>
+        <li>Past decisions you regret or are proud of</li>
+        <li>How you'd resolve a tradeoff between speed and quality</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I see you're a 2-person team building mobile-first. Let's define what Streak stands for. What's the one word that describes the experience you want users to have?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Simplicity.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>"Simplicity" is vague &mdash; Streaks is simple and you said it's too limited. What do you mean specifically? Give me a concrete example.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>If a feature needs a tooltip or explanation, it's too complex. We'd rather have 3 features that feel effortless than 10 that need a tutorial.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>That's much clearer. Now, when simplicity conflicts with what power users want, what do you sacrifice?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Power users. We're not building for people who want 50 configurable settings. If someone needs that, Habitica exists. We're building for people who gave up on habit apps because they were too much work.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">constitution.md</span>
+        <strong># Constitution</strong><br><br>
+        <strong>## Vision</strong><br>
+        A habit tracker so simple that keeping a habit feels easier than breaking one.<br><br>
+        <strong>## Core Principles</strong><br>
+        1. <strong>Effortless over powerful</strong> &mdash; No feature should require an explanation. If it needs a tooltip, cut it.<br>
+        2. <strong>Momentum over metrics</strong> &mdash; Show streaks and progress, not spreadsheets and charts. Feeling good matters more than data.<br>
+        3. <strong>Forgiveness over perfection</strong> &mdash; Missing one day shouldn't feel like failure. The system should encourage recovery, not punishment.<br><br>
+        <strong>## Non-Negotiables</strong><br>
+        - No dark patterns (guilt-based notifications, shame screens)<br>
+        - No data selling &mdash; user data stays on device<br>
+        - Free core experience &mdash; monetize through premium, not paywalls on basics<br><br>
+        <strong>## Decision Framework</strong><br>
+        When in doubt: Does this feature make the app feel lighter or heavier? If heavier, cut it.<br><br>
+        <strong>## Anti-Patterns</strong><br>
+        - Never add a feature just because a competitor has it<br>
+        - Never show a user a wall of settings on first launch<br>
+        - Never punish a missed day with negative messaging
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Listing principles that don't create tradeoffs.</strong> "We value quality" &mdash; who doesn't? A useful principle tells you what you're willing to sacrifice.
+      </div>
+      <div class="wt-mistake">
+        <strong>Having too many principles.</strong> If you have 5+, none of them are memorable. Aim for 3.
+      </div>
+      <div class="wt-mistake">
+        <strong>Not connecting principles to real decisions.</strong> Each principle should clearly tell you what NOT to build.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>A good principle tells you what NOT to build.</strong> "Effortless over powerful" means no advanced configuration screens, no complex onboarding flows, no dense dashboards.
+      </div>
+      <div class="wt-tip">
+        <strong>Revisit after step 5 (Validate).</strong> Real evidence may change your principles. That's a feature, not a bug.
+      </div>
+      <div class="wt-tip">
+        <strong>Share the constitution with your whole team.</strong> It's only useful if everyone knows the rules.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>After validation reveals your assumptions were wrong</li>
+        <li>When team values shift significantly</li>
+        <li>Before a major pivot</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Landscape</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">All downstream steps</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Users -->
+    <section class="wt-section" id="step-2" data-step="step-2">
+      <div class="wt-step-header">
+        <span class="wt-step-num">2</span>
+        <h2>Users</h2>
+      </div>
+      <div class="wt-command">/product-kit:users</div>
+      <p style="font-style: italic; color: var(--text);">"'Everyone' is not a user."</p>
+
+      <h4>Why this step matters</h4>
+      <p>Building for "everyone" means building for no one. A specific persona lets you make decisions. Would "The Restarter" want this feature? You can answer that. Would "people" want it? You can't.</p>
+      <p>Personas turn subjective debates into testable claims. Instead of arguing about whether to add a feature, you ask: "Does our primary persona need this?" That question has a researchable answer.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Who you've talked to or observed</li>
+        <li>Demographic details and behavioral patterns</li>
+        <li>What they currently do to solve this problem</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I've read your landscape and constitution. Now &mdash; who has the problem you're solving? Who specifically keeps failing at building habits?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>People who want to build habits.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>That's 3 billion people. I need you to be much more specific. Who <em>specifically</em> keeps downloading habit apps and quitting? What's their life like? Walk me through their Tuesday.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Mid-20s professionals, 1-3 years into their career. They have unpredictable schedules &mdash; some days they're in back-to-back meetings, others they have free time. They've tried habit apps before, used each one for about two weeks, then forgot about them.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Good. What does their phone look like? How many habit apps are in their app graveyard?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>They've downloaded 2-3 habit apps. Habitica was too complex, Streaks was too simple, and they tried a Notion template that they forgot about after a week. They feel guilty about it &mdash; "I can't even stick to a simple habit tracker."</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">users.md</span>
+        <strong># Users</strong><br><br>
+        <strong>## Primary Persona: The Restarter</strong><br>
+        - <strong>Who:</strong> 24-30 year old professionals, 1-3 years into career<br>
+        - <strong>Context:</strong> Unpredictable schedule, high ambition, low follow-through on personal goals<br>
+        - <strong>Day-in-the-life:</strong> Wakes up with good intentions, gets pulled into work, remembers their habit at 10 PM, feels too tired, skips it, feels guilty<br>
+        - <strong>Pain Points:</strong> Guilt from broken streaks, app fatigue, feature overload<br>
+        - <strong>Current Solutions:</strong> Downloaded 2-3 habit apps, used each &lt;2 weeks. Currently using nothing.<br>
+        - <strong>Quote:</strong> "I can't even stick to a habit tracker, let alone the habit."<br><br>
+        <strong>## Secondary Persona: The Optimizer</strong><br>
+        - <strong>Who:</strong> 28-35 year old self-improvement enthusiasts<br>
+        - <strong>Context:</strong> Already tracks multiple habits, finds current apps too simple<br>
+        - <strong>Pain Points:</strong> Wants flexible scheduling, finds binary daily tracking too rigid<br><br>
+        <strong>## Key Insight</strong><br>
+        Both personas share a frustration with rigid daily tracking. The Restarter is punished by it, the Optimizer is limited by it. A flexible model serves both.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Describing demographics without behaviors.</strong> "25-35 year olds" tells you nothing useful. What do they <em>do</em>? What have they tried? What failed?
+      </div>
+      <div class="wt-mistake">
+        <strong>Making the persona aspirational.</strong> "They love self-improvement" is what you wish they were. "They've failed at 3 habit apps" is what they actually are.
+      </div>
+      <div class="wt-mistake">
+        <strong>Not including current workarounds.</strong> What users do today tells you what you need to beat. It's the most actionable part of the persona.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Base personas on real people.</strong> Even 2-3 conversations with real users makes your persona dramatically better than one based on imagination.
+      </div>
+      <div class="wt-tip">
+        <strong>Include a direct quote.</strong> A real quote grounds the persona and makes it memorable for your team.
+      </div>
+      <div class="wt-tip">
+        <strong>The "current solutions" section is gold.</strong> It tells you what to beat and reveals unmet needs.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>After validation interviews reveal a different primary user</li>
+        <li>When you discover a new user segment you hadn't considered</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Landscape, Constitution</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Problem, Assumptions, Solution</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Problem -->
+    <section class="wt-section" id="step-3" data-step="step-3">
+      <div class="wt-step-header">
+        <span class="wt-step-num">3</span>
+        <h2>Problem</h2>
+      </div>
+      <div class="wt-command">/product-kit:problem</div>
+      <p style="font-style: italic; color: var(--text);">"'We need an app' is a solution. What's the problem?"</p>
+
+      <h4>Why this step matters</h4>
+      <p>Most failed products solve the wrong problem. They build what the founder wants, not what users need. Problem framing is the highest-leverage activity in product development &mdash; get it wrong and nothing downstream matters.</p>
+      <p>The key insight: separate the problem from the solution. "We need a habit tracker" is a solution. The problem is something deeper &mdash; something that could be solved in multiple ways.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>User pain points from step 2</li>
+        <li>Specific moments where the problem occurs</li>
+        <li>Root causes vs. symptoms</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I've read your users.md. The Restarter feels guilty about broken streaks. What specific pain is driving that guilt?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>They can't stick to habits. They start strong but always fall off after a week or two.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>That's the symptom, not the problem. Lots of people can't stick to habits for lots of reasons &mdash; low motivation, bad goals, unrealistic expectations. What specifically goes wrong for <em>your</em> user?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>They miss one day because of their unpredictable schedule, the app resets their streak to zero, and they feel like they've failed completely. So they give up.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Now we're getting somewhere. Is the problem that they break streaks, or that breaking a streak <em>feels like total failure</em>?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>The second one. They <em>will</em> miss days &mdash; that's inevitable. The problem is that existing apps treat a missed day as a reset, so they give up entirely instead of recovering.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">problem.md</span>
+        <strong># Problem</strong><br><br>
+        <strong>## Problem Statement</strong><br>
+        Existing habit trackers punish imperfection. When users with unpredictable schedules inevitably miss a day, the all-or-nothing streak model makes them feel like they've failed completely, leading to abandonment rather than recovery.<br><br>
+        <strong>## Impact</strong><br>
+        - <strong>Frequency:</strong> Happens within 2-3 weeks of starting any new habit app<br>
+        - <strong>Severity:</strong> Users don't just stop using the app &mdash; they stop trying to build the habit entirely<br>
+        - <strong>Scope:</strong> Affects anyone with an unpredictable schedule (most working professionals)<br><br>
+        <strong>## Root Cause</strong><br>
+        The streak model is binary: you either did it today or you didn't. This works for people with perfectly consistent schedules but fails everyone else. One missed day erases weeks of progress, making the psychological cost of failure disproportionate to the actual setback.<br><br>
+        <strong>## Current Alternatives &amp; Why They Fail</strong><br>
+        - <strong>Habitica:</strong> Still uses daily tracking. Gamification distracts from the core problem.<br>
+        - <strong>Streaks:</strong> Rigid daily model with no flexibility in definitions.<br>
+        - <strong>Manual tracking:</strong> No motivation or accountability mechanics.<br><br>
+        <strong>## Scope</strong><br>
+        - <strong>In:</strong> How habit apps handle imperfect adherence<br>
+        - <strong>Out:</strong> Motivation, goal-setting, social accountability (for now)<br><br>
+        <strong>## Success Criteria</strong><br>
+        Users continue tracking habits after missing a day, instead of abandoning the app.
+      </div>
+
+      <div class="wt-note">
+        <strong>Notice the shift:</strong> We went from "build a habit tracker" to a specific, testable problem &mdash; "streak models punish imperfection, causing abandonment." That's a much better foundation.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Describing a solution disguised as a problem.</strong> "The problem is there's no app that does X" is a solution, not a problem. The problem should describe pain, not a missing product.
+      </div>
+      <div class="wt-mistake">
+        <strong>Being too broad.</strong> "People struggle with habits" is a PhD thesis, not a product problem. Narrow it to a specific mechanism.
+      </div>
+      <div class="wt-mistake">
+        <strong>Not separating root cause from symptoms.</strong> "Users quit" is a symptom. "The streak model punishes imperfection" is the root cause.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Ask "why?" five times.</strong> Keep digging until you find the root cause. "They quit" &rarr; "Why?" &rarr; "Streak reset" &rarr; "Why is that bad?" &rarr; "It erases progress" &rarr; "Why does that matter?" &rarr; "It feels like total failure."
+      </div>
+      <div class="wt-tip">
+        <strong>A good problem statement doesn't mention your product.</strong> If you can't describe the problem without describing the solution, you haven't found the real problem yet.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>After validation proves the problem is different than expected</li>
+        <li>When user research reveals a deeper root cause</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Users, Constitution</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Assumptions, Solution</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4: Assumptions -->
+    <section class="wt-section" id="step-4" data-step="step-4">
+      <div class="wt-step-header">
+        <span class="wt-step-num">4</span>
+        <h2>Assumptions</h2>
+      </div>
+      <div class="wt-command">/product-kit:assumptions</div>
+      <p style="font-style: italic; color: var(--text);">"What are you betting on without knowing it?"</p>
+
+      <h4>Why this step matters</h4>
+      <p>Every product decision is built on assumptions. Most teams don't make these explicit, so they never test them. The assumptions step surfaces your hidden bets and ranks them by risk.</p>
+      <p>This is what separates validated products from expensive guesses. If your critical assumptions are wrong, you'll find out <em>before</em> you build, not after.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Nothing &mdash; Claude reads your artifacts and surfaces assumptions automatically</li>
+        <li>Think about what you're <em>least sure about</em></li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I've analyzed your landscape, constitution, users, and problem artifacts. I found 7 assumptions embedded in your work. Let me walk you through the riskiest ones. First: you're assuming users abandon because of the streak model, not because of low motivation. If it's actually low motivation, your entire solution is misdirected.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>That's our biggest bet, yeah. We're not 100% sure that's the cause.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>That's a critical assumption then &mdash; low confidence, high impact. Here's another: you're assuming "Restarters" exist as a distinct, reachable segment. If they're not reachable through online communities, your go-to-market strategy fails. How confident are you about that?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Honestly, not very. We think they're on Reddit and Twitter but we haven't tested it.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">assumptions.md</span>
+        <strong># Assumptions</strong><br><br>
+        <strong>## Critical (Low Confidence, High Impact)</strong><br>
+        1. <strong>Users abandon because of the streak model, not low motivation</strong><br>
+        &nbsp;&nbsp;- Source: problem.md<br>
+        &nbsp;&nbsp;- Confidence: Low<br>
+        &nbsp;&nbsp;- Risk: If it's low motivation, a forgiving streak model won't help<br>
+        &nbsp;&nbsp;- Test: Interview 5-8 lapsed habit app users about why they quit<br><br>
+        2. <strong>"Restarters" exist as a distinct segment and are reachable</strong><br>
+        &nbsp;&nbsp;- Source: users.md<br>
+        &nbsp;&nbsp;- Confidence: Low<br>
+        &nbsp;&nbsp;- Risk: If not a real segment, positioning and marketing fail<br>
+        &nbsp;&nbsp;- Test: Survey in r/getdisciplined and r/habits<br><br>
+        <strong>## Important (Medium Confidence)</strong><br>
+        3. <strong>A "weekly rhythm" model would feel more forgiving than daily streaks</strong><br>
+        &nbsp;&nbsp;- Source: constitution.md principle #3<br>
+        &nbsp;&nbsp;- Test: Prototype test with 5 users<br><br>
+        4. <strong>Mobile-first is the right platform choice</strong><br>
+        &nbsp;&nbsp;- Source: landscape.md<br>
+        &nbsp;&nbsp;- Test: Check where users currently track habits<br><br>
+        <strong>## Minor (High Confidence)</strong><br>
+        5. <strong>Users prefer simple UI over feature-rich UI</strong><br>
+        &nbsp;&nbsp;- Source: constitution.md, competitive analysis<br>
+        &nbsp;&nbsp;- Confidence: High (supported by competitor reviews)<br><br>
+        <strong>## Validation Priority</strong><br>
+        1. Assumption #1 (streak model causation)<br>
+        2. Assumption #2 (segment reachability)<br>
+        3. Assumption #3 (weekly rhythm preference)
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Only listing assumptions you're already confident about.</strong> The valuable assumptions are the ones that make you uncomfortable. Those are the ones that need testing.
+      </div>
+      <div class="wt-mistake">
+        <strong>Not having a testable hypothesis.</strong> Every critical assumption needs a concrete test. "Interview 5-8 users" is testable. "Do more research" is not.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>The most dangerous assumptions are the ones you don't realize you're making.</strong> That's why Claude reads your artifacts &mdash; it catches things you take for granted.
+      </div>
+      <div class="wt-tip">
+        <strong>Focus validation effort on Critical assumptions only.</strong> Don't boil the ocean. Test the 2-3 bets that would kill your product if wrong.
+      </div>
+      <div class="wt-tip">
+        <strong>If you have 0 critical assumptions, you're not being honest enough.</strong> Every early-stage product has bets. Surface them.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>After completing validation (to update confidence levels)</li>
+        <li>When new information surfaces that changes your risk profile</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Landscape, Constitution, Users, Problem</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Validate</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 5: Validate -->
+    <section class="wt-section" id="step-5" data-step="step-5">
+      <div class="wt-step-header">
+        <span class="wt-step-num">5</span>
+        <h2>Validate</h2>
+      </div>
+      <div class="wt-command">/product-kit:validate</div>
+      <p style="font-style: italic; color: var(--text);">"Don't guess. Go find out."</p>
+
+      <h4>Why this step matters</h4>
+      <p>This is where Product Kit earns its keep. Assumptions without evidence are just opinions. Validation turns opinions into data.</p>
+      <p>This step generates the actual instruments &mdash; interview scripts, survey questions, CSV templates &mdash; and then processes the results. It's the step that takes real-world effort: you have to talk to people.</p>
+      <p>It's also the step most people skip. Don't. The cost of 5-8 interviews is a few hours. The cost of building the wrong product is months.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Access to potential users (Reddit communities, Twitter, personal network)</li>
+        <li>1-2 weeks for data collection</li>
+        <li>A willingness to hear that you're wrong</li>
+      </ul>
+
+      <h4>The conversation (Phase 1: Generate instruments)</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I'll create validation instruments for your 2 critical assumptions. For assumption #1 (streak model causes abandonment), here's an interview guide with open-ended questions that avoid leading the witness.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Great. What about reaching Restarters for the survey?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>For assumption #2, here's a short survey you can post in r/getdisciplined and r/habits. I've also created a CSV template for recording interview responses so I can analyze them later.</p>
+      </div>
+
+      <h4>The conversation (Phase 2: After data collection)</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>I interviewed 8 people and have notes. I also got 45 survey responses from Reddit.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Drop the files into your project and let me analyze them. ... Done. 6 of 8 interviewees cited "streak reset" as the specific moment they quit. Here's the strongest quote: P3 said "I missed one day and it said Day 1. I just deleted it." Your first critical assumption is validated with strong evidence.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>What about the Restarter segment?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Your survey got 45 responses in 3 days from two subreddits. 38 of 45 respondents matched the Restarter profile. The segment exists and is reachable. Both critical assumptions are now validated.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">validation.md (after data collection)</span>
+        <strong># Validation Results</strong><br><br>
+        <strong>## Assumption Status</strong><br><br>
+        1. <strong>Users abandon because of the streak model</strong> &mdash; <span style="color: var(--green);">VALIDATED</span><br>
+        &nbsp;&nbsp;- Evidence: 6/8 interviewees cited streak reset as the moment they quit<br>
+        &nbsp;&nbsp;- Key quote: P3: "I missed one day and it said Day 1. I just deleted it."<br>
+        &nbsp;&nbsp;- Quality: Strong (consistent pattern across diverse interviewees)<br><br>
+        2. <strong>Restarters exist as a reachable segment</strong> &mdash; <span style="color: var(--green);">VALIDATED</span><br>
+        &nbsp;&nbsp;- Evidence: 38/45 survey respondents matched the Restarter profile<br>
+        &nbsp;&nbsp;- Channels: r/getdisciplined (28 responses), r/habits (17 responses)<br>
+        &nbsp;&nbsp;- Quality: Moderate (self-selected sample, but strong signal)<br><br>
+        <strong>## Validation Gate: <span style="color: var(--green);">PASSED</span></strong><br>
+        All critical assumptions validated. Cleared to proceed to Solution.
+      </div>
+
+      <div class="wt-note">
+        <strong>Gate:</strong> If critical assumptions still have <code>[PENDING]</code> evidence, <code>/product-kit:solution</code> will refuse to proceed. This prevents building on guesses.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Only talking to friends and family.</strong> They'll tell you what you want to hear. Talk to strangers who match your persona.
+      </div>
+      <div class="wt-mistake">
+        <strong>Asking leading questions.</strong> "Don't you hate when apps reset your streak?" will always get a "yes." Ask open-ended questions instead.
+      </div>
+      <div class="wt-mistake">
+        <strong>Skipping this step.</strong> "We're agile, we'll learn after launch" is how you waste months building the wrong thing.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>5-8 interviews is enough.</strong> You're looking for patterns, not statistical significance. After 5 interviews, you'll start hearing the same things.
+      </div>
+      <div class="wt-tip">
+        <strong>If an assumption is invalidated, that's a SUCCESS.</strong> You just avoided building the wrong thing. Pivot the assumption, not the whole product.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>When you collect new data</li>
+        <li>When you discover new assumptions to test</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Assumptions</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Solution (gates it &mdash; won't proceed with pending critical assumptions)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 6: Solution -->
+    <section class="wt-section" id="step-6" data-step="step-6">
+      <div class="wt-step-header">
+        <span class="wt-step-num">6</span>
+        <h2>Solution</h2>
+      </div>
+      <div class="wt-command">/product-kit:solution</div>
+      <p style="font-style: italic; color: var(--text);">"NOW you can brainstorm what to build."</p>
+
+      <h4>Why this step matters</h4>
+      <p>Notice that solution is step 6, not step 1. Most teams start here. Product Kit makes you earn the right to brainstorm by validating the problem first.</p>
+      <p>Now that you know the problem is real and your assumptions are tested, solution ideas are grounded in evidence, not fantasy. Every option gets evaluated against what you've learned.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Any solution ideas you've been sitting on (it's normal to have them by now)</li>
+        <li>Competitor approaches you've studied</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Your validation confirmed that streak resets cause abandonment. Let me generate 5 solution approaches. Option A: Streak Freeze (let users pause streaks). Option B: Grace Days (allow 1-2 misses per streak). Option C: Weekly Rhythm (track "days this week" with a flexible target). Option D: Decay Model (streaks fade slowly instead of resetting). Option E: Milestone Streaks (celebrate milestones, ignore daily gaps).</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>I like Option C &mdash; the weekly rhythm idea.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>What about Option A? Streak Freeze is simpler to build &mdash; just add a "pause" button.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>It still punishes missing days, just delays the punishment. That conflicts with our constitution principle &mdash; "Forgiveness over perfection."</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Good point &mdash; Option C aligns better with your principles. It reframes the whole mental model: instead of "did I do it today?" it becomes "am I on track this week?" That's fundamentally more forgiving. Let's scope the v1.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">solution.md</span>
+        <strong># Solution</strong><br><br>
+        <strong>## Options Considered</strong><br>
+        A. <strong>Streak Freeze</strong> &mdash; Pause streaks manually. <em>Pro:</em> Simple. <em>Con:</em> Still binary thinking; conflicts with "forgiveness" principle.<br>
+        B. <strong>Grace Days</strong> &mdash; Allow 1-2 misses. <em>Pro:</em> Familiar model. <em>Con:</em> Still punishes the 3rd miss; arbitrary threshold.<br>
+        C. <strong>Weekly Rhythm</strong> &mdash; Track days per week with flexible target. <em>Pro:</em> Reframes the mental model; aligns with constitution. <em>Con:</em> Unfamiliar to users; needs clear onboarding.<br>
+        D. <strong>Decay Model</strong> &mdash; Streaks fade over days. <em>Pro:</em> Gradual. <em>Con:</em> Hard to visualize; feels abstract.<br>
+        E. <strong>Milestone Streaks</strong> &mdash; Celebrate milestones only. <em>Pro:</em> Positive. <em>Con:</em> No daily accountability.<br><br>
+        <strong>## Recommended Solution: Weekly Rhythm (Option C)</strong><br>
+        Replace all-or-nothing daily streaks with a "weekly rhythm" model. Users set a target like "4 out of 7 days." Missing a day doesn't break anything &mdash; you see progress toward the week's goal. Streaks count <em>weeks met</em>, not consecutive days.<br><br>
+        <strong>## v1 Scope</strong><br>
+        - Core rhythm tracker with weekly targets<br>
+        - Simple daily check-in (one tap)<br>
+        - Recovery nudge after a missed day<br><br>
+        <strong>## Deferred to v2+</strong><br>
+        - Social accountability (unvalidated &mdash; low confidence)<br>
+        - Advanced analytics / charts (conflicts with "momentum over metrics")<br>
+        - Integrations with other apps
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Falling in love with the first idea.</strong> Generate at least 3-5 options before choosing. Your first idea is rarely your best.
+      </div>
+      <div class="wt-mistake">
+        <strong>Including features that conflict with your constitution.</strong> Check every feature against your principles. If it conflicts, cut it.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>The best v1 solves ONE problem well.</strong> Resist the urge to solve everything. You can always add features later.
+      </div>
+      <div class="wt-tip">
+        <strong>"Deferred" doesn't mean "never."</strong> It means "not yet." Explicitly listing deferred features prevents scope creep.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>When validation results change</li>
+        <li>When you realize the solution doesn't address the root cause</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">All previous artifacts (especially Validation, Constitution)</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Prioritize</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 7: Prioritize -->
+    <section class="wt-section" id="step-7" data-step="step-7">
+      <div class="wt-step-header">
+        <span class="wt-step-num">7</span>
+        <h2>Prioritize</h2>
+      </div>
+      <div class="wt-command">/product-kit:prioritize</div>
+      <p style="font-style: italic; color: var(--text);">"What's the smallest thing you can ship that solves the core problem?"</p>
+
+      <h4>Why this step matters</h4>
+      <p>Even a focused solution has features that can be ranked. Prioritization prevents scope creep by forcing every feature to justify itself with a score. It's the difference between "let's add this too" and "that scored 1.5, it's v2."</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>The solution from step 6</li>
+        <li>A sense of engineering effort for each feature (or access to your engineer)</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I've broken your solution into 8 features and scored each one using Impact &times; Confidence / Effort. The top scorer is "Single daily check-in" at 20.0 &mdash; high impact, high confidence, low effort. Social accountability scored 1.5 &mdash; I'd cut it from v1.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Agreed on cutting social. What about the recovery nudge?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>It scored 8.0 &mdash; solid but not essential. Should it be must-have or nice-to-have?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Nice-to-have. The core rhythm tracker comes first.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>One note: these effort scores are PM estimates. Share this table with your engineer before we write the spec &mdash; engineering effort is the most commonly misjudged score.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">priorities.md</span>
+        <strong># Priorities</strong><br><br>
+        | Rank | Feature | Impact | Confidence | Effort | Score | Status |<br>
+        |------|---------|--------|------------|--------|-------|--------|<br>
+        | 1 | Single daily check-in | 5 | 4 | 1 | 20.0 | v1 must-have |<br>
+        | 2 | Weekly rhythm tracker | 5 | 5 | 2 | 12.5 | v1 must-have |<br>
+        | 3 | Week completion celebration | 4 | 4 | 1 | 16.0 | v1 must-have |<br>
+        | 4 | Recovery nudge | 4 | 4 | 2 | 8.0 | v1 nice-to-have |<br>
+        | 5 | Habit creation flow | 3 | 5 | 1 | 15.0 | v1 must-have |<br>
+        | 6 | Progress visualization | 3 | 3 | 2 | 4.5 | v2 |<br>
+        | 7 | Notifications | 3 | 3 | 3 | 3.0 | v2 |<br>
+        | 8 | Social accountability | 3 | 2 | 4 | 1.5 | v2 |<br><br>
+        <strong>## Engineering Review</strong><br>
+        Effort scores are PM estimates. Engineer validation required before spec.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Not having your engineer validate effort scores.</strong> PMs consistently underestimate effort. Get engineering input before committing.
+      </div>
+      <div class="wt-mistake">
+        <strong>Making everything a "must-have."</strong> If you have more than 3-4 must-haves for v1, you're not prioritizing hard enough.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Confidence should be based on validation evidence, not gut feeling.</strong> Features backed by interview data get high confidence. Features based on "we think users want this" get low confidence.
+      </div>
+      <div class="wt-tip">
+        <strong>Low-effort, high-impact features are your best friends.</strong> Ship those first.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>After engineering review changes effort scores</li>
+        <li>When scope changes significantly</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Solution, Constitution, Validation</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Spec</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 8: Spec -->
+    <section class="wt-section" id="step-8" data-step="step-8">
+      <div class="wt-step-header">
+        <span class="wt-step-num">8</span>
+        <h2>Spec</h2>
+      </div>
+      <div class="wt-command">/product-kit:spec</div>
+      <p style="font-style: italic; color: var(--text);">"Everything synthesized. Every claim traced. Ready to build."</p>
+
+      <h4>Why this step matters</h4>
+      <p>The spec is the culmination of all previous work. It synthesizes 8 artifacts into one document that an engineer can build from. Every feature traces to evidence. Every decision traces to a principle.</p>
+      <p>It's not a requirements doc &mdash; it's a validated blueprint. The difference? Requirements docs say "build this feature." A spec says "build this feature because 6 of 8 users cited this as their #1 pain point."</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>All 8 previous artifacts complete</li>
+        <li>Priorities reviewed by engineering</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>I'll synthesize all your artifacts into a product spec. Every feature will link back to validation evidence and constitution principles.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Sounds good. Include acceptance criteria for every feature &mdash; specific, testable conditions that must be true for a feature to be considered done.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Done. I also noticed a gap &mdash; your success metrics don't include a retention metric, which is critical given your problem is about abandonment. Want me to add week-over-week retention as a primary metric?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Yes, that's a good catch. Add it.</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">spec.md</span>
+        <strong># Product Spec: Streak</strong><br><br>
+        <strong>## Overview</strong><br>
+        A mobile habit tracker that replaces all-or-nothing daily streaks with a forgiving "weekly rhythm" model, designed for 24-30 year old professionals with unpredictable schedules who've abandoned 2-3 habit apps.<br><br>
+        <strong>## Principles</strong> (from constitution.md)<br>
+        1. Effortless over powerful<br>
+        2. Momentum over metrics<br>
+        3. Forgiveness over perfection<br><br>
+        <strong>## Target User: The Restarter</strong> (from users.md)<br>
+        24-30 year old professionals. Unpredictable schedules. Downloaded 2-3 habit apps, used each &lt;2 weeks.<br><br>
+        <strong>## Problem</strong> (from problem.md)<br>
+        All-or-nothing streak models punish imperfection, causing abandonment. 6/8 interviewees confirmed (validation.md).<br><br>
+        <strong>## v1 Features</strong><br><br>
+        <strong>### Weekly Rhythm Tracker &mdash; Must Have</strong><br>
+        - <strong>What:</strong> Users set a weekly target (e.g., 4/7 days). Progress shown as filled dots.<br>
+        - <strong>Why:</strong> 6/8 interviewees cited streak resets as why they quit (validation.md)<br>
+        - <strong>Acceptance criteria:</strong><br>
+        &nbsp;&nbsp;&#9744; User can create a habit with a weekly frequency target<br>
+        &nbsp;&nbsp;&#9744; Missing a day does not reset progress<br>
+        &nbsp;&nbsp;&#9744; Weekly completion is celebrated, not daily perfection<br><br>
+        <strong>### Single Daily Check-in &mdash; Must Have</strong><br>
+        - <strong>What:</strong> One-tap "did it" button. No forms, no details.<br>
+        - <strong>Why:</strong> Constitution principle #1 (effortless over powerful)<br>
+        - <strong>Acceptance criteria:</strong><br>
+        &nbsp;&nbsp;&#9744; Check-in takes &lt;2 seconds<br>
+        &nbsp;&nbsp;&#9744; No required fields beyond the tap<br><br>
+        <strong>## Success Metrics</strong><br>
+        - Week-over-week retention (primary)<br>
+        - % of users who continue after missing a day<br>
+        - Weekly rhythm completion rate<br><br>
+        <strong>## Risks</strong><br>
+        - Users may not understand the weekly model without onboarding<br>
+        - Weekly rhythms may feel less motivating than daily streaks for some users<br><br>
+        <strong>## Appendix</strong><br>
+        Source artifacts: landscape.md, constitution.md, users.md, problem.md, assumptions.md, validation.md, solution.md, priorities.md
+      </div>
+
+      <div class="wt-note">
+        <strong>The result:</strong> A spec grounded in real evidence. Not "I think users want this" but "6 out of 8 people we talked to said this." Hand <code>spec.md</code> to Claude and start building.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Treating the spec as final.</strong> It should evolve as you build and learn. Update it when priorities shift.
+      </div>
+      <div class="wt-mistake">
+        <strong>Adding features at spec time that weren't prioritized.</strong> If it didn't go through prioritization, it doesn't belong in the spec.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Hand spec.md to Claude with "build this."</strong> The spec has everything needed &mdash; target user, problem, features, acceptance criteria.
+      </div>
+      <div class="wt-tip">
+        <strong>Run /product-kit:audit after building.</strong> It compares what you specced vs. what you built and flags gaps.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>When priorities change after engineering review</li>
+        <li>After significant user feedback post-launch</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">ALL previous artifacts</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Development (handoff to Claude)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Utilities -->
+    <section class="wt-section" id="utilities" data-step="utilities">
+      <h2>Utility Commands</h2>
+      <p>These commands can be run at any point in the workflow. Here's how each one helps during the Streak project.</p>
+
+      <div class="utility-card">
+        <h3>Clarify</h3>
+        <div class="wt-command">/product-kit:clarify</div>
+        <p>After writing solution.md, you notice it mentions a "daily check-in" but your constitution says "no daily pressure." Is that a contradiction?</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p>I found a potential contradiction. Your solution includes a "single daily check-in" but your constitution principle #2 says "momentum over metrics &mdash; no daily pressure." However, looking deeper, the check-in is optional and frictionless (one tap). The constitution prohibits <em>pressure</em>, not daily actions. Recommendation: clarify in the spec that the check-in has no penalty for skipping.</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Analyze</h3>
+        <div class="wt-command">/product-kit:analyze</div>
+        <p>After completing step 5, run Analyze for a quality check.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p><strong>Score: 7/10.</strong> Strengths: strong validation evidence, clear problem framing, well-defined persona. Gaps: competitive differentiation is weak &mdash; your problem statement doesn't explain why <em>you</em> will solve this better than a competitor who copies the weekly rhythm model. Recommendation: add a "why us" section to your problem statement.</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Bootstrap</h3>
+        <div class="wt-command">/product-kit:bootstrap</div>
+        <p>Your friend has a half-built habit app with no product artifacts. Run Bootstrap on their codebase.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p>I scanned the codebase and found: a React Native app with daily tracking, streak counting, and push notifications. I've auto-drafted users.md (inferred from UI text), problem.md (inferred from the streak reset handler), and solution.md (the current implementation). Review each one and refine &mdash; these are starting points, not finished artifacts.</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Audit</h3>
+        <div class="wt-command">/product-kit:audit</div>
+        <p>After building Streak v1, run Audit to compare spec vs. code.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p><strong>Spec vs. Code Comparison:</strong><br>
+          &bull; Weekly rhythm tracker &mdash; <span style="color: var(--green);">Implemented</span><br>
+          &bull; Single daily check-in &mdash; <span style="color: var(--green);">Implemented</span><br>
+          &bull; Recovery nudge &mdash; <span style="color: var(--red);">Not implemented</span> (was nice-to-have)<br>
+          &bull; Settings page &mdash; <span style="color: var(--amber);">Built but not specced</span> (scope creep?)</p>
+        </div>
+      </div>
+
+      <div class="utility-card">
+        <h3>Learn</h3>
+        <div class="wt-command">/product-kit:learn</div>
+        <p>You found 3 articles about habit formation psychology and saved them to <code>knowledge/</code>.</p>
+        <div class="wt-dialogue">
+          <p class="wt-speaker claude">Claude</p>
+          <p>Indexed 3 files into knowledge-index.md. Key findings: "implementation intentions" increase habit adherence by 2-3x (source: habit-research.pdf). I'll reference this in future artifact drafts when relevant.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="wt-section" id="conclusion" data-step="conclusion">
+      <h2>Next Steps</h2>
+      <p style="color: var(--text);">You've gone from "I want to build a habit tracker" to a validated, evidence-based product spec. Along the way, you:</p>
+      <ul style="color: var(--text); line-height: 2;">
+        <li>Mapped your competitive landscape and constraints</li>
+        <li>Defined principles that filter every decision</li>
+        <li>Built a specific, research-grounded persona</li>
+        <li>Framed a testable problem (not a solution in disguise)</li>
+        <li>Surfaced your hidden assumptions and tested them</li>
+        <li>Brainstormed solutions grounded in evidence</li>
+        <li>Prioritized ruthlessly with a scoring framework</li>
+        <li>Synthesized everything into a build-ready spec</li>
+      </ul>
+      <p>The spec is your handoff to development. Give <code>spec.md</code> to Claude and start building the right thing. Need to share your artifacts with stakeholders? Run <code>productkit export</code> to bundle all artifacts into a single markdown file.</p>
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="index.html" class="btn btn-secondary">Back to Product Kit</a>
+        <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">View on GitHub</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>Product Kit &mdash; built by <a href="https://github.com/iamquechua">iamquechua</a> &middot; <a href="https://github.com/iamquechua/product-kit">GitHub</a> &middot; MIT License</p>
+</footer>
+
+<script>
+// Scroll spy for sidebar
+const sections = document.querySelectorAll('[data-step]');
+const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sidebarLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(section => observer.observe(section));
+
+// Close mobile sidebar when a link is clicked
+sidebarLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+
+// Format switcher (plugin vs CLI)
+function setFormat(fmt) {
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const from = fmt === 'cli' ? '/product-kit:' : '/productkit.';
+  const to   = fmt === 'cli' ? '/productkit.' : '/product-kit:';
+  // Swap text in .wt-command elements
+  document.querySelectorAll('.wt-command').forEach(el => {
+    el.textContent = el.textContent.replace(from, to);
+  });
+  // Swap text in code elements and bold/strong elements
+  document.querySelectorAll('code, strong, p').forEach(el => {
+    if (el.children.length === 0 && el.textContent.includes(from)) {
+      el.textContent = el.textContent.replaceAll(from, to);
+    }
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { getArtifactDir } = require('../utils/fileUtils');
+const { getArtifactDir, getWorkspaceRoot } = require('../utils/fileUtils');
 
 const ARTIFACTS = [
   { file: 'constitution.md', label: 'Constitution' },
@@ -27,12 +27,21 @@ async function exportCommand(options) {
   const artifactDir = getArtifactDir(root);
   const existing = ARTIFACTS.filter(a => fs.existsSync(path.join(artifactDir, a.file)));
 
-  if (existing.length === 0) {
+  // Check for workspace landscape
+  const workspaceRoot = getWorkspaceRoot(root);
+  const hasLandscape = workspaceRoot && fs.existsSync(path.join(workspaceRoot, 'landscape.md'));
+
+  if (existing.length === 0 && !hasLandscape) {
     console.error(chalk.red('No artifacts found. Run some slash commands first.'));
     process.exit(1);
   }
 
   const sections = [];
+
+  if (hasLandscape) {
+    sections.push(fs.readFileSync(path.join(workspaceRoot, 'landscape.md'), 'utf-8'));
+  }
+
   for (const artifact of existing) {
     const content = fs.readFileSync(path.join(artifactDir, artifact.file), 'utf-8');
     sections.push(content);
@@ -45,7 +54,8 @@ async function exportCommand(options) {
   const outputFile = options.output || 'export.md';
   fs.writeFileSync(path.join(root, outputFile), combined);
 
-  console.log(chalk.green.bold(`Exported ${existing.length} artifact(s) to ${outputFile}`));
+  const totalCount = existing.length + (hasLandscape ? 1 : 0);
+  console.log(chalk.green.bold(`Exported ${totalCount} artifact(s) to ${outputFile}`));
 }
 
 module.exports = exportCommand;

@@ -12,6 +12,7 @@ const completionCommand = require('./commands/completion');
 const exportCommand = require('./commands/export');
 const diffCommand = require('./commands/diff');
 const doctorCommand = require('./commands/doctor');
+const workspaceCommand = require('./commands/workspace');
 
 const program = new Command();
 
@@ -26,6 +27,7 @@ program
   .option('--existing', 'Add Product Kit to the current directory')
   .option('--minimal', 'Skip constitution, start with users/problem')
   .option('--artifact-dir <dir>', 'Directory for artifacts (default: project root)')
+  .option('--mode <mode>', 'Building mode: solo or team')
   .action(initCommand);
 
 program
@@ -76,6 +78,11 @@ program
   .command('doctor')
   .description('Check project health (missing files, outdated commands, etc.)')
   .action(doctorCommand);
+
+program
+  .command('workspace <name>')
+  .description('Create a shared workspace for multi-project orgs')
+  .action(workspaceCommand);
 
 program.parse(process.argv);
 

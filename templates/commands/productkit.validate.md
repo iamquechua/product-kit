@@ -16,6 +16,15 @@ Read existing artifacts:
 - `assumptions.md` — prioritized assumptions (required)
 - `users.md` — user personas (optional, used for interview targeting)
 - `problem.md` — problem statement (optional, for context)
+- `landscape.md` — company and domain landscape (optional)
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence alongside `validation-data/`. If the file doesn't exist but `knowledge/` has files, suggest running `/productkit.learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 At minimum, `assumptions.md` must exist. If it's missing, tell the user to run `/productkit.assumptions` first.
 

@@ -16,8 +16,17 @@ Read these files first (required):
 - `problem.md` — the core problem
 
 Also read if they exist:
+- `landscape.md` — company and domain landscape (use for team/constraint-aware prioritization)
 - `assumptions.md` — risk factors
 - `constitution.md` — decision-making principles
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when scoring features. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 If `solution.md` does not exist, tell the user to run `/product-kit:solution` first.
 
@@ -28,7 +37,7 @@ If `solution.md` does not exist, tell the user to run `/product-kit:solution` fi
    - **Impact** (1-5): How much does this move the needle on the core problem?
    - **Confidence** (1-5): How sure are we that users need this? (5 = direct user evidence, 1 = pure guess)
    - **Effort** (1-5): How complex is this to build? (1 = trivial, 5 = massive). **This is a PM estimate — mark as `Eng. Validated: No`.**
-   - **Priority Score** = (Impact x Confidence) / Effort
+   - **Priority Score** = (Impact × Confidence) / Effort
 3. **Discuss the ranking** — Present the scored list. Ask the user if the ranking feels right. Adjust if needed.
 4. **Draw the v1 line** — Which features make the cut for the first release? Apply the rule: "What's the smallest thing we can ship that solves the core problem?"
 5. **Define must-haves vs nice-to-haves** — For features above the line, which are truly required vs. which could be cut if time runs short?
@@ -43,13 +52,15 @@ If `solution.md` does not exist, tell the user to run `/product-kit:solution` fi
 
 ## Output
 
-Write to `priorities.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write to `priorities.md`:
 
 ```markdown
 # Feature Priorities
 
 ## Scoring Framework
-Priority Score = (Impact x Confidence) / Effort
+Priority Score = (Impact × Confidence) / Effort
 
 ## Feature Rankings
 
@@ -78,12 +89,6 @@ Priority Score = (Impact x Confidence) / Effort
 - [Decision 2 and rationale]
 ```
 
-## Next Step
-
-After writing the priorities, tell the user:
-
-> Your features are prioritized. The next step is to generate the full product spec — run `/product-kit:spec`.
-
 ### When the PM returns with engineering-validated effort scores
 
 When the user runs `/product-kit:prioritize` again after updating effort scores:
@@ -92,7 +97,7 @@ When the user runs `/product-kit:prioritize` again after updating effort scores:
 2. Check the `Eng. Validated` column. For rows marked `Yes`:
    - Recalculate the Priority Score using the updated Effort value
    - Re-rank features by new scores
-   - Present the updated ranking and highlight what changed
-3. For rows still marked `No`, keep the PM estimate but flag them
-4. Redraw the v1 line if the ranking changed significantly — ask the PM if the v1 scope still makes sense
+   - Present the updated ranking to the PM and highlight what changed (e.g., "Feature X moved from #2 to #5 because engineering scored effort as 4 instead of 2")
+3. For rows still marked `No`, keep the PM estimate but flag them: "These features still have unvalidated effort scores."
+4. Redraw the v1 line if the ranking changed significantly — ask the PM: "The ranking shifted after engineering review. Does the v1 scope still make sense, or should we adjust?"
 5. Update the Engineering Review Status section. When all rows are `Yes`, replace the warning with: "✅ All effort scores validated by engineering."

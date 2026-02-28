@@ -23,6 +23,9 @@ async function update() {
   let added = 0;
 
   for (const file of commandFiles) {
+    // Landscape is workspace-only, skip for projects
+    if (file === 'productkit.landscape.md') continue;
+
     const src = path.join(commandsDir, file);
     const dest = path.join(targetDir, file);
     const existed = fs.existsSync(dest);
@@ -34,6 +37,19 @@ async function update() {
     } else {
       added++;
       console.log(chalk.green(`  + ${file}`));
+    }
+  }
+
+  // Update workspace landscape command if in a workspace
+  const { getWorkspaceRoot } = require('../utils/fileUtils');
+  const workspaceRoot = getWorkspaceRoot(root);
+  if (workspaceRoot) {
+    const wsSrc = path.join(commandsDir, 'productkit.landscape.md');
+    const wsDest = path.join(workspaceRoot, '.claude', 'commands', 'productkit.landscape.md');
+    if (fs.existsSync(wsSrc)) {
+      fs.ensureDirSync(path.join(workspaceRoot, '.claude', 'commands'));
+      fs.copyFileSync(wsSrc, wsDest);
+      console.log(chalk.green('  ~ workspace landscape command updated'));
     }
   }
 

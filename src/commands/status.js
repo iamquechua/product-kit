@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { getArtifactDir } = require('../utils/fileUtils');
+const { getArtifactDir, getWorkspaceRoot } = require('../utils/fileUtils');
 
 const ARTIFACTS = [
   { file: 'constitution.md', command: '/productkit.constitution', label: 'Constitution' },
@@ -25,6 +25,7 @@ async function status() {
   }
 
   const artifactDir = getArtifactDir(root);
+  const workspaceRoot = getWorkspaceRoot(root);
   const done = [];
   const remaining = [];
 
@@ -38,6 +39,19 @@ async function status() {
   }
 
   console.log();
+
+  // Show workspace landscape status if in a workspace
+  if (workspaceRoot) {
+    const landscapeExists = fs.existsSync(path.join(workspaceRoot, 'landscape.md'));
+    console.log(chalk.bold('Workspace:'));
+    if (landscapeExists) {
+      console.log(chalk.green('  done  Landscape (landscape.md)'));
+    } else {
+      console.log(chalk.yellow('  todo  Landscape — run /productkit.landscape from workspace root'));
+    }
+    console.log();
+  }
+
   console.log(chalk.bold(`Progress: ${done.length}/${ARTIFACTS.length} artifacts`));
   console.log();
 

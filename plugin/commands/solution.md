@@ -10,25 +10,42 @@ Guide the user from problem understanding to concrete solution ideas. Ensure eve
 
 ## Before You Start
 
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
 Read these files first (required):
 - `users.md` — who has this problem
 - `problem.md` — what problem we're solving
+- `validation.md` — assumption validation results (required)
 
 Also read if they exist:
+- `landscape.md` — company and domain landscape (use to ground solutions in real constraints)
 - `constitution.md` — product principles (use to filter solutions)
-- `assumptions.md` — known risks (avoid solutions that depend on unvalidated assumptions)
-- `validation.md` — assumption validation results (required if `assumptions.md` exists)
+- `assumptions.md` — known risks
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when evaluating solution feasibility. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 If `users.md` or `problem.md` do not exist, tell the user to run `/product-kit:users` and `/product-kit:problem` first.
 
+If `validation.md` does not exist, tell the user to run `/product-kit:validate` first.
+
 ### Validation Gate
 
-If `validation.md` exists, scan the Evidence fields for all assumptions marked as **Critical** or **Important**. If ANY of these contain the literal text `[PENDING]`:
+After reading `validation.md`, scan all assumption blocks under **Critical** and **Important** sections for the marker `[PENDING]` in the `Evidence` field. This is a mechanical check — look for the literal text `[PENDING]`.
+
+**If any Critical or Important assumption has `Evidence: [PENDING]`:**
 
 1. **Do not proceed with solution brainstorming.**
-2. List the unvalidated assumptions.
-3. Tell the PM: "These critical/important assumptions haven't been validated yet. Run `/product-kit:validate` to add evidence before proposing solutions."
-4. If the PM explicitly asks to proceed anyway, you may continue — but add a prominent warning at the top of `solution.md`: "⚠️ The following assumptions are unvalidated: [list]. Solutions below may need to change if these assumptions are invalidated." Also flag each solution option that depends on an unvalidated assumption.
+2. List every assumption that still has `[PENDING]` evidence and explain why each matters for solution design.
+3. Tell the user: "These assumptions have no evidence yet. Run `/product-kit:validate` again with your findings to update them, then come back to `/product-kit:solution`."
+4. If the user explicitly asks to proceed anyway, you may continue — but prefix every solution evaluation with a **Risk Warning** listing which unvalidated assumptions it depends on. Make it clear the output is a hypothesis, not a validated plan.
+
+**Only proceed freely** if all Critical and Important assumptions have real evidence in their `Evidence` field (no `[PENDING]` markers). Low Risk assumptions with `[PENDING]` are acceptable and should not block.
 
 ## Process
 
@@ -54,7 +71,9 @@ If `validation.md` exists, scan the Evidence fields for all assumptions marked a
 
 ## Output
 
-Write to `solution.md` in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+
+Write to `solution.md`:
 
 ```markdown
 # Solution
@@ -92,9 +111,3 @@ Write to `solution.md` in the project root:
 - [Risk 1 and how to mitigate]
 - [Risk 2 and how to mitigate]
 ```
-
-## Next Step
-
-After writing the solution, tell the user:
-
-> Your solution is defined. The next step is to prioritize features — run `/product-kit:prioritize`.

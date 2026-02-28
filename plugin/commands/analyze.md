@@ -10,11 +10,22 @@ Evaluate the overall quality, consistency, and completeness of the product think
 
 ## Before You Start
 
-Read all existing artifacts in the project root:
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read artifacts there instead of the project root. If not set, default to the project root.
+
+Read all existing artifacts:
+- `landscape.md`
 - `constitution.md`
 - `users.md`
 - `problem.md`
 - `assumptions.md`
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Check whether artifacts adequately reference available evidence. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 Work with whatever exists.
 
@@ -70,7 +81,3 @@ Present the analysis directly in the conversation. Use this structure:
 ### Verdict
 [Ready to move to solution design / Needs more work on X]
 ```
-
-## Next Step
-
-After presenting the analysis, recommend the next action based on the findings. If artifacts are missing, tell the user which command to run. If there are contradictions, suggest `/product-kit:clarify`. If everything looks solid, suggest moving to the next command in the workflow.
