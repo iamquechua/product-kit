@@ -22,7 +22,7 @@ claude --plugin-dir ./plugin
 |---------|-------------|--------|
 | `/product-kit:landscape` | Capture company, team, and domain context | `landscape.md` |
 | `/product-kit:constitution` | Define product principles and values | `constitution.md` |
-| `/product-kit:compete` | Analyze competitive landscape and find differentiation | `compete.md` |
+| `/product-kit:compete` | Map competitive landscape and surface gaps | `compete.md` |
 | `/product-kit:users` | Define target user personas | `users.md` |
 | `/product-kit:problem` | Frame the problem statement | `problem.md` |
 | `/product-kit:assumptions` | Extract and prioritize assumptions | `assumptions.md` |

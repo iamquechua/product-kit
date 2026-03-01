@@ -8,7 +8,7 @@ Use these commands in order to build your product foundation:
 
 0. `/productkit.landscape` — Capture company, team, and domain context (run once, before everything else)
 1. `/productkit.constitution` — Define your product principles
-2. `/productkit.compete` — Analyze competitive landscape and find differentiation
+2. `/productkit.compete` — Map competitive landscape and surface gaps
 3. `/productkit.users` — Define target user personas
 4. `/productkit.problem` — Frame the problem statement
 5. `/productkit.assumptions` — Extract and prioritize assumptions
@@ -33,7 +33,7 @@ Check `.productkit/config.json` for a `mode` field — either `"solo"` (building
 Product artifacts are written as markdown files to `.productkit/artifacts/` by default. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead. Default artifact locations (under `.productkit/artifacts/`):
 - `landscape.md` — Company, team, and domain landscape
 - `constitution.md` — Product principles and values
-- `compete.md` — Competitive analysis and differentiation angle
+- `compete.md` — Competitive analysis and market gaps
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
 - `assumptions.md` — Prioritized assumptions

@@ -12,7 +12,7 @@ Then use the slash commands to build your product foundation:
 
 0. `/productkit.landscape` — Capture company, team, and domain context
 1. `/productkit.constitution` — Define your product principles
-2. `/productkit.compete` — Analyze competitive landscape and find differentiation
+2. `/productkit.compete` — Map competitive landscape and surface gaps
 3. `/productkit.users` — Define target user personas
 4. `/productkit.problem` — Frame the problem statement
 5. `/productkit.assumptions` — Extract and prioritize assumptions
@@ -36,7 +36,7 @@ Artifacts are written to the project root by default. If `artifact_dir` is set i
 |------|-------------|
 | `landscape.md` | Company, team, and domain landscape |
 | `constitution.md` | Product principles and values |
-| `compete.md` | Competitive analysis and differentiation angle |
+| `compete.md` | Competitive analysis and market gaps |
 | `users.md` | Target user personas |
 | `problem.md` | Problem statement |
 | `assumptions.md` | Prioritized assumptions |

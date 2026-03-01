@@ -13,7 +13,7 @@ The recommended workflow order is:
 
 0. `/product-kit:landscape` — Capture company, team, and domain context (run once, before everything else)
 1. `/product-kit:constitution` — Define product principles and values
-2. `/product-kit:compete` — Analyze competitive landscape and find differentiation
+2. `/product-kit:compete` — Map competitive landscape and surface gaps
 3. `/product-kit:users` — Define target user personas
 4. `/product-kit:problem` — Frame the problem statement
 5. `/product-kit:assumptions` — Extract and prioritize assumptions
@@ -49,7 +49,7 @@ Each command reads previous artifacts to maintain consistency:
 Commands produce these markdown files in the project root (or in the directory specified by `artifact_dir` in `.productkit/config.json`):
 - `landscape.md` — Company, team, and domain landscape
 - `constitution.md` — Product principles and values
-- `compete.md` — Competitive analysis and differentiation angle
+- `compete.md` — Competitive analysis and market gaps
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
 - `assumptions.md` — Prioritized assumptions

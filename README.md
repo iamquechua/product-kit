@@ -83,7 +83,7 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 |------|---------|-------------|--------|
 | 0 | `/productkit.landscape` | Capture company, team, and domain landscape | `landscape.md` |
 | 1 | `/productkit.constitution` | Define product principles and values | `constitution.md` |
-| 2 | `/productkit.compete` | Analyze competitive landscape and find differentiation | `compete.md` |
+| 2 | `/productkit.compete` | Map competitive landscape and surface gaps | `compete.md` |
 | 3 | `/productkit.users` | Define target user personas through dialogue | `users.md` |
 | 4 | `/productkit.problem` | Frame the problem statement grounded in user research | `problem.md` |
 | 5 | `/productkit.assumptions` | Extract and prioritize hidden assumptions | `assumptions.md` |
