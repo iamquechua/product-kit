@@ -20,7 +20,8 @@ describe('diff command', () => {
       cwd: PROJECT_DIR,
       stdio: 'ignore',
     });
-    fs.writeFileSync(path.join(PROJECT_DIR, 'users.md'), '# Users\n\nOriginal.\n');
+    fs.ensureDirSync(path.join(PROJECT_DIR, '.productkit', 'artifacts'));
+    fs.writeFileSync(path.join(PROJECT_DIR, '.productkit', 'artifacts', 'users.md'), '# Users\n\nOriginal.\n');
     execSync('git add -A && git commit -m "initial"', {
       cwd: PROJECT_DIR,
       stdio: 'ignore',
@@ -40,7 +41,7 @@ describe('diff command', () => {
   });
 
   it('shows diff when an artifact is modified', () => {
-    fs.writeFileSync(path.join(PROJECT_DIR, 'users.md'), '# Users\n\nUpdated content.\n');
+    fs.writeFileSync(path.join(PROJECT_DIR, '.productkit', 'artifacts', 'users.md'), '# Users\n\nUpdated content.\n');
 
     const output = execSync(`node ${CLI} diff`, {
       cwd: PROJECT_DIR,
@@ -50,12 +51,12 @@ describe('diff command', () => {
     assert.ok(output.includes('Original'));
 
     // Revert
-    execSync('git checkout -- users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
+    execSync('git checkout -- .productkit/artifacts/users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
   });
 
   it('shows staged changes with --staged', () => {
-    fs.writeFileSync(path.join(PROJECT_DIR, 'users.md'), '# Users\n\nStaged change.\n');
-    execSync('git add users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
+    fs.writeFileSync(path.join(PROJECT_DIR, '.productkit', 'artifacts', 'users.md'), '# Users\n\nStaged change.\n');
+    execSync('git add .productkit/artifacts/users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
 
     const output = execSync(`node ${CLI} diff --staged`, {
       cwd: PROJECT_DIR,
@@ -64,8 +65,8 @@ describe('diff command', () => {
     assert.ok(output.includes('Staged change'));
 
     // Reset
-    execSync('git reset HEAD users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
-    execSync('git checkout -- users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
+    execSync('git reset HEAD .productkit/artifacts/users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
+    execSync('git checkout -- .productkit/artifacts/users.md', { cwd: PROJECT_DIR, stdio: 'ignore' });
   });
 
   it('ignores non-artifact files', () => {

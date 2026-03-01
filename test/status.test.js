@@ -34,7 +34,8 @@ describe('status command', () => {
   });
 
   it('detects completed artifacts', () => {
-    fs.writeFileSync(path.join(TEST_PROJECT, 'users.md'), '# Users\n');
+    fs.ensureDirSync(path.join(TEST_PROJECT, '.productkit', 'artifacts'));
+    fs.writeFileSync(path.join(TEST_PROJECT, '.productkit', 'artifacts', 'users.md'), '# Users\n');
     const output = execSync(`node ${CLI} status`, {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',

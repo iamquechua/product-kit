@@ -10,7 +10,7 @@ Pull together everything the user has built — constitution, users, problem, as
 
 ## Before You Start
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Read all existing artifacts:
 - `landscape.md` — company and domain landscape (use throughout the spec for grounding)

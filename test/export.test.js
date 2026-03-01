@@ -16,8 +16,10 @@ describe('export command', () => {
       stdio: 'ignore',
     });
     // Create some artifacts
-    fs.writeFileSync(path.join(PROJECT_DIR, 'users.md'), '# Users\n\nTarget users here.\n');
-    fs.writeFileSync(path.join(PROJECT_DIR, 'problem.md'), '# Problem\n\nProblem statement here.\n');
+    const artifactDir = path.join(PROJECT_DIR, '.productkit', 'artifacts');
+    fs.ensureDirSync(artifactDir);
+    fs.writeFileSync(path.join(artifactDir, 'users.md'), '# Users\n\nTarget users here.\n');
+    fs.writeFileSync(path.join(artifactDir, 'problem.md'), '# Problem\n\nProblem statement here.\n');
   });
 
   after(() => {
@@ -84,7 +86,7 @@ describe('export command', () => {
 - **Definition of Done:** Tested
 - **Notes:** Redirect to home
 `;
-    fs.writeFileSync(path.join(PROJECT_DIR, 'stories.md'), storiesMd);
+    fs.writeFileSync(path.join(PROJECT_DIR, '.productkit', 'artifacts', 'stories.md'), storiesMd);
 
     execSync(`node ${CLI} export --stories-csv`, {
       cwd: PROJECT_DIR,
@@ -118,7 +120,7 @@ describe('export command', () => {
   - [ ] Login works
 - **Watch out for:** Rate limiting
 `;
-    fs.writeFileSync(path.join(PROJECT_DIR, 'stories.md'), soloStoriesMd);
+    fs.writeFileSync(path.join(PROJECT_DIR, '.productkit', 'artifacts', 'stories.md'), soloStoriesMd);
 
     execSync(`node ${CLI} export --stories-csv`, {
       cwd: PROJECT_DIR,

@@ -10,7 +10,7 @@ Act as a seasoned PM mentor. Guide the user through defining their product's cor
 
 ## Before You Start
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Read `landscape.md` if it exists — use company, domain, and team context to ask more relevant questions and ground the constitution in real constraints.
 
@@ -40,7 +40,7 @@ Check if this project is inside a workspace: look for `../.productkit/config.jso
 
 ## Output
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Write the final constitution to `constitution.md` with this format:
 

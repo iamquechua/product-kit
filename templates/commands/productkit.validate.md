@@ -10,7 +10,7 @@ Turn prioritized assumptions into actionable validation materials — interview 
 
 ## Before You Start
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Read existing artifacts:
 - `assumptions.md` — prioritized assumptions (required)

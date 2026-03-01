@@ -11,7 +11,7 @@ Read the product spec and codebase, then produce an evidence-based technical rev
 ## Before You Start
 
 Check `.productkit/config.json` for:
-- `artifact_dir` — if set, read artifacts there instead of the project root
+- `artifact_dir` — if set, read artifacts there instead of `.productkit/artifacts/`
 - `mode` — either `"solo"` or `"team"` (defaults to `"team"` if not set)
 
 Read these artifacts (required):

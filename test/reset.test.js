@@ -23,16 +23,18 @@ describe('reset command', () => {
 
   it('removes existing artifacts', () => {
     // Create some artifacts
-    fs.writeFileSync(path.join(TEST_PROJECT, 'users.md'), '# Users\n');
-    fs.writeFileSync(path.join(TEST_PROJECT, 'problem.md'), '# Problem\n');
+    const artifactDir = path.join(TEST_PROJECT, '.productkit', 'artifacts');
+    fs.ensureDirSync(artifactDir);
+    fs.writeFileSync(path.join(artifactDir, 'users.md'), '# Users\n');
+    fs.writeFileSync(path.join(artifactDir, 'problem.md'), '# Problem\n');
 
     const output = execSync(`node ${CLI} reset --force`, {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
 
-    assert.ok(!fs.existsSync(path.join(TEST_PROJECT, 'users.md')));
-    assert.ok(!fs.existsSync(path.join(TEST_PROJECT, 'problem.md')));
+    assert.ok(!fs.existsSync(path.join(artifactDir, 'users.md')));
+    assert.ok(!fs.existsSync(path.join(artifactDir, 'problem.md')));
     assert.ok(output.includes('2 artifacts removed'));
   });
 

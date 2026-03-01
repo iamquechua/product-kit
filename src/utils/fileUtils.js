@@ -17,7 +17,7 @@ function getArtifactDir(root) {
       return resolveContainedPath(root, config.artifact_dir, root);
     }
   } catch {}
-  return root;
+  return path.join(root, '.productkit', 'artifacts');
 }
 
 function getWorkspaceRoot(projectRoot) {

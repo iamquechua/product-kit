@@ -18,7 +18,7 @@ Check if this project is inside a workspace: look for `../.productkit/config.jso
 - Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
 - Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
-2. Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+2. Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 3. Check which artifacts already exist (constitution.md, users.md, problem.md, assumptions.md, solution.md, priorities.md, spec.md) in the artifact directory. **Skip any that already exist** — tell the user you're skipping them.
 4. Check `.productkit/config.json` — if `minimal: true`, skip `constitution.md`.
 

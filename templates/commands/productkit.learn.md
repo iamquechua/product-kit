@@ -10,7 +10,7 @@ Scan the `knowledge/` directory, extract key findings from each file, and produc
 
 ## Before You Start
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Check `.productkit/config.json` for a `knowledge_dir` field (default: `knowledge`). This is the directory to scan.
 
@@ -43,7 +43,7 @@ If `knowledge-index.md` already exists, read it. Detect new or changed files sin
 
 ## Output
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Write the index to `knowledge-index.md` with this format:
 

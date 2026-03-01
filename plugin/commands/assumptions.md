@@ -50,7 +50,7 @@ Check if this project is inside a workspace: look for `../.productkit/config.jso
 
 ## Output
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Write to `assumptions.md`:
 

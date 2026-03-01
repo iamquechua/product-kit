@@ -25,6 +25,7 @@ describe('init command', () => {
 
     // Directories
     assert.ok(fs.existsSync(path.join(TEST_PROJECT, '.productkit')));
+    assert.ok(fs.existsSync(path.join(TEST_PROJECT, '.productkit', 'artifacts')));
     assert.ok(fs.existsSync(path.join(TEST_PROJECT, '.claude', 'commands')));
 
     // Config

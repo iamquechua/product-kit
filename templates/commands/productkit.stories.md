@@ -11,7 +11,7 @@ Transform the spec into discrete, estimable work items traceable back to the spe
 ## Before You Start
 
 Check `.productkit/config.json` for:
-- `artifact_dir` — if set, read and write artifacts there instead of the project root
+- `artifact_dir` — if set, read and write artifacts there instead of `.productkit/artifacts/`
 - `mode` — either `"solo"` or `"team"` (defaults to `"team"` if not set)
 
 Read existing artifacts:

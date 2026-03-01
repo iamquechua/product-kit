@@ -27,6 +27,7 @@ function scaffold(projectRoot, projectName, minimal, artifactDir, mode) {
 
   // Create directories
   fs.ensureDirSync(path.join(projectRoot, '.productkit'));
+  fs.ensureDirSync(path.join(projectRoot, '.productkit', 'artifacts'));
   fs.ensureDirSync(path.join(projectRoot, '.claude', 'commands'));
 
   // Write config

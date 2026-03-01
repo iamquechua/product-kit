@@ -29,7 +29,7 @@ Check `.productkit/config.json` for a `mode` field — either `"solo"` (building
 
 ## Artifacts
 
-Product artifacts are written as markdown files. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead of the project root. Default artifact locations:
+Product artifacts are written as markdown files to `.productkit/artifacts/` by default. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead. Default artifact locations (under `.productkit/artifacts/`):
 - `landscape.md` — Company, team, and domain landscape
 - `constitution.md` — Product principles and values
 - `users.md` — Target user personas

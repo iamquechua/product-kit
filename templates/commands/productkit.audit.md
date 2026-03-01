@@ -10,7 +10,7 @@ Read the product spec and supporting artifacts, then systematically scan the cod
 
 ## Before You Start
 
-Check `.productkit/config.json` for an `artifact_dir` field. If set, read artifacts there instead of the project root. If not set, default to the project root.
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read artifacts there instead of `.productkit/artifacts/`. If not set, default to `.productkit/artifacts/`.
 
 Read these artifacts (required):
 - `spec.md` — the product spec (required)
