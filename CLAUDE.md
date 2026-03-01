@@ -28,6 +28,16 @@ templates/              # Copied into user projects on `init`
 test/                   # Node.js built-in test runner
 ```
 
+## Scope
+
+Product Kit is strictly a **product discovery and validation** toolkit. Its job is to answer "should we build this?" — not "how do we run a business around it."
+
+**In scope:** User research, problem validation, assumption testing, solution evaluation, feature prioritization, and spec writing. Everything from idea to validated spec.
+
+**Out of scope:** Business planning (market sizing, TAM/SAM/SOM, revenue modeling), go-to-market strategy (distribution, pricing, launch), UX design (wireframes, journey maps, prototypes), and project execution (sprint planning, roadmaps, retrospectives). These are important but belong to other tools.
+
+When evaluating new slash commands or features, ask: **"Does this help validate whether a product idea is worth building?"** If the answer is no, it doesn't belong in the core workflow.
+
 ## Key Concepts
 
 - **Slash commands** live in `templates/commands/`. Each is a markdown file with a `description` front-matter field and a structured prompt.

@@ -12,20 +12,21 @@ Then use the slash commands to build your product foundation:
 
 0. `/productkit.landscape` — Capture company, team, and domain context
 1. `/productkit.constitution` — Define your product principles
-2. `/productkit.users` — Define target user personas
-3. `/productkit.problem` — Frame the problem statement
-4. `/productkit.assumptions` — Extract and prioritize assumptions
-5. `/productkit.validate` — Validate assumptions with interviews and surveys
-6. `/productkit.solution` — Brainstorm and evaluate solutions
-7. `/productkit.prioritize` — Score and rank features
-8. `/productkit.spec` — Generate a product spec
-9. `/productkit.clarify` — Resolve ambiguities
-10. `/productkit.analyze` — Check consistency and completeness
-11. `/productkit.bootstrap` — Auto-draft all artifacts from existing codebase
-12. `/productkit.audit` — Compare spec against actual implementation
-13. `/productkit.learn` — Index knowledge directory for faster commands
-14. `/productkit.techreview` — Review spec against codebase, flag engineering questions
-15. `/productkit.stories` — Break spec into user stories with acceptance criteria
+2. `/productkit.compete` — Analyze competitive landscape and find differentiation
+3. `/productkit.users` — Define target user personas
+4. `/productkit.problem` — Frame the problem statement
+5. `/productkit.assumptions` — Extract and prioritize assumptions
+6. `/productkit.validate` — Validate assumptions with interviews and surveys
+7. `/productkit.solution` — Brainstorm and evaluate solutions
+8. `/productkit.prioritize` — Score and rank features
+9. `/productkit.spec` — Generate a product spec
+10. `/productkit.clarify` — Resolve ambiguities
+11. `/productkit.analyze` — Check consistency and completeness
+12. `/productkit.bootstrap` — Auto-draft all artifacts from existing codebase
+13. `/productkit.audit` — Compare spec against actual implementation
+14. `/productkit.learn` — Index knowledge directory for faster commands
+15. `/productkit.techreview` — Review spec against codebase, flag engineering questions
+16. `/productkit.stories` — Break spec into user stories with acceptance criteria
 
 ## Artifacts
 
@@ -35,6 +36,7 @@ Artifacts are written to the project root by default. If `artifact_dir` is set i
 |------|-------------|
 | `landscape.md` | Company, team, and domain landscape |
 | `constitution.md` | Product principles and values |
+| `compete.md` | Competitive analysis and differentiation angle |
 | `users.md` | Target user personas |
 | `problem.md` | Problem statement |
 | `assumptions.md` | Prioritized assumptions |

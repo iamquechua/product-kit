@@ -14,6 +14,8 @@ Read these files first (required):
 - `users.md` — understand who has this problem
 - `constitution.md` — if it exists, align with product principles
 
+Read `compete.md` if it exists — use competitive context to sharpen problem framing.
+
 Read `landscape.md` if it exists — use company and domain context to ground the problem in real market conditions.
 
 Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when framing the problem. If the file doesn't exist but `knowledge/` has files, suggest running `/productkit.learn` first.

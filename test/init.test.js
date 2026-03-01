@@ -36,6 +36,7 @@ describe('init command', () => {
     // Slash commands
     const commands = [
       'productkit.constitution.md',
+      'productkit.compete.md',
       'productkit.users.md',
       'productkit.problem.md',
       'productkit.assumptions.md',

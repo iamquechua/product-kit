@@ -35,6 +35,7 @@ function getWorkspaceRoot(projectRoot) {
 const ARTIFACT_FILES = [
   'landscape.md',
   'constitution.md',
+  'compete.md',
   'users.md',
   'problem.md',
   'assumptions.md',
@@ -51,6 +52,7 @@ const ARTIFACT_FILES = [
 const ARTIFACTS_WITH_COMMANDS = [
   { file: 'landscape.md', command: '/productkit.landscape', label: 'Landscape' },
   { file: 'constitution.md', command: '/productkit.constitution', label: 'Constitution' },
+  { file: 'compete.md', command: '/productkit.compete', label: 'Compete' },
   { file: 'users.md', command: '/productkit.users', label: 'Users' },
   { file: 'problem.md', command: '/productkit.problem', label: 'Problem' },
   { file: 'assumptions.md', command: '/productkit.assumptions', label: 'Assumptions' },

@@ -8,20 +8,21 @@ Use these commands in order to build your product foundation:
 
 0. `/productkit.landscape` — Capture company, team, and domain context (run once, before everything else)
 1. `/productkit.constitution` — Define your product principles
-2. `/productkit.users` — Define target user personas
-3. `/productkit.problem` — Frame the problem statement
-4. `/productkit.assumptions` — Extract and prioritize assumptions
-5. `/productkit.validate` — Validate assumptions with interview scripts and surveys
-6. `/productkit.solution` — Brainstorm and evaluate solutions
-7. `/productkit.prioritize` — Score and rank features
-8. `/productkit.spec` — Generate a product spec
-9. `/productkit.clarify` — Resolve ambiguities across artifacts
-10. `/productkit.analyze` — Run a completeness/consistency check
-11. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
-12. `/productkit.audit` — Compare spec against codebase and surface gaps (post-build — what was actually implemented vs spec)
-13. `/productkit.learn` — Index knowledge directory into a summary for faster commands
-14. `/productkit.techreview` — Review spec against codebase and flag what needs engineering input (pre-build — feasibility before implementation)
-15. `/productkit.stories` — Break spec into user stories with acceptance criteria
+2. `/productkit.compete` — Analyze competitive landscape and find differentiation
+3. `/productkit.users` — Define target user personas
+4. `/productkit.problem` — Frame the problem statement
+5. `/productkit.assumptions` — Extract and prioritize assumptions
+6. `/productkit.validate` — Validate assumptions with interview scripts and surveys
+7. `/productkit.solution` — Brainstorm and evaluate solutions
+8. `/productkit.prioritize` — Score and rank features
+9. `/productkit.spec` — Generate a product spec
+10. `/productkit.clarify` — Resolve ambiguities across artifacts
+11. `/productkit.analyze` — Run a completeness/consistency check
+12. `/productkit.bootstrap` — Auto-draft all artifacts from an existing codebase
+13. `/productkit.audit` — Compare spec against codebase and surface gaps (post-build — what was actually implemented vs spec)
+14. `/productkit.learn` — Index knowledge directory into a summary for faster commands
+15. `/productkit.techreview` — Review spec against codebase and flag what needs engineering input (pre-build — feasibility before implementation)
+16. `/productkit.stories` — Break spec into user stories with acceptance criteria
 
 ## Mode
 
@@ -32,6 +33,7 @@ Check `.productkit/config.json` for a `mode` field — either `"solo"` (building
 Product artifacts are written as markdown files to `.productkit/artifacts/` by default. Check `.productkit/config.json` for an `artifact_dir` field — if set, artifacts live in that directory instead. Default artifact locations (under `.productkit/artifacts/`):
 - `landscape.md` — Company, team, and domain landscape
 - `constitution.md` — Product principles and values
+- `compete.md` — Competitive analysis and differentiation angle
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
 - `assumptions.md` — Prioritized assumptions
@@ -46,7 +48,7 @@ Product artifacts are written as markdown files to `.productkit/artifacts/` by d
 
 ## Workflow
 
-Start with `/productkit.landscape` to front-load company knowledge, then `/productkit.constitution` or `/productkit.users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency.
+Start with `/productkit.landscape` to front-load company knowledge, then `/productkit.constitution`, `/productkit.compete`, and `/productkit.users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency.
 
 For existing projects, use `/productkit.bootstrap` to auto-draft all artifacts from your codebase in one session.
 

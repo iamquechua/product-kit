@@ -17,6 +17,7 @@ Read these files first (required):
 
 Also read if they exist:
 - `landscape.md` — company and domain landscape (use for team/constraint-aware prioritization)
+- `compete.md` — competitive analysis (use competitive gaps to inform priority)
 - `assumptions.md` — risk factors
 - `constitution.md` — decision-making principles
 

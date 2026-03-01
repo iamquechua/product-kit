@@ -350,7 +350,7 @@
 <section class="hero" id="top">
   <div class="container">
     <h1>Validate ideas<br><span>before you build them.</span></h1>
-    <p>Product Kit is a free, open-source product discovery toolkit for Claude. 9 guided steps. 7 utility commands. 1 validated spec.</p>
+    <p>Product Kit is a free, open-source product discovery toolkit for Claude. 10 guided steps. 7 utility commands. 1 validated spec.</p>
     <div class="hero-buttons">
       <a href="https://github.com/iamquechua/product-kit" class="btn btn-primary">View on GitHub</a>
       <a href="#setup" class="btn btn-secondary">Get Started</a>
@@ -376,26 +376,28 @@
 <section id="workflow" style="background: var(--bg-surface);">
   <div class="container">
     <h2>How It Works</h2>
-    <p>Product Kit guides you through 9 steps. Each step reads the previous one. Nothing gets skipped.</p>
+    <p>Product Kit guides you through 10 steps. Each step reads the previous one. Nothing gets skipped.</p>
 
     <div class="workflow">
       <div class="workflow-step"><span class="num">0</span>Landscape</div>
       <span class="workflow-arrow">&rarr;</span>
       <div class="workflow-step"><span class="num">1</span>Constitution</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">2</span>Users</div>
+      <div class="workflow-step"><span class="num">2</span>Compete</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">3</span>Problem</div>
+      <div class="workflow-step"><span class="num">3</span>Users</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">4</span>Assumptions</div>
+      <div class="workflow-step"><span class="num">4</span>Problem</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">5</span>Validate</div>
+      <div class="workflow-step"><span class="num">5</span>Assumptions</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">6</span>Solution</div>
+      <div class="workflow-step"><span class="num">6</span>Validate</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">7</span>Prioritize</div>
+      <div class="workflow-step"><span class="num">7</span>Solution</div>
       <span class="workflow-arrow">&rarr;</span>
-      <div class="workflow-step"><span class="num">8</span>Spec</div>
+      <div class="workflow-step"><span class="num">8</span>Prioritize</div>
+      <span class="workflow-arrow">&rarr;</span>
+      <div class="workflow-step"><span class="num">9</span>Spec</div>
     </div>
 
     <p style="text-align:center; color: var(--text-muted); margin-top: 1rem;">Plus seven utility commands — <strong>Clarify</strong>, <strong>Analyze</strong>, <strong>Bootstrap</strong>, <strong>Audit</strong>, <strong>Learn</strong>, <strong>Tech Review</strong>, and <strong>Stories</strong> — that you can run anytime.</p>
@@ -422,7 +424,7 @@
         <li style="margin-bottom: 0.5rem;">Select the zip file</li>
         <li style="margin-bottom: 0.5rem;">Done &mdash; type <code>/product-kit:users</code> to start</li>
       </ol>
-      <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);"><strong>What you get:</strong> All 9 guided steps plus utility commands (Clarify, Analyze, Bootstrap, Audit, Learn, Tech Review, Stories). Great for product discovery without leaving Claude.</p>
+      <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);"><strong>What you get:</strong> All 10 guided steps plus utility commands (Clarify, Analyze, Bootstrap, Audit, Learn, Tech Review, Stories). Great for product discovery without leaving Claude.</p>
     </div>
 
     <div class="setup-panel" id="panel-cli">
@@ -442,7 +444,7 @@ claude</code></pre>
 <!-- Step-by-step -->
 <section id="steps" style="background: var(--bg-surface);">
   <div class="container">
-    <h2>The 9 Steps</h2>
+    <h2>The 10 Steps</h2>
     <p>Each step is a guided conversation. Claude asks the questions, pushes back on vague answers, and writes a markdown artifact when done.</p>
 
     <!-- Step 0 -->
@@ -504,6 +506,34 @@ claude</code></pre>
     <!-- Step 2 -->
     <div class="step-card">
       <span class="step-num">2</span>
+      <h3>Compete</h3>
+      <span class="tagline">"Know the battlefield before you pick your position."</span>
+      <pre><code>/productkit.compete</code></pre>
+      <div class="step-meta">
+        <div class="step-meta-block">
+          <h4>What Claude asks you</h4>
+          <ul>
+            <li>What category does this product live in?</li>
+            <li>Who else solves this problem?</li>
+            <li>What do competitors do well and poorly?</li>
+            <li>Where are the gaps?</li>
+          </ul>
+        </div>
+        <div class="step-meta-block">
+          <h4>What it produces &mdash; <code>compete.md</code></h4>
+          <ul>
+            <li>Direct &amp; indirect competitor analysis</li>
+            <li>Non-software workarounds</li>
+            <li>Comparison matrix</li>
+            <li>Gaps &amp; differentiation angle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <span class="step-num">3</span>
       <h3>Users</h3>
       <span class="tagline">"Everyone" is not a user.</span>
       <pre><code>/productkit.users</code></pre>
@@ -527,9 +557,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 3 -->
+    <!-- Step 4 -->
     <div class="step-card">
-      <span class="step-num">3</span>
+      <span class="step-num">4</span>
       <h3>Problem</h3>
       <span class="tagline">"We need an app" &rarr; "What problem does that app solve?"</span>
       <pre><code>/productkit.problem</code></pre>
@@ -554,9 +584,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 4 -->
+    <!-- Step 5 -->
     <div class="step-card">
-      <span class="step-num">4</span>
+      <span class="step-num">5</span>
       <h3>Assumptions</h3>
       <span class="tagline">What are you betting on without knowing it?</span>
       <pre><code>/productkit.assumptions</code></pre>
@@ -580,9 +610,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 5 -->
+    <!-- Step 6 -->
     <div class="step-card">
-      <span class="step-num">5</span>
+      <span class="step-num">6</span>
       <h3>Validate</h3>
       <span class="tagline">Don't guess. Go find out.</span>
       <pre><code>/productkit.validate</code></pre>
@@ -608,9 +638,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 6 -->
+    <!-- Step 7 -->
     <div class="step-card">
-      <span class="step-num">6</span>
+      <span class="step-num">7</span>
       <h3>Solution</h3>
       <span class="tagline">NOW you can brainstorm what to build.</span>
       <pre><code>/productkit.solution</code></pre>
@@ -635,9 +665,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 7 -->
+    <!-- Step 8 -->
     <div class="step-card">
-      <span class="step-num">7</span>
+      <span class="step-num">8</span>
       <h3>Prioritize</h3>
       <span class="tagline">"What's the smallest thing you can ship that solves the core problem?"</span>
       <pre><code>/productkit.prioritize</code></pre>
@@ -661,9 +691,9 @@ claude</code></pre>
       </div>
     </div>
 
-    <!-- Step 8 -->
+    <!-- Step 9 -->
     <div class="step-card">
-      <span class="step-num">8</span>
+      <span class="step-num">9</span>
       <h3>Spec</h3>
       <span class="tagline">Everything synthesized. Every claim traced. Ready to build.</span>
       <pre><code>/productkit.spec</code></pre>
@@ -671,7 +701,7 @@ claude</code></pre>
         <div class="step-meta-block">
           <h4>What Claude does</h4>
           <ul>
-            <li>Reads all 8 previous artifacts</li>
+            <li>Reads all 9 previous artifacts</li>
             <li>Synthesizes into one document</li>
             <li>Links every claim to its source</li>
           </ul>
@@ -746,6 +776,7 @@ claude</code></pre>
       <span class="folder">my-project/</span><br>
       <span class="muted">├──</span> <span class="file">landscape.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Company &amp; domain context</span><br>
       <span class="muted">├──</span> <span class="file">constitution.md</span> <span class="muted">&nbsp;&nbsp;# Product principles</span><br>
+      <span class="muted">├──</span> <span class="file">compete.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Competitive analysis</span><br>
       <span class="muted">├──</span> <span class="file">users.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# User personas</span><br>
       <span class="muted">├──</span> <span class="file">problem.md</span> <span class="muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Problem statement</span><br>
       <span class="muted">├──</span> <span class="file">assumptions.md</span> <span class="muted">&nbsp;&nbsp;# Prioritized assumptions</span><br>
@@ -762,7 +793,7 @@ claude</code></pre>
 
     <p style="font-size: 0.9rem; color: var(--text-muted);">Use <code>--artifact-dir</code> during init to store artifacts in a subdirectory (e.g. <code>docs/product/</code>) instead of the default <code>.productkit/artifacts/</code>.</p>
 
-    <p>13 artifacts. 1 validated product idea. Hand <code>spec.md</code> to Claude Code and build the right thing.</p>
+    <p>14 artifacts. 1 validated product idea. Hand <code>spec.md</code> to Claude Code and build the right thing.</p>
   </div>
 </section>
 

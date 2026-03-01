@@ -20,6 +20,7 @@ Read these files first (required):
 Also read if they exist:
 - `landscape.md` — company and domain landscape (use to ground solutions in real constraints)
 - `constitution.md` — product principles (use to filter solutions)
+- `compete.md` — competitive analysis (reference competitive gaps when evaluating differentiation)
 - `assumptions.md` — known risks
 
 Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings when evaluating solution feasibility. If the file doesn't exist but `knowledge/` has files, suggest running `/productkit.learn` first.

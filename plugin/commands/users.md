@@ -14,6 +14,8 @@ Read `landscape.md` if it exists — use company, market, and domain context to 
 
 Read `constitution.md` if it exists — use the product vision to inform user discovery.
 
+Read `compete.md` if it exists — use competitive analysis to understand which user segments are underserved.
+
 Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when building personas. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
 
 ### Workspace Context

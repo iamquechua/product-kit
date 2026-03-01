@@ -22,6 +22,7 @@ claude --plugin-dir ./plugin
 |---------|-------------|--------|
 | `/product-kit:landscape` | Capture company, team, and domain context | `landscape.md` |
 | `/product-kit:constitution` | Define product principles and values | `constitution.md` |
+| `/product-kit:compete` | Analyze competitive landscape and find differentiation | `compete.md` |
 | `/product-kit:users` | Define target user personas | `users.md` |
 | `/product-kit:problem` | Frame the problem statement | `problem.md` |
 | `/product-kit:assumptions` | Extract and prioritize assumptions | `assumptions.md` |
@@ -51,7 +52,7 @@ All commands automatically detect workspace membership and read both project-lev
 
 ## Workflow
 
-Start with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution` or `/product-kit:users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, `/product-kit:audit`, `/product-kit:learn`, `/product-kit:techreview`, or `/product-kit:stories` at any stage.
+Start with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution`, `/product-kit:compete`, and `/product-kit:users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, `/product-kit:audit`, `/product-kit:learn`, `/product-kit:techreview`, or `/product-kit:stories` at any stage.
 
 ## Version Sync
 

@@ -15,6 +15,7 @@ Check `.productkit/config.json` for an `artifact_dir` field. If set, read and wr
 Read all existing artifacts:
 - `landscape.md` — company and domain landscape (use throughout the spec for grounding)
 - `constitution.md` — product principles
+- `compete.md` — competitive analysis
 - `users.md` — target users (required)
 - `problem.md` — problem statement (required)
 - `assumptions.md` — known risks

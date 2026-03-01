@@ -398,13 +398,14 @@
       <li><a href="#knowledge">Knowledge &amp; Learn</a></li>
       <li><a href="#step-0">0. Landscape</a></li>
       <li><a href="#step-1">1. Constitution</a></li>
-      <li><a href="#step-2">2. Users</a></li>
-      <li><a href="#step-3">3. Problem</a></li>
-      <li><a href="#step-4">4. Assumptions</a></li>
-      <li><a href="#step-5">5. Validate</a></li>
-      <li><a href="#step-6">6. Solution</a></li>
-      <li><a href="#step-7">7. Prioritize</a></li>
-      <li><a href="#step-8">8. Spec</a></li>
+      <li><a href="#step-2">2. Compete</a></li>
+      <li><a href="#step-3">3. Users</a></li>
+      <li><a href="#step-4">4. Problem</a></li>
+      <li><a href="#step-5">5. Assumptions</a></li>
+      <li><a href="#step-6">6. Validate</a></li>
+      <li><a href="#step-7">7. Solution</a></li>
+      <li><a href="#step-8">8. Prioritize</a></li>
+      <li><a href="#step-9">9. Spec</a></li>
       <li><a href="#utilities">Utilities</a></li>
       <li><a href="#conclusion">Next Steps</a></li>
     </ul>
@@ -416,7 +417,7 @@
     <!-- Introduction -->
     <section class="wt-section" id="intro" data-step="intro">
       <h2>Walkthrough: Building "Streak" from Scratch</h2>
-      <p style="color: var(--text);">Product Kit is a free, open-source product discovery toolkit for Claude. It guides you through 9 steps &mdash; from understanding your market to writing a validated product spec &mdash; using guided conversations that produce markdown artifacts.</p>
+      <p style="color: var(--text);">Product Kit is a free, open-source product discovery toolkit for Claude. It guides you through 10 steps &mdash; from understanding your market to writing a validated product spec &mdash; using guided conversations that produce markdown artifacts.</p>
       <p style="color: var(--text);">In this walkthrough, we'll build <strong>Streak</strong> &mdash; a habit tracker for people who keep starting habits and quitting. You'll see every conversation, every artifact, and every decision along the way.</p>
 
       <h4>Prerequisites</h4>
@@ -435,9 +436,9 @@
 
       <h4>Estimated time</h4>
       <ul>
-        <li><strong>Steps 0&ndash;4</strong> (Landscape through Assumptions): ~2 hours</li>
-        <li><strong>Step 5</strong> (Validate): 1&ndash;2 weeks of fieldwork (interviews, surveys, data collection)</li>
-        <li><strong>Steps 6&ndash;8</strong> (Solution through Spec): ~1 hour</li>
+        <li><strong>Steps 0&ndash;5</strong> (Landscape through Assumptions): ~2 hours</li>
+        <li><strong>Step 6</strong> (Validate): 1&ndash;2 weeks of fieldwork (interviews, surveys, data collection)</li>
+        <li><strong>Steps 7&ndash;9</strong> (Solution through Spec): ~1 hour</li>
       </ul>
 
       <div class="wt-note">
@@ -558,7 +559,7 @@ Next steps:
     <section class="wt-section" id="knowledge" data-step="knowledge">
       <h2>Set Up Your Knowledge Base</h2>
       <div class="wt-command">/product-kit:learn</div>
-      <p>Before you begin the 9-step workflow, set up your <code>knowledge/</code> directory. This is where you store research files &mdash; competitor analyses, user interview transcripts, market reports, articles, anything that informs your product thinking.</p>
+      <p>Before you begin the 10-step workflow, set up your <code>knowledge/</code> directory. This is where you store research files &mdash; competitor analyses, user interview transcripts, market reports, articles, anything that informs your product thinking.</p>
 
       <h4>How it works</h4>
       <ul>
@@ -777,7 +778,7 @@ Next steps:
         <strong>A good principle tells you what NOT to build.</strong> "Effortless over powerful" means no advanced configuration screens, no complex onboarding flows, no dense dashboards.
       </div>
       <div class="wt-tip">
-        <strong>Revisit after step 5 (Validate).</strong> Real evidence may change your principles. That's a feature, not a bug.
+        <strong>Revisit after step 6 (Validate).</strong> Real evidence may change your principles. That's a feature, not a bug.
       </div>
       <div class="wt-tip">
         <strong>Share the constitution with your whole team.</strong> It's only useful if everyone knows the rules.
@@ -803,10 +804,117 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 2: Users -->
+    <!-- Step 2: Compete -->
     <section class="wt-section" id="step-2" data-step="step-2">
       <div class="wt-step-header">
         <span class="wt-step-num">2</span>
+        <h2>Compete</h2>
+      </div>
+      <div class="wt-command">/product-kit:compete</div>
+      <p style="font-style: italic; color: var(--text);">"Know the battlefield before you pick your position."</p>
+
+      <h4>Why this step matters</h4>
+      <p>Your product doesn't exist in a vacuum. Users already have solutions &mdash; other apps, spreadsheets, or just doing nothing. If you don't know what's out there, you'll build something that's a marginal improvement at best and invisible at worst.</p>
+      <p>Competitive analysis isn't about copying features. It's about finding gaps &mdash; underserved needs, painful workarounds, and positioning angles that existing solutions have missed.</p>
+
+      <h4>What to prepare</h4>
+      <ul>
+        <li>Products you consider competitors (direct and indirect)</li>
+        <li>How people currently solve this problem without software</li>
+        <li>What frustrates users about existing solutions</li>
+      </ul>
+
+      <h4>The conversation</h4>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Based on your constitution, Streak is a habit tracker focused on simplicity and forgiveness. What market category does this live in? Be specific.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Mobile habit tracking apps.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Good. Who are the main competitors you're aware of? And don't forget non-app alternatives &mdash; how do people track habits without an app?</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker you">You</p>
+        <p>Habitica, Streaks (iOS), Habitify, and Loop Habit Tracker. For non-app, people use bullet journals and reminders/alarms.</p>
+      </div>
+      <div class="wt-dialogue">
+        <p class="wt-speaker claude">Claude</p>
+        <p>Let's go deeper on each. Starting with Habitica &mdash; what do they do well, and where do they fall short for your target user?</p>
+      </div>
+
+      <h4>Full artifact</h4>
+      <div class="wt-artifact">
+        <span class="artifact-label">compete.md</span>
+        <strong># Competitive Analysis</strong><br><br>
+        <strong>## Market Category</strong><br>
+        Mobile habit tracking for people who repeatedly start and abandon habits (habit restarters).<br><br>
+        <strong>## Alternatives</strong><br><br>
+        <strong>### Direct Competitors</strong><br><br>
+        <strong>#### Habitica</strong><br>
+        - <strong>Positioning:</strong> Gamified habit tracker (RPG-style)<br>
+        - <strong>Strengths:</strong> Strong community, fun for gamers<br>
+        - <strong>Weaknesses:</strong> Overwhelming UI, punishes missed days, steep learning curve<br>
+        - <strong>Target User:</strong> Gamers who want habit gamification<br><br>
+        <strong>#### Streaks (iOS)</strong><br>
+        - <strong>Positioning:</strong> Minimalist habit tracker<br>
+        - <strong>Strengths:</strong> Clean design, Apple Watch support<br>
+        - <strong>Weaknesses:</strong> Limited to 12 habits, iOS only, no recovery mechanism<br>
+        - <strong>Target User:</strong> Apple users who want a simple tracker<br><br>
+        <strong>### Non-Software Workarounds</strong><br>
+        - Bullet journals &mdash; Flexible but easy to forget, no reminders<br>
+        - Phone alarms &mdash; Binary (did/didn't), no streak tracking or encouragement<br><br>
+        <strong>## Gaps &amp; Opportunities</strong><br>
+        - No competitor focuses on recovery after breaking a streak<br>
+        - Most apps punish missed days instead of encouraging restarts<br>
+        - Simple apps lack emotional support; complex apps overwhelm<br><br>
+        <strong>## Positioning &amp; Differentiation</strong><br>
+        Streak is the habit tracker that expects you to fail and helps you restart. While competitors punish missed days or ignore them, Streak treats breaking a streak as a normal part of habit formation and makes getting back on track effortless.
+      </div>
+
+      <h4>Common mistakes</h4>
+      <div class="wt-mistake">
+        <strong>Only listing direct competitors.</strong> Non-software workarounds and indirect competitors matter &mdash; they reveal what users actually do today.
+      </div>
+      <div class="wt-mistake">
+        <strong>Vague differentiation.</strong> "We're simpler" isn't enough. Be specific about what gap you're filling and why competitors haven't filled it.
+      </div>
+
+      <h4>Tips &amp; best practices</h4>
+      <div class="wt-tip">
+        <strong>Try the competitors yourself.</strong> Sign up, use them for a week, and note what frustrates you. First-hand experience beats secondhand research.
+      </div>
+      <div class="wt-tip">
+        <strong>Read competitor reviews.</strong> App store reviews are gold &mdash; they tell you exactly what users love and hate about existing solutions.
+      </div>
+
+      <h4>When to re-run</h4>
+      <ul>
+        <li>When a new competitor launches or pivots</li>
+        <li>When your positioning shifts after validation</li>
+        <li>Before major feature planning</li>
+      </ul>
+
+      <h4>How it connects</h4>
+      <div class="wt-section-nav">
+        <div>
+          <div class="nav-label">Reads</div>
+          <div class="nav-items">Landscape, Constitution</div>
+        </div>
+        <div>
+          <div class="nav-label">Feeds into</div>
+          <div class="nav-items">Problem, Solution, Prioritize, Spec</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Users -->
+    <section class="wt-section" id="step-3" data-step="step-3">
+      <div class="wt-step-header">
+        <span class="wt-step-num">3</span>
         <h2>Users</h2>
       </div>
       <div class="wt-command">/product-kit:users</div>
@@ -913,10 +1021,10 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 3: Problem -->
-    <section class="wt-section" id="step-3" data-step="step-3">
+    <!-- Step 4: Problem -->
+    <section class="wt-section" id="step-4" data-step="step-4">
       <div class="wt-step-header">
-        <span class="wt-step-num">3</span>
+        <span class="wt-step-num">4</span>
         <h2>Problem</h2>
       </div>
       <div class="wt-command">/product-kit:problem</div>
@@ -1028,10 +1136,10 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 4: Assumptions -->
-    <section class="wt-section" id="step-4" data-step="step-4">
+    <!-- Step 5: Assumptions -->
+    <section class="wt-section" id="step-5" data-step="step-5">
       <div class="wt-step-header">
-        <span class="wt-step-num">4</span>
+        <span class="wt-step-num">5</span>
         <h2>Assumptions</h2>
       </div>
       <div class="wt-command">/product-kit:assumptions</div>
@@ -1135,10 +1243,10 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 5: Validate -->
-    <section class="wt-section" id="step-5" data-step="step-5">
+    <!-- Step 6: Validate -->
+    <section class="wt-section" id="step-6" data-step="step-6">
       <div class="wt-step-header">
-        <span class="wt-step-num">5</span>
+        <span class="wt-step-num">6</span>
         <h2>Validate</h2>
       </div>
       <div class="wt-command">/product-kit:validate</div>
@@ -1280,17 +1388,17 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 6: Solution -->
-    <section class="wt-section" id="step-6" data-step="step-6">
+    <!-- Step 7: Solution -->
+    <section class="wt-section" id="step-7" data-step="step-7">
       <div class="wt-step-header">
-        <span class="wt-step-num">6</span>
+        <span class="wt-step-num">7</span>
         <h2>Solution</h2>
       </div>
       <div class="wt-command">/product-kit:solution</div>
       <p style="font-style: italic; color: var(--text);">"NOW you can brainstorm what to build."</p>
 
       <h4>Why this step matters</h4>
-      <p>Notice that solution is step 6, not step 1. Most teams start here. Product Kit makes you earn the right to brainstorm by validating the problem first.</p>
+      <p>Notice that solution is step 7, not step 1. Most teams start here. Product Kit makes you earn the right to brainstorm by validating the problem first.</p>
       <p>Now that you know the problem is real and your assumptions are tested, solution ideas are grounded in evidence, not fantasy. Every option gets evaluated against what you've learned.</p>
 
       <h4>What to prepare</h4>
@@ -1378,10 +1486,10 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 7: Prioritize -->
-    <section class="wt-section" id="step-7" data-step="step-7">
+    <!-- Step 8: Prioritize -->
+    <section class="wt-section" id="step-8" data-step="step-8">
       <div class="wt-step-header">
-        <span class="wt-step-num">7</span>
+        <span class="wt-step-num">8</span>
         <h2>Prioritize</h2>
       </div>
       <div class="wt-command">/product-kit:prioritize</div>
@@ -1392,7 +1500,7 @@ Next steps:
 
       <h4>What to prepare</h4>
       <ul>
-        <li>The solution from step 6</li>
+        <li>The solution from step 7</li>
         <li>A sense of engineering effort for each feature (or access to your engineer)</li>
       </ul>
 
@@ -1471,10 +1579,10 @@ Next steps:
       </div>
     </section>
 
-    <!-- Step 8: Spec -->
-    <section class="wt-section" id="step-8" data-step="step-8">
+    <!-- Step 9: Spec -->
+    <section class="wt-section" id="step-9" data-step="step-9">
       <div class="wt-step-header">
-        <span class="wt-step-num">8</span>
+        <span class="wt-step-num">9</span>
         <h2>Spec</h2>
       </div>
       <div class="wt-command">/product-kit:spec</div>
@@ -1604,7 +1712,7 @@ Next steps:
       <div class="utility-card">
         <h3>Analyze</h3>
         <div class="wt-command">/product-kit:analyze</div>
-        <p>After completing step 5, run Analyze for a quality check.</p>
+        <p>After completing step 6, run Analyze for a quality check.</p>
         <div class="wt-dialogue">
           <p class="wt-speaker claude">Claude</p>
           <p><strong>Score: 7/10.</strong> Strengths: strong validation evidence, clear problem framing, well-defined persona. Gaps: competitive differentiation is weak &mdash; your problem statement doesn't explain why <em>you</em> will solve this better than a competitor who copies the weekly rhythm model. Recommendation: add a "why us" section to your problem statement.</p>

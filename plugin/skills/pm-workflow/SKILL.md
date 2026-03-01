@@ -13,13 +13,14 @@ The recommended workflow order is:
 
 0. `/product-kit:landscape` — Capture company, team, and domain context (run once, before everything else)
 1. `/product-kit:constitution` — Define product principles and values
-2. `/product-kit:users` — Define target user personas
-3. `/product-kit:problem` — Frame the problem statement
-4. `/product-kit:assumptions` — Extract and prioritize assumptions
-5. `/product-kit:validate` — Validate assumptions with interviews and surveys
-6. `/product-kit:solution` — Brainstorm and evaluate solutions
-7. `/product-kit:prioritize` — Score and rank features
-8. `/product-kit:spec` — Generate a complete product spec
+2. `/product-kit:compete` — Analyze competitive landscape and find differentiation
+3. `/product-kit:users` — Define target user personas
+4. `/product-kit:problem` — Frame the problem statement
+5. `/product-kit:assumptions` — Extract and prioritize assumptions
+6. `/product-kit:validate` — Validate assumptions with interviews and surveys
+7. `/product-kit:solution` — Brainstorm and evaluate solutions
+8. `/product-kit:prioritize` — Score and rank features
+9. `/product-kit:spec` — Generate a complete product spec
 
 Utility commands (run anytime):
 - `/product-kit:clarify` — Resolve ambiguities across artifacts
@@ -34,19 +35,21 @@ Each command reads previous artifacts to maintain consistency:
 
 - `landscape` — no dependencies (run first at workspace or project level)
 - `constitution` — reads `landscape.md` if it exists
+- `compete` — reads `landscape.md` and `constitution.md` if they exist
 - `users` — reads `landscape.md` and `constitution.md` if they exist
-- `problem` — requires `users.md`; reads `landscape.md` if it exists
+- `problem` — requires `users.md`; reads `compete.md`, `landscape.md` if they exist
 - `assumptions` — requires `users.md` and `problem.md`; reads `landscape.md` if it exists
 - `validate` — requires `assumptions.md`; reads `users.md`, `problem.md`, `landscape.md` if they exist
-- `solution` — requires `users.md`, `problem.md`, and `validation.md`; reads `landscape.md` if it exists
-- `prioritize` — requires `solution.md`, `users.md`, and `problem.md`; reads `landscape.md` if it exists
-- `spec` — requires `users.md`, `problem.md`, and `solution.md`; reads `landscape.md` if it exists
+- `solution` — requires `users.md`, `problem.md`, and `validation.md`; reads `compete.md`, `landscape.md` if they exist
+- `prioritize` — requires `solution.md`, `users.md`, and `problem.md`; reads `compete.md`, `landscape.md` if they exist
+- `spec` — requires `users.md`, `problem.md`, and `solution.md`; reads `compete.md`, `landscape.md` if they exist
 
 ## Artifacts
 
 Commands produce these markdown files in the project root (or in the directory specified by `artifact_dir` in `.productkit/config.json`):
 - `landscape.md` — Company, team, and domain landscape
 - `constitution.md` — Product principles and values
+- `compete.md` — Competitive analysis and differentiation angle
 - `users.md` — Target user personas
 - `problem.md` — Problem statement
 - `assumptions.md` — Prioritized assumptions
@@ -69,7 +72,7 @@ Projects can live inside a workspace (parent directory with `../.productkit/conf
 
 ## Guidance
 
-- If a user is starting fresh, recommend beginning with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution` or `/product-kit:users`
+- If a user is starting fresh, recommend beginning with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution`, `/product-kit:compete`, and `/product-kit:users`
 - If a required artifact is missing, tell the user which command to run first
 - If the user seems stuck, suggest `/product-kit:analyze` to assess their progress
 - If artifacts seem inconsistent, suggest `/product-kit:clarify`
