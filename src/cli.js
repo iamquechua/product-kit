@@ -12,6 +12,7 @@ const completionCommand = require('./commands/completion');
 const exportCommand = require('./commands/export');
 const diffCommand = require('./commands/diff');
 const doctorCommand = require('./commands/doctor');
+const dashboardCommand = require('./commands/dashboard');
 
 const program = new Command();
 
@@ -76,6 +77,12 @@ program
   .command('doctor')
   .description('Check project health (missing files, outdated commands, etc.)')
   .action(doctorCommand);
+
+program
+  .command('dashboard')
+  .description('Generate a visual dashboard of artifact progress')
+  .option('--output <file>', 'Output filename', 'dashboard.html')
+  .action(dashboardCommand);
 
 program.parse(process.argv);
 

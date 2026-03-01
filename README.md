@@ -129,6 +129,8 @@ These markdown files are your product foundation — share them with your team, 
 | `productkit reset` | Remove all artifacts and start over |
 | `productkit list` | Show available slash commands with descriptions |
 | `productkit completion` | Output shell completion script (bash/zsh) |
+| `productkit dashboard` | Generate a visual dashboard of artifact progress |
+| `productkit dashboard --output <file>` | Output to a custom filename |
 | `productkit check` | Verify Claude Code is installed |
 
 ## Cowork Plugin (No CLI Required)

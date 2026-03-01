@@ -12,6 +12,7 @@ _productkit() {
     'reset:Remove all artifacts and start over'
     'list:Show available slash commands with descriptions'
     'completion:Output shell completion script'
+    'dashboard:Generate a visual dashboard of artifact progress'
   )
 
   _arguments -C \\
@@ -45,7 +46,7 @@ const BASH_COMPLETION = `_productkit() {
   COMPREPLY=()
   cur="\${COMP_WORDS[COMP_CWORD]}"
   prev="\${COMP_WORDS[COMP_CWORD-1]}"
-  commands="init check status update reset list completion"
+  commands="init check status update reset list completion dashboard"
 
   case "\${prev}" in
     productkit)

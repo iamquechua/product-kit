@@ -36,3 +36,5 @@ Product artifacts are written as markdown files. Check `.productkit/config.json`
 Start with `/productkit.constitution` or `/productkit.users`, then work through the commands in order. Each command reads previous artifacts to maintain consistency.
 
 For existing projects, use `/productkit.bootstrap` to auto-draft all artifacts from your codebase in one session.
+
+Run `productkit dashboard` to generate a visual dashboard showing artifact progress, workflow status, and next steps.
