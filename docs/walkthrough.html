@@ -393,6 +393,8 @@
     <h4>Walkthrough</h4>
     <ul>
       <li><a href="#intro" class="active">Introduction</a></li>
+      <li><a href="#workspace">Create a Workspace</a></li>
+      <li><a href="#init-project">Initialize Your Project</a></li>
       <li><a href="#knowledge">Knowledge &amp; Learn</a></li>
       <li><a href="#step-0">0. Landscape</a></li>
       <li><a href="#step-1">1. Constitution</a></li>
@@ -420,7 +422,7 @@
       <h4>Prerequisites</h4>
       <ul>
         <li>Claude with the <a href="https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip" style="color: var(--accent-light);">Cowork plugin</a>, or <a href="https://claude.com/claude-code" style="color: var(--accent-light);">Claude Code</a> with the CLI</li>
-        <li>Product Kit set up (plugin uploaded, or <code>productkit init</code> in the CLI)</li>
+        <li>Product Kit set up (plugin uploaded, or <code>productkit workspace</code> / <code>productkit init</code> in the CLI &mdash; covered in the next two sections)</li>
         <li>A product idea you want to validate (or follow along with Streak)</li>
       </ul>
 
@@ -443,11 +445,112 @@
       </div>
 
       <div class="wt-note">
-        <strong>Building solo?</strong> This walkthrough uses team mode examples (user stories, engineering handoffs). In solo mode, Product Kit adapts &mdash; you get direct task lists instead of &ldquo;As a user...&rdquo; stories, personal build plans instead of sprint estimates, and techreview resolves questions conversationally instead of deferring to engineers. Set your mode during <code>productkit init</code> with <code>--mode solo</code>.
+        <strong>Building solo?</strong> This walkthrough uses team mode examples (user stories, engineering handoffs). In solo mode, Product Kit adapts &mdash; you get direct task lists instead of &ldquo;As a user...&rdquo; stories, personal build plans instead of sprint estimates, and techreview resolves questions conversationally instead of deferring to engineers. You'll choose your mode during project initialization.
       </div>
 
       <div class="wt-tip">
         <strong>Already have a product?</strong> This walkthrough follows a new product from scratch, but Product Kit works for existing products too. Run <code>/product-kit:bootstrap</code> to generate artifacts from your codebase, then re-run individual steps (like Problem, Assumptions, and Validate) scoped to your next feature. You don't need to redo Landscape or Constitution every time.
+      </div>
+    </section>
+
+    <!-- Create a Workspace -->
+    <section class="wt-section" id="workspace" data-step="workspace">
+      <h2>Create a Workspace</h2>
+      <div class="wt-command">productkit workspace streak-org</div>
+      <p style="color: var(--text);">A workspace is a parent directory that holds one or more Product Kit projects. It gives you a shared landscape, a shared knowledge base, and a single place to run <code>/productkit.landscape</code> that feeds every project inside it.</p>
+
+      <h4>Why use a workspace?</h4>
+      <ul>
+        <li>Your company has multiple products that share the same landscape (team, stack, competitors)</li>
+        <li>You want a single <code>knowledge/</code> directory that informs all projects</li>
+        <li>You want <code>landscape.md</code> written once at the org level, not repeated per project</li>
+      </ul>
+
+      <h4>Run the command</h4>
+      <pre><code>$ productkit workspace streak-org
+
+Workspace created successfully!
+
+Workspace: streak-org
+
+Next steps:
+  1. cd streak-org
+  2. productkit init my-app
+  3. claude
+  4. /productkit.landscape  (writes to workspace root)</code></pre>
+
+      <h4>What it creates</h4>
+      <pre><code>streak-org/
+├── .productkit/
+│   └── config.json          # { "type": "workspace", ... }
+├── .claude/
+│   └── commands/
+│       └── productkit.landscape.md
+└── knowledge/
+    └── README.md</code></pre>
+
+      <p>The workspace gets the <code>landscape</code> slash command and a <code>knowledge/</code> directory. Individual projects created inside it will automatically detect the workspace and link to it.</p>
+
+      <div class="wt-tip">
+        <strong>Building a single product?</strong> You can skip this step entirely and run <code>productkit init streak</code> directly. Workspaces are for orgs managing multiple products under one roof.
+      </div>
+    </section>
+
+    <!-- Initialize Your Project -->
+    <section class="wt-section" id="init-project" data-step="init-project">
+      <h2>Initialize Your Project</h2>
+      <div class="wt-command">productkit init streak</div>
+      <p style="color: var(--text);">This scaffolds a new Product Kit project with all the slash commands, a <code>CLAUDE.md</code> for agent context, and a <code>knowledge/</code> directory. If you're inside a workspace, the project automatically links to it.</p>
+
+      <h4>Run the command</h4>
+      <pre><code>$ cd streak-org
+$ productkit init streak
+
+How are you building this product?
+  1. Solo — I'm building it myself
+  2. Team — I'm working with engineers/designers
+
+Choose (1 or 2): 2
+
+Project initialized successfully!
+
+Next steps:
+  1. cd streak
+  2. claude
+  3. /productkit.constitution</code></pre>
+
+      <h4>What it creates</h4>
+      <pre><code>streak/
+├── .productkit/
+│   └── config.json          # { "type": "project", "workspace": "..", "mode": "team", ... }
+├── .claude/
+│   └── commands/
+│       ├── productkit.constitution.md
+│       ├── productkit.users.md
+│       ├── productkit.problem.md
+│       └── ... (all slash commands except landscape)
+├── knowledge/
+│   └── README.md
+├── CLAUDE.md
+├── README.md
+└── .gitignore</code></pre>
+
+      <p>Notice that <code>landscape</code> is not included in the project &mdash; it lives at the workspace level. When you run <code>/productkit.landscape</code> from Claude Code, it writes <code>landscape.md</code> to the workspace root, and all projects inside the workspace read from it.</p>
+
+      <h4>Solo vs. Team mode</h4>
+      <p>The mode you choose during init affects how downstream commands behave:</p>
+      <ul>
+        <li><strong>Solo:</strong> Task lists instead of user stories, personal build plans instead of sprint estimates, techreview resolves questions conversationally</li>
+        <li><strong>Team:</strong> User stories with acceptance criteria, engineering handoffs, sprint-ready story points</li>
+      </ul>
+      <p>You can also skip the prompt by passing <code>--mode solo</code> or <code>--mode team</code>.</p>
+
+      <div class="wt-note">
+        <strong>Existing project?</strong> Run <code>productkit init --existing</code> from inside your project directory to add Product Kit without creating a new folder.
+      </div>
+
+      <div class="wt-note">
+        <strong>Without a workspace:</strong> If you skipped the workspace step, run <code>productkit init streak</code> from any directory. The project gets all slash commands except <code>landscape</code>, which lives at the workspace level. To follow this walkthrough's Step 0, create a workspace first.
       </div>
     </section>
 
@@ -579,7 +682,7 @@
       <div class="wt-section-nav">
         <div>
           <div class="nav-label">Reads</div>
-          <div class="nav-items">Nothing (first step)</div>
+          <div class="nav-items">Nothing (first step). In a workspace, writes to the workspace root.</div>
         </div>
         <div>
           <div class="nav-label">Feeds into</div>
