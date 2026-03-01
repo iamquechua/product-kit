@@ -1,6 +1,6 @@
 # Product Kit — Cowork Plugin
 
-Structured product thinking for Claude Cowork. No command line required.
+Product discovery toolkit for Claude Cowork. No command line required.
 
 ## Install
 

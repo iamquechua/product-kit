@@ -19,7 +19,7 @@ const program = new Command();
 
 program
   .name('productkit')
-  .description(chalk.cyan.bold('Product thinking toolkit for Claude Code'))
+  .description(chalk.cyan.bold('Product discovery toolkit for Claude Code'))
   .version(version);
 
 program

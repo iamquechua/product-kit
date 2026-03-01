@@ -1,7 +1,7 @@
 {
   "name": "productkit",
   "version": "1.9.0",
-  "description": "Slash-command-driven product thinking toolkit for Claude Code",
+  "description": "Slash-command-driven product discovery toolkit for Claude Code",
   "main": "src/cli.js",
   "bin": {
     "productkit": "./src/cli.js"

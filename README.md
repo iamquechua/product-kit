@@ -1,6 +1,6 @@
 # Product Kit
 
-Slash-command-driven product thinking toolkit for [Claude Code](https://claude.com/claude-code).
+Slash-command-driven product discovery toolkit for [Claude Code](https://claude.com/claude-code).
 
 Product Kit gives PMs a structured workflow for validating product ideas — user personas, problem statements, assumptions mapping — all through guided AI conversations.
 

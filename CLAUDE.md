@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Product Kit is a CLI that scaffolds Claude Code slash commands for structured product thinking. The CLI is a thin scaffolding tool — all PM workflow lives in the slash command templates.
+Product Kit is a CLI that scaffolds Claude Code slash commands for structured product discovery. The CLI is a thin scaffolding tool — all PM workflow lives in the slash command templates.
 
 ## Architecture
 

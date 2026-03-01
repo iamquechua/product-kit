@@ -1,6 +1,6 @@
 # Product Kit Project
 
-This project uses Product Kit for structured product thinking.
+This project uses Product Kit for structured product discovery.
 
 ## Slash Commands
 
