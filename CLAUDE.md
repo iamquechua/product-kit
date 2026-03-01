@@ -26,7 +26,6 @@ templates/              # Copied into user projects on `init`
 └── gitignore
 
 test/                   # Node.js built-in test runner
-examples/               # Example projects
 ```
 
 ## Key Concepts

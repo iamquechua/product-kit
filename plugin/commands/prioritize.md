@@ -28,6 +28,11 @@ Check if this project is inside a workspace: look for `../.productkit/config.jso
 - Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
 - Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
+### Mode Detection
+
+Read `.productkit/config.json` and check the `mode` field:
+- `mode` — either `"solo"` or `"team"` (defaults to `"team"` if not set)
+
 If `solution.md` does not exist, tell the user to run `/product-kit:solution` first.
 
 ## Process
@@ -36,12 +41,12 @@ If `solution.md` does not exist, tell the user to run `/product-kit:solution` fi
 2. **Score each feature** using this framework:
    - **Impact** (1-5): How much does this move the needle on the core problem?
    - **Confidence** (1-5): How sure are we that users need this? (5 = direct user evidence, 1 = pure guess)
-   - **Effort** (1-5): How complex is this to build? (1 = trivial, 5 = massive). **This is a PM estimate — mark as `Eng. Validated: No`.**
+   - **Effort** (1-5): How complex is this to build? (1 = trivial, 5 = massive). **In team mode**, this is a PM estimate — mark as `Eng. Validated: No`. **In solo mode**, the builder owns this estimate directly — no `Eng. Validated` column.
    - **Priority Score** = (Impact × Confidence) / Effort
 3. **Discuss the ranking** — Present the scored list. Ask the user if the ranking feels right. Adjust if needed.
 4. **Draw the v1 line** — Which features make the cut for the first release? Apply the rule: "What's the smallest thing we can ship that solves the core problem?"
 5. **Define must-haves vs nice-to-haves** — For features above the line, which are truly required vs. which could be cut if time runs short?
-6. **Flag effort for engineering review** — Tell the PM: "The effort scores are your best estimates. Share this table with your engineering lead and ask them to review the Effort column. When they've provided their input, update the Effort scores and set `Eng. Validated` to `Yes`, then run `/product-kit:prioritize` again to recalculate rankings."
+6. **Flag effort for engineering review (team mode only)** — Tell the PM: "The effort scores are your best estimates. Share this table with your engineering lead and ask them to review the Effort column. When they've provided their input, update the Effort scores and set `Eng. Validated` to `Yes`, then run `/product-kit:prioritize` again to recalculate rankings." **Skip this step entirely in solo mode** — the builder validates effort themselves during scoring.
 
 ## Conversation Style
 
@@ -55,6 +60,8 @@ If `solution.md` does not exist, tell the user to run `/product-kit:solution` fi
 Check `.productkit/config.json` for an `artifact_dir` field. If set, write artifacts there instead of the project root. If not set, default to the project root.
 
 Write to `priorities.md`:
+
+### Team mode output
 
 ```markdown
 # Feature Priorities
@@ -89,7 +96,41 @@ Priority Score = (Impact × Confidence) / Effort
 - [Decision 2 and rationale]
 ```
 
-### When the PM returns with engineering-validated effort scores
+### Solo mode output
+
+In solo mode, drop the `Eng. Validated` column and the `Engineering Review Status` section entirely. The builder owns effort estimates directly.
+
+```markdown
+# Feature Priorities
+
+## Scoring Framework
+Priority Score = (Impact × Confidence) / Effort
+
+## Feature Rankings
+
+| Rank | Feature | Impact | Confidence | Effort | Score | Status |
+|------|---------|--------|------------|--------|-------|--------|
+| 1 | [Feature] | 5 | 4 | 2 | 10.0 | v1 must-have |
+| 2 | [Feature] | 4 | 4 | 2 | 8.0 | v1 must-have |
+| 3 | [Feature] | 4 | 3 | 3 | 4.0 | v1 nice-to-have |
+| 4 | [Feature] | 3 | 2 | 4 | 1.5 | v2 |
+
+## v1 Scope
+### Must-Haves
+- [Feature] — [Why it's essential]
+
+### Nice-to-Haves
+- [Feature] — [Include if time allows]
+
+## Deferred to v2+
+- [Feature] — [Why it's deferred]
+
+## Key Decisions Made
+- [Decision 1 and rationale]
+- [Decision 2 and rationale]
+```
+
+### When the PM returns with engineering-validated effort scores (team mode only)
 
 When the user runs `/product-kit:prioritize` again after updating effort scores:
 

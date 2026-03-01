@@ -31,9 +31,16 @@ Check if this project is inside a workspace: look for `../.productkit/config.jso
 
 At minimum, `users.md`, `problem.md`, and `solution.md` must exist. If any are missing, tell the user which commands to run first.
 
-### Engineering Effort Review Check
+### Mode Detection
 
-If `priorities.md` exists, scan the feature table for the `Eng. Validated` column. If any v1 must-have or nice-to-have features have `Eng. Validated: No`:
+Read `.productkit/config.json` and check the `mode` field:
+- `mode` — either `"solo"` or `"team"` (defaults to `"team"` if not set)
+
+### Engineering Effort Review Check (team mode only)
+
+**Skip this check entirely in solo mode** — solo builders validate effort themselves during prioritization.
+
+In team mode, if `priorities.md` exists, scan the feature table for the `Eng. Validated` column. If any v1 must-have or nice-to-have features have `Eng. Validated: No`:
 
 1. **Do not proceed with the spec.**
 2. List the features with unvalidated effort scores.
