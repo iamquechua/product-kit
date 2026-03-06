@@ -1,10 +1,10 @@
 {
   "name": "productkit",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Slash-command-driven product thinking toolkit for Claude Code",
   "main": "src/cli.js",
   "bin": {
-    "productkit": "./src/cli.js"
+    "productkit": "src/cli.js"
   },
   "scripts": {
     "test": "node --test test/*.test.js"
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamquechua/product-kit.git"
+    "url": "git+https://github.com/iamquechua/product-kit.git"
   },
   "homepage": "https://github.com/iamquechua/product-kit#readme",
   "bugs": {
