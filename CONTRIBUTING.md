@@ -5,7 +5,7 @@ Thanks for your interest in contributing to Product Kit!
 ## Getting Started
 
 ```bash
-git clone https://github.com/iamquechua/product-kit.git
+git clone https://github.com/realdouno/product-kit.git
 cd product-kit
 npm install
 npm test
@@ -52,7 +52,7 @@ node --test test/init.test.js     # Single file
 
 ## Reporting Bugs
 
-Open an issue at https://github.com/iamquechua/product-kit/issues with:
+Open an issue at https://github.com/realdouno/product-kit/issues with:
 - What you expected to happen
 - What actually happened
 - Steps to reproduce

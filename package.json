@@ -22,11 +22,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamquechua/product-kit.git"
+    "url": "git+https://github.com/realdouno/product-kit.git"
   },
-  "homepage": "https://github.com/iamquechua/product-kit#readme",
+  "homepage": "https://github.com/realdouno/product-kit#readme",
   "bugs": {
-    "url": "https://github.com/iamquechua/product-kit/issues"
+    "url": "https://github.com/realdouno/product-kit/issues"
   },
   "engines": {
     "node": ">=18"

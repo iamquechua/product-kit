@@ -1,6 +1,6 @@
 # {{PROJECT_NAME}}
 
-A product research project powered by [Product Kit](https://github.com/iamquechua/product-kit). See the [full guide](https://iamquechua.github.io/product-kit/) for a walkthrough.
+A product research project powered by [Product Kit](https://github.com/realdouno/product-kit). See the [full guide](https://realdouno.github.io/product-kit/) for a walkthrough.
 
 ## Getting Started
 

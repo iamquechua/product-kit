@@ -4,7 +4,7 @@ Slash-command-driven product thinking toolkit for [Claude Code](https://claude.c
 
 Product Kit gives PMs a structured workflow for validating product ideas — user personas, problem statements, assumptions mapping — all through guided AI conversations.
 
-**[Read the full guide →](https://iamquechua.github.io/product-kit/)**
+**[Read the full guide →](https://realdouno.github.io/product-kit/)**
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ npm install -g productkit
 ### From source
 
 ```bash
-git clone https://github.com/iamquechua/product-kit.git
+git clone https://github.com/realdouno/product-kit.git
 cd product-kit
 npm install
 npm link   # makes `productkit` available globally
@@ -158,7 +158,7 @@ These markdown files are your product foundation — share them with your team, 
 
 If you prefer Claude Cowork over the command line, Product Kit is also available as a Cowork plugin. Same guided workflows, no terminal needed.
 
-1. Download [`product-kit-plugin.zip`](https://github.com/iamquechua/product-kit/releases/download/latest-plugin/product-kit-plugin.zip) from [GitHub Releases](https://github.com/iamquechua/product-kit/releases/tag/latest-plugin)
+1. Download [`product-kit-plugin.zip`](https://github.com/realdouno/product-kit/releases/download/latest-plugin/product-kit-plugin.zip) from [GitHub Releases](https://github.com/realdouno/product-kit/releases/tag/latest-plugin)
 2. In Cowork, go to **Plugins → + → Upload plugin**
 3. Select the zip file
 
