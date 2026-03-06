@@ -20,6 +20,7 @@ claude --plugin-dir ./plugin
 
 | Command | What it does | Output |
 |---------|-------------|--------|
+| `/product-kit:landscape` | Capture company, team, and domain context | `landscape.md` |
 | `/product-kit:constitution` | Define product principles and values | `constitution.md` |
 | `/product-kit:users` | Define target user personas | `users.md` |
 | `/product-kit:problem` | Frame the problem statement | `problem.md` |
@@ -32,10 +33,29 @@ claude --plugin-dir ./plugin
 | `/product-kit:analyze` | Run completeness/consistency check | In-conversation report |
 | `/product-kit:bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
 | `/product-kit:audit` | Compare spec against codebase, surface gaps | `audit.md` |
+| `/product-kit:learn` | Index knowledge directory into a compact summary | `knowledge-index.md` |
+| `/product-kit:techreview` | Review spec against codebase, flag engineering questions | `techreview.md` |
+| `/product-kit:stories` | Break spec into user stories with acceptance criteria | `stories.md` |
+
+## Knowledge Directory
+
+Run `/product-kit:learn` to index the `knowledge/` directory into `knowledge-index.md` — a compact summary that all other commands read instead of scanning raw files directly. Drop research files (interview transcripts, survey results, analytics exports, PDFs) into `knowledge/` and re-run `/product-kit:learn` to update the index. Configure the directory name in `.productkit/config.json` with the `knowledge_dir` field (default: `knowledge`).
+
+## Workspaces
+
+Projects can live inside a workspace (parent directory with `.productkit/config.json` containing `"type": "workspace"`). Workspaces provide:
+- Shared `landscape.md` at the workspace root — company/domain context across all projects
+- Shared `knowledge/` at the workspace root — research files available to all projects
+
+All commands automatically detect workspace membership and read both project-level and workspace-level files.
 
 ## Workflow
 
-Start with `/product-kit:constitution` or `/product-kit:users`, then work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, or `/product-kit:audit` at any stage.
+Start with `/product-kit:landscape` to front-load company context, then `/product-kit:constitution` or `/product-kit:users`, and work through the commands in order. Each command reads previous artifacts to maintain consistency. Run `/product-kit:clarify`, `/product-kit:analyze`, `/product-kit:bootstrap`, `/product-kit:audit`, `/product-kit:learn`, `/product-kit:techreview`, or `/product-kit:stories` at any stage.
+
+## Version Sync
+
+The plugin version in `.claude-plugin/plugin.json` must stay in sync with the CLI version in `package.json`. When bumping versions, update both files.
 
 ## Learn More
 

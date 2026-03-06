@@ -3,15 +3,18 @@ const assert = require('node:assert');
 const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
+const os = require('os');
 
 const CLI = path.join(__dirname, '..', 'src', 'cli.js');
-const TEST_PROJECT = path.join(__dirname, '..', 'test-status-output');
+const { ARTIFACT_FILES } = require('../src/utils/fileUtils');
+const TOTAL = ARTIFACT_FILES.length;
+const TEST_PROJECT = path.join(os.tmpdir(), 'test-status-output');
 
 describe('status command', () => {
   before(() => {
     fs.removeSync(TEST_PROJECT);
     execSync(`node ${CLI} init test-status-output`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
   });
@@ -25,7 +28,7 @@ describe('status command', () => {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
-    assert.ok(output.includes('0/8'));
+    assert.ok(output.includes(`0/${TOTAL}`));
     assert.ok(output.includes('todo'));
     assert.ok(output.includes('/productkit.constitution'));
   });
@@ -36,7 +39,7 @@ describe('status command', () => {
       cwd: TEST_PROJECT,
       encoding: 'utf-8',
     });
-    assert.ok(output.includes('1/8'));
+    assert.ok(output.includes(`1/${TOTAL}`));
     assert.ok(output.includes('Users'));
   });
 

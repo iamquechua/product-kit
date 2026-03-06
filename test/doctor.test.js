@@ -3,15 +3,16 @@ const assert = require('node:assert');
 const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
+const os = require('os');
 
 const CLI = path.join(__dirname, '..', 'src', 'cli.js');
-const PROJECT_DIR = path.join(__dirname, '..', 'test-doctor-output');
+const PROJECT_DIR = path.join(os.tmpdir(), 'test-doctor-output');
 
 describe('doctor command', () => {
   before(() => {
     fs.removeSync(PROJECT_DIR);
     execSync(`node ${CLI} init test-doctor-output`, {
-      cwd: path.join(__dirname, '..'),
+      cwd: os.tmpdir(),
       stdio: 'ignore',
     });
   });

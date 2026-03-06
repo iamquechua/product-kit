@@ -1,6 +1,10 @@
 node_modules/
+.claude/
 .DS_Store
 .env
+*.tgz
 my-first-project/
 test-output/
 TODO.md
+REVIEW.md
+PRE_DEPLOYMENT_REVIEW.md

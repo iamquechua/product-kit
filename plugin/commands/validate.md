@@ -10,21 +10,33 @@ Turn prioritized assumptions into actionable validation materials — interview 
 
 ## Before You Start
 
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+
 Read existing artifacts:
 - `assumptions.md` — prioritized assumptions (required)
 - `users.md` — user personas (optional, used for interview targeting)
 - `problem.md` — problem statement (optional, for context)
+- `landscape.md` — company and domain landscape (optional)
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence alongside `validation-data/`. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 At minimum, `assumptions.md` must exist. If it's missing, tell the user to run `/product-kit:assumptions` first.
 
 ### Check for raw validation data
 
-Look for a `validation-data/` directory in the project root. If it exists, read the files inside:
+Look for a `validation-data/` directory in the artifact directory (or project root if no artifact_dir is set). If it exists, read the files inside:
 
 - **`interviews.csv`** — interview responses. Columns: Participant, Question, Response, Notes.
 - **`survey-responses.csv`** — survey results. Columns are the survey questions generated on the first run.
 - **`desk-research.csv`** — desk research findings. Columns: Assumption, Source, Finding, URL, Date.
 - **`.md` or `.txt` files** — free-form interview transcripts or notes. Read each one.
+- **Any other files** — note their presence but flag that you can only analyze text-based formats.
 
 If `validation-data/` contains filled-in files, these are the **primary source of evidence**. Analyze them directly rather than relying on the PM's summary. If the directory doesn't exist or is empty, proceed with the normal flow (ask the PM for evidence or generate validation materials).
 
@@ -32,16 +44,19 @@ If `validation-data/` contains filled-in files, these are the **primary source o
 
 ## Process
 
+If this is your first time doing validation, start simple: pick the single riskiest assumption and validate just that one. You don't need to test everything at once. A 15-minute conversation with one real user teaches more than hours of desk research.
+
 1. **Review assumptions** — Read `assumptions.md` and list the Critical and Important assumptions. Present them to the user.
-2. **Triage each assumption** — For each high-risk assumption, ask: "Do you already have evidence for or against this?" If yes, capture it and assess whether it validates, partially validates, or invalidates the assumption. If no, flag it for validation.
-3. **Generate interview script** — For assumptions that need qualitative validation, write an interview script targeting the relevant user persona from `users.md`. Group questions by assumption. Include warm-up and closing sections.
-4. **Generate survey questions** — For assumptions that can be tested quantitatively, write survey questions in formats ready for Typeform/Google Forms (Likert scale, multiple choice, open text). Tag each question with the assumption it tests.
-5. **Generate data collection templates** — Create the `validation-data/` directory and write CSV templates:
-   - **`validation-data/interviews.csv`** — Pre-filled with interview questions. Columns: `Participant`, `Question`, `Response`, `Notes`.
-   - **`validation-data/survey-responses.csv`** — Columns are the survey questions. Each row will be one respondent's answers.
-   - **`validation-data/desk-research.csv`** — One row per assumption needing desk research. Columns: `Assumption`, `Source`, `Finding`, `URL`, `Date`.
-6. **Summarize status** — Present a clear picture: what's validated, what's invalidated, what still needs fieldwork.
-7. **Finalize** — Write the validation artifact and data collection templates after user approval. Tell the PM: "Fill in the CSV files in `validation-data/` as you collect data, then run `/product-kit:validate` again for me to analyze your findings."
+2. **Check for existing data** — Before generating new validation instruments, ask: "Do you already have data that could serve as evidence? Analytics dashboards, support ticket themes, NPS scores, user feedback logs, app store reviews?" If the team already has relevant data, capture it as evidence immediately rather than creating new instruments for something already answered.
+3. **Triage each assumption** — For each high-risk assumption, ask: "Do you already have evidence for or against this?" If yes, capture it and assess whether it validates, partially validates, or invalidates the assumption. If no, flag it for validation.
+4. **Generate interview script** — For assumptions that need qualitative validation, write an interview script targeting the relevant user persona from `users.md`. Group questions by assumption. Include warm-up and closing sections.
+5. **Generate survey questions** — For assumptions that can be tested quantitatively, write survey questions in formats ready for Typeform/Google Forms (Likert scale, multiple choice, open text). Tag each question with the assumption it tests.
+6. **Generate data collection templates** — Create the `validation-data/` directory and write CSV templates:
+   - **`validation-data/interviews.csv`** — Pre-filled with the interview questions from the script. Columns: `Participant`, `Question`, `Response`, `Notes`. Each row has a question pre-populated; the PM fills in responses for each participant.
+   - **`validation-data/survey-responses.csv`** — Columns are the survey questions generated in step 4. Each row will be one respondent's answers. First row is headers only — the PM pastes in exported survey data or fills in manually.
+   - **`validation-data/desk-research.csv`** — Pre-filled with one row per assumption that needs desk research. Columns: `Assumption`, `Source`, `Finding`, `URL`, `Date`. The PM fills in what they find.
+7. **Summarize status** — Present a clear picture: what's validated, what's invalidated, what still needs fieldwork.
+8. **Finalize** — Write the validation artifact and data collection templates after user approval. Tell the PM: "Fill in the CSV files in `validation-data/` as you collect data, then run `/product-kit:validate` again for me to analyze your findings."
 
 ## Conversation Style
 
@@ -50,6 +65,7 @@ If `validation-data/` contains filled-in files, these are the **primary source o
 - For invalidated assumptions, flag the downstream impact ("This assumption is in your problem statement — you may need to revisit it")
 - Keep interview questions open-ended and non-leading
 - Keep survey questions clear and unambiguous — no double-barreled questions
+- If all critical assumptions are already validated, celebrate that and generate materials only for remaining gaps
 
 ## Output
 
@@ -67,6 +83,13 @@ Write to `validation.md`. Every assumption gets a structured block with an `Evid
    - Source: [assumptions.md reference]
    - Method: [Interview | Survey | Desk research | Domain expertise]
    - Evidence: [Specific findings — quotes, data, sources] OR [PENDING]
+   - Status: Validated | Partially validated | Invalidated | Needs validation
+
+2. **[Assumption]**
+   - Priority: Critical
+   - Source: [assumptions.md reference]
+   - Method: [Method used or suggested]
+   - Evidence: [Specific findings] OR [PENDING]
    - Status: Validated | Partially validated | Invalidated | Needs validation
 
 ### Important
@@ -132,11 +155,11 @@ The PM drops raw data into `validation-data/`:
 - Survey exports → `.csv` files
 - Desk research findings → `.md` files with sources
 
-Then runs `/product-kit:validate`. Claude reads the raw files, extracts evidence relevant to each assumption, and updates `validation.md` directly.
+Then runs `/product-kit:validate`. Claude reads the raw files, extracts evidence relevant to each assumption, and updates `validation.md` directly. The PM does not need to fill in evidence manually — Claude does the analysis.
 
 **Path B: Manual entry (fallback)**
 
-For evidence that doesn't have a raw file, the PM fills in the `Evidence:` fields directly in `validation.md`, replacing `[PENDING]` with their findings. Then runs `/product-kit:validate` for review.
+For evidence that doesn't have a raw file (e.g., a phone call, in-person observation, domain expertise), the PM fills in the `Evidence:` fields directly in `validation.md`, replacing `[PENDING]` with their findings. Then runs `/product-kit:validate` for review.
 
 ---
 
@@ -145,32 +168,37 @@ For evidence that doesn't have a raw file, the PM fills in the `Evidence:` field
 1. Read the existing `validation.md`
 2. **Check `validation-data/` for raw files.** If files are present:
    - Read each file and identify which assumptions it provides evidence for
-   - For interview transcripts: extract relevant quotes, count participants, note patterns
-   - For survey CSVs: calculate response counts, percentages, distributions
+   - For interview transcripts: extract relevant quotes, count participants, note patterns across interviews
+   - For survey CSVs: calculate response counts, percentages, distributions for relevant questions. For large files (100+ rows), summarize key statistics rather than reading every row.
    - For desk research: extract cited sources, statistics, and findings
-   - Write the extracted evidence into the `Evidence:` field, citing the source file
+   - Cross-reference findings against each `[PENDING]` assumption
+   - Write the extracted evidence into the `Evidence:` field, citing the source file (e.g., "From interview-03.md: '...'", "Survey data (n=45): 72% responded...")
    - Present your analysis to the PM for confirmation before finalizing
 3. **For manually entered evidence** (no raw file), review the quality:
-   - **Is it specific?** — "Users liked it" is not evidence. Push back.
-   - **Does it include the method?** — Interview, survey, desk research, analytics?
-   - **Does it include the source/sample?** — How many people? Which report?
-   - **Does it actually test the assumption?** — Flag mismatches.
-4. For evidence that passes review: update the `Status:` field
-5. For evidence that is too weak: reset `Evidence:` back to `[PENDING]` and explain what's missing
-6. When all critical and important assumptions have evidence (no `[PENDING]` markers), tell the user they're clear to run `/product-kit:solution`
+   - **Is it specific?** — "Users liked it" is not evidence. Push back: "How many users? What exactly did they say?"
+   - **Does it include the method?** — Interview, survey, desk research, analytics? If not stated, ask.
+   - **Does it include the source/sample?** — How many people? Which report? What dataset? If missing, ask.
+   - **Does it actually test the assumption?** — Evidence about user demographics doesn't validate a usability assumption. Flag mismatches.
+4. For evidence that passes review (from raw data or manual entry):
+   - Update the `Status:` field to Validated / Partially validated / Invalidated
+   - For invalidated assumptions, add `- Impact:` noting what needs to change in previous artifacts
+5. For manually entered evidence that is too weak or vague:
+   - **Do not update the Status.** Keep it as `Needs validation`.
+   - Reset `Evidence:` back to `[PENDING]`
+   - Explain what's missing and what good evidence would look like for this specific assumption
+6. Keep the interview script and survey sections — they may still be useful for remaining `[PENDING]` items
+7. When all critical and important assumptions have evidence that passed review (no `[PENDING]` markers), tell the user they're clear to run `/product-kit:solution`
 
 **Evidence quality bar by method:**
 
 | Method | Minimum evidence required |
 |--------|--------------------------|
-| Interview | Number of participants, at least one direct quote per assumption |
+| Interview | Number of participants, at least one direct quote or specific observation per assumption |
 | Survey | Sample size, response rate, key percentages or distributions |
-| Desk research | Source name, publication date, specific finding cited |
+| Desk research | Source name, publication date, specific statistic or finding cited |
 | Analytics | Metric name, time period, actual numbers |
-| Domain expertise | Specific experience cited (role, years, context) |
+| Domain expertise | Specific experience cited (role, years, context), not just "I believe" |
 
-## Next Step
-
-After writing the validation, tell the user:
-
-> Your validation results are captured. Fill in evidence for any remaining [PENDING] assumptions, then run `/product-kit:validate` again. Once all critical and important assumptions are validated, run `/product-kit:solution`.
+**Note on `validation-data/` and privacy:**
+- Remind the PM to anonymize interview transcripts (replace real names with pseudonyms) before committing to git
+- Suggest adding `validation-data/` to `.gitignore` if the data contains sensitive or personally identifiable information

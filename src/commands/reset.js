@@ -2,18 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const readline = require('readline');
-const { getArtifactDir } = require('../utils/fileUtils');
-
-const ARTIFACTS = [
-  'constitution.md',
-  'users.md',
-  'problem.md',
-  'assumptions.md',
-  'validation.md',
-  'solution.md',
-  'priorities.md',
-  'spec.md',
-];
+const { getArtifactDir, ARTIFACT_FILES: ARTIFACTS } = require('../utils/fileUtils');
 
 function confirm(question) {
   const rl = readline.createInterface({

@@ -10,14 +10,23 @@ Read the product spec and supporting artifacts, then systematically scan the cod
 
 ## Before You Start
 
+Check `.productkit/config.json` for an `artifact_dir` field. If set, read artifacts there instead of the project root. If not set, default to the project root.
+
 Read these artifacts (required):
 - `spec.md` — the product spec (required)
 - `priorities.md` — feature priorities and v1 scope (required)
 
 Also read if they exist:
+- `landscape.md` — company and domain landscape
 - `solution.md` — chosen solution
 - `validation.md` — assumption validation results
 - `assumptions.md` — known risks
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 At minimum, `spec.md` must exist. If it's missing, tell the user to run `/product-kit:spec` first.
 
@@ -31,7 +40,7 @@ After reading the artifacts, scan the project's actual implementation:
 - **Config files** — environment setup, deployment config, CI/CD
 - **Comments and TODOs** — in-code notes about incomplete work or known issues
 
-Read enough of the codebase to understand what exists. Focus on entry points, key modules, and test files.
+Read enough of the codebase to understand what exists. You don't need to read every file — focus on entry points, key modules, and test files to build a picture of what's implemented.
 
 ## Process
 
@@ -43,11 +52,11 @@ Read enough of the codebase to understand what exists. Focus on entry points, ke
    - ❌ **Not met** — no evidence of implementation
    - ❓ **Cannot assess** — would need manual testing or runtime verification
 
-3. **Identify scope creep** — Look for significant functionality in the codebase that isn't described in the spec. Flag it.
+3. **Identify scope creep** — Look for significant functionality in the codebase that isn't described in the spec. Flag it — it may be intentional evolution or unplanned drift.
 
 4. **Check deferred items** — Review the "Out of Scope" and "Deferred to v2+" sections. Were any deferred items actually built? Were any v1 items actually deferred?
 
-5. **Review risks and assumptions** — If `validation.md` exists, check whether invalidated assumptions affected the implementation. If `assumptions.md` exists, check whether high-risk assumptions have been addressed in the code.
+5. **Review risks and assumptions** — If `validation.md` exists, check whether invalidated assumptions affected the implementation. If `assumptions.md` exists, check whether high-risk assumptions have been addressed in the code (error handling, fallbacks, etc.).
 
 6. **Check success metrics** — Are the success metrics from the spec measurable with the current implementation? Is there analytics, logging, or monitoring in place?
 
@@ -63,7 +72,7 @@ Read enough of the codebase to understand what exists. Focus on entry points, ke
 
 ## Output
 
-Present the audit directly in the conversation, then offer to write it to `audit.md`:
+Present the audit directly in the conversation, then offer to write it to `audit.md`. Use this structure:
 
 ```markdown
 # Product Audit: [Product Name]

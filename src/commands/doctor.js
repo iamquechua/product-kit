@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 async function doctor() {
   const root = process.cwd();
@@ -45,12 +45,20 @@ async function doctor() {
 
   // 3. Check for expected command templates
   const templatesDir = path.join(__dirname, '..', '..', 'templates', 'commands');
-  const expectedCommands = fs.readdirSync(templatesDir);
+  let expectedCommands;
+  try {
+    expectedCommands = fs.readdirSync(templatesDir);
+  } catch {
+    fail('Templates directory missing — Product Kit installation may be corrupted');
+    expectedCommands = [];
+  }
 
   // Account for minimal mode
   let config = {};
   try { config = fs.readJsonSync(configPath); } catch {}
-  const skippable = config.minimal ? ['productkit.constitution.md'] : [];
+  // Landscape is workspace-only; constitution is skipped in minimal mode
+  const skippable = ['productkit.landscape.md'];
+  if (config.minimal) skippable.push('productkit.constitution.md');
 
   const missing = [];
   for (const cmd of expectedCommands) {
@@ -92,7 +100,7 @@ async function doctor() {
 
   // 5. Git initialized
   try {
-    execSync('git rev-parse --git-dir', { cwd: root, stdio: 'ignore' });
+    execFileSync('git', ['rev-parse', '--git-dir'], { cwd: root, stdio: 'ignore' });
     pass('Git repository initialized');
   } catch {
     warn('No git repository — consider running git init');

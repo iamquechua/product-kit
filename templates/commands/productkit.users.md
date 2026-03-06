@@ -10,7 +10,17 @@ Guide the user through identifying and deeply understanding their target users. 
 
 ## Before You Start
 
+Read `landscape.md` if it exists — use company, market, and domain context to ask more targeted questions about users.
+
 Read `constitution.md` if it exists — use the product vision to inform user discovery.
+
+Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when building personas. If the file doesn't exist but `knowledge/` has files, suggest running `/productkit.learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 ## Process
 

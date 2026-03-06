@@ -17,9 +17,16 @@ Read these artifacts (required):
 - `priorities.md` — feature priorities and v1 scope (required)
 
 Also read if they exist:
+- `landscape.md` — company and domain landscape
 - `solution.md` — chosen solution
 - `validation.md` — assumption validation results
 - `assumptions.md` — known risks
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
 
 At minimum, `spec.md` must exist. If it's missing, tell the user to run `/productkit.spec` first.
 

@@ -10,8 +10,17 @@ Analyze the existing project — code, docs, README, config files, comments — 
 
 ## Before You Start
 
-1. Read the project's README, CLAUDE.md, package.json (or equivalent), and scan the directory structure to understand what this project does.
-2. Check which artifacts already exist (constitution.md, users.md, problem.md, assumptions.md, validation.md, solution.md, priorities.md, spec.md). **Skip any that already exist** — tell the user you're skipping them.
+1. Read the project's README, CLAUDE.md, package.json (or equivalent), and scan the directory structure to understand what this project does. Also read `landscape.md` if it exists — use it for company and domain context. Read `knowledge-index.md` if it exists — it contains a summary of research from the `knowledge/` directory. Reference relevant findings as evidence when drafting artifacts. If the file doesn't exist but `knowledge/` has files, suggest running `/product-kit:learn` first.
+
+### Workspace Context
+
+Check if this project is inside a workspace: look for `../.productkit/config.json` with `"type": "workspace"`. If yes:
+- Read `landscape.md` from the workspace root (parent directory) — this is shared company/domain landscape.
+- Also read workspace-level `knowledge-index.md` if it exists. Workspace research index supplements (does not replace) project-level research index.
+
+2. Check `.productkit/config.json` for an `artifact_dir` field. If set, read and write artifacts there instead of the project root. If not set, default to the project root.
+3. Check which artifacts already exist (constitution.md, users.md, problem.md, assumptions.md, solution.md, priorities.md, spec.md) in the artifact directory. **Skip any that already exist** — tell the user you're skipping them.
+4. Check `.productkit/config.json` — if `minimal: true`, skip `constitution.md`.
 
 ## Process
 
@@ -19,31 +28,45 @@ Work through each missing artifact in this order:
 
 ### 1. Constitution (`constitution.md`)
 Draft based on: README vision/mission, CLAUDE.md principles, project conventions.
+- Product vision — infer from what the project does
+- Core principles — infer from code patterns, docs, and design choices
+- Non-negotiables — infer from what the project explicitly avoids
 
 ### 2. Users (`users.md`)
 Draft based on: README audience, docs, issue tracker themes, CLI help text, UI copy.
+- Identify 2-4 user types from project context
+- Describe each with specifics inferred from the codebase
 
 ### 3. Problem (`problem.md`)
 Draft based on: README "why", issue patterns, gaps the project fills.
+- Frame the core problem the project solves
+- Ground it in the users you just defined
 
 ### 4. Assumptions (`assumptions.md`)
 Draft based on: implicit bets in the architecture, undocumented dependencies, target audience guesses.
+- Surface 5-10 assumptions from code and docs
+- Categorize by risk (high/medium/low)
 
 ### 5. Solution (`solution.md`)
 Draft based on: the actual implementation, architecture choices, alternatives mentioned in docs/comments.
+- Describe the chosen approach and why
+- Note alternatives that were likely considered
 
 ### 6. Priorities (`priorities.md`)
 Draft based on: feature completeness, TODO comments, open issues, roadmap docs.
+- List features/capabilities by apparent priority
+- Flag gaps between what exists and what's needed
 
 ### 7. Spec (`spec.md`)
 Draft based on: all previous artifacts plus technical implementation details.
+- Synthesize everything into a product spec
 
 ## For Each Artifact
 
 1. **Show your draft** — present the full markdown content
 2. **Explain your reasoning** — briefly note what codebase signals you used
 3. **Ask for approval** — "Should I write this to `[filename]`? Or would you like to adjust anything?"
-4. **On approval** — write the file
+4. **On approval** — write the file to the artifact directory
 5. **On feedback** — revise and re-present
 
 ## Conversation Style

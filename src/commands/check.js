@@ -1,9 +1,9 @@
 const chalk = require('chalk');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 async function check() {
   try {
-    execSync('claude --version', { stdio: 'ignore' });
+    execFileSync('claude', ['--version'], { stdio: 'ignore' });
     console.log(chalk.green('Claude Code is installed and available.'));
   } catch {
     console.log(chalk.red('Claude Code is not installed or not in PATH.'));

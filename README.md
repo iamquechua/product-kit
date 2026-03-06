@@ -43,7 +43,7 @@ productkit init my-project
 cd my-project
 ```
 
-This scaffolds a project with slash commands, a `CLAUDE.md` context file, and a `.productkit/` config directory.
+This scaffolds a project with slash commands, a `CLAUDE.md` context file, a `knowledge/` directory for research files, and a `.productkit/` config directory.
 
 For existing projects:
 
@@ -58,6 +58,17 @@ To keep artifacts out of the project root (recommended for busy codebases):
 productkit init --existing --artifact-dir docs/product
 ```
 
+To create a shared workspace for multi-project orgs:
+
+```bash
+productkit workspace my-company
+cd my-company
+productkit init my-app
+productkit init admin-dashboard
+```
+
+The workspace holds shared `landscape.md` and `knowledge/` that all projects inside it inherit automatically. `init` auto-detects when it's run inside a workspace.
+
 ### 2. Open Claude Code
 
 ```bash
@@ -70,6 +81,7 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 
 | Step | Command | What it does | Output |
 |------|---------|-------------|--------|
+| 0 | `/productkit.landscape` | Capture company, team, and domain landscape | `landscape.md` |
 | 1 | `/productkit.constitution` | Define product principles and values | `constitution.md` |
 | 2 | `/productkit.users` | Define target user personas through dialogue | `users.md` |
 | 3 | `/productkit.problem` | Frame the problem statement grounded in user research | `problem.md` |
@@ -82,8 +94,11 @@ Each command starts a guided conversation. Claude asks questions, pushes back on
 | — | `/productkit.analyze` | Run a consistency and completeness check | Analysis in chat |
 | — | `/productkit.bootstrap` | Auto-draft all artifacts from existing codebase | All missing artifacts |
 | — | `/productkit.audit` | Compare spec against codebase, surface gaps | `audit.md` |
+| — | `/productkit.learn` | Index knowledge directory into a compact summary | `knowledge-index.md` |
+| — | `/productkit.techreview` | Review spec against codebase, flag engineering questions | `techreview.md` |
+| — | `/productkit.stories` | Break spec into user stories with acceptance criteria | `stories.md` |
 
-Commands build on each other — `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
+Commands build on each other — every command reads `landscape.md` and `knowledge-index.md` for evidence, `/productkit.problem` reads your `users.md`, `/productkit.solution` reads your problem and users, and `/productkit.spec` synthesizes everything into a single document. You can run `/productkit.clarify` and `/productkit.analyze` at any stage to check your work.
 
 ### 4. Review your artifacts
 
@@ -91,6 +106,7 @@ After running the commands, your project contains:
 
 ```
 my-project/
+├── landscape.md             # Company & domain landscape
 ├── constitution.md        # Product principles
 ├── users.md               # User personas
 ├── problem.md             # Problem statement
@@ -100,6 +116,10 @@ my-project/
 ├── priorities.md          # Ranked feature list
 ├── spec.md                # Complete product spec
 ├── audit.md               # Spec vs codebase audit (on demand)
+├── knowledge-index.md     # Summary index of knowledge/ files
+├── knowledge/             # Raw research files (interviews, surveys, etc.)
+├── techreview.md          # Technical feasibility review (on demand)
+├── stories.md             # User stories by epic (on demand)
 ├── .productkit/config.json
 ├── .claude/commands/      # Slash command prompts
 ├── CLAUDE.md
@@ -118,10 +138,13 @@ These markdown files are your product foundation — share them with your team, 
 | `productkit init <name>` | Scaffold a new project |
 | `productkit init --existing` | Add Product Kit to the current directory |
 | `productkit init --minimal` | Skip constitution, start with users/problem |
+| `productkit init --mode <solo\|team>` | Set building mode (solo builder vs team with engineers) |
 | `productkit init --artifact-dir <dir>` | Store artifacts in a custom directory |
+| `productkit workspace <name>` | Create a shared workspace for multi-project orgs |
 | `productkit status` | Show progress — which artifacts exist and what's next |
 | `productkit export` | Export all artifacts as a single combined markdown file |
 | `productkit export --output <file>` | Export to a custom filename |
+| `productkit export --stories-csv` | Export stories as CSV for Jira/Linear/Shortcut import |
 | `productkit diff` | Show what changed in artifacts since last commit |
 | `productkit diff --staged` | Show staged artifact changes |
 | `productkit doctor` | Check project health (missing files, outdated commands) |
