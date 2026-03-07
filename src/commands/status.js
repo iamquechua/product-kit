@@ -19,6 +19,8 @@ async function status() {
   const remaining = [];
 
   for (const artifact of ARTIFACTS) {
+    // In workspace projects, landscape lives at workspace root — skip from project list
+    if (workspaceRoot && artifact.file === 'landscape.md') continue;
     const exists = fs.existsSync(path.join(artifactDir, artifact.file));
     if (exists) {
       done.push(artifact);
@@ -41,7 +43,8 @@ async function status() {
     console.log();
   }
 
-  console.log(chalk.bold(`Progress: ${done.length}/${ARTIFACTS.length} artifacts`));
+  const total = done.length + remaining.length;
+  console.log(chalk.bold(`Progress: ${done.length}/${total} artifacts`));
   console.log();
 
   if (done.length > 0) {
